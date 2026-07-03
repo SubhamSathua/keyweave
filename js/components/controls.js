@@ -3,6 +3,7 @@ import { DEFAULT_DENSITY } from '../constants.js';
 
 export function mountControls() {
   mountCustomDropdowns();
+  mountTooltips();
   mountDensityInput();
   mountToggles();
 }
@@ -59,6 +60,58 @@ function selectDropdownItem(dropdown, item, name) {
   } else if (name === 'case') {
     engineState.caseMode = item.dataset.value;
   }
+}
+
+/* ── Dynamic Tooltips ── */
+function mountTooltips() {
+  const tip = document.getElementById('global-tooltip');
+  if (!tip) return;
+
+  document.querySelectorAll('.info-btn').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+      const html = btn.getAttribute('data-tip-html');
+      if (!html) return;
+      tip.innerHTML = html;
+      tip.classList.add('visible');
+      positionTooltip(tip, btn);
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      tip.classList.remove('visible');
+    });
+  });
+}
+
+function positionTooltip(tip, anchor) {
+  const GAP = 10;
+  const btnRect = anchor.getBoundingClientRect();
+  const tipRect = tip.getBoundingClientRect();
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  let top = btnRect.top + btnRect.height / 2 - tipRect.height / 2;
+  let left = btnRect.right + GAP;
+
+  // flip left if overflows right edge
+  if (left + tipRect.width > vw - 8) {
+    left = btnRect.left - GAP - tipRect.width;
+  }
+
+  // flip up if overflows bottom
+  if (top + tipRect.height > vh - 8) {
+    top = vh - tipRect.height - 8;
+  }
+
+  // flip down if overflows top
+  if (top < 8) {
+    top = 8;
+  }
+
+  // clamp left
+  left = Math.max(8, Math.min(left, vw - tipRect.width - 8));
+
+  tip.style.top = top + 'px';
+  tip.style.left = left + 'px';
 }
 
 /* ── Density Input (drag-to-scrub + type) ── */

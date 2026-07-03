@@ -87,24 +87,7 @@
                 <div class="dropdown-item" data-value="weighted">Weighted Overload</div>
               </div>
             </div>
-            <span class="info-btn" data-tooltip="mode-tip">i</span>
-          </div>
-          <div id="mode-tip" class="tooltip tooltip--wide">
-            <div class="tooltip-head">Generation Modes</div>
-            <div class="tooltip-modes">
-              <div class="tooltip-mode">
-                <span class="tooltip-mode-name">Real Words</span>
-                <span class="tooltip-mode-desc">Dictionary words only, filtered by active keys.</span>
-              </div>
-              <div class="tooltip-mode">
-                <span class="tooltip-mode-name">Fake Words</span>
-                <span class="tooltip-mode-desc">Trigram-stitched pseudowords, pronounceable.</span>
-              </div>
-              <div class="tooltip-mode">
-                <span class="tooltip-mode-name">Weighted Overload</span>
-                <span class="tooltip-mode-desc">60% focus keys + 40% standard spacing.</span>
-              </div>
-            </div>
+            <span class="info-btn" data-tip-html="<b>Generation Modes</b><br><b>Real Words:</b> Dictionary words only, filtered by active keys.<br><b>Fake Words:</b> Trigram-stitched pseudowords, pronounceable.<br><b>Weighted:</b> 60% focus keys + 40% standard spacing.">i</span>
           </div>
         </div>
 
@@ -119,18 +102,16 @@
                 <div class="dropdown-item" data-value="upper">UPPERCASE</div>
               </div>
             </div>
-            <span class="info-btn" data-tooltip="case-tip">i</span>
+            <span class="info-btn" data-tip-html="lowercase: all small. Mixed: random capitalization. UPPERCASE: all caps.">i</span>
           </div>
-          <div id="case-tip" class="tooltip">lowercase: all small. Mixed: random capitalization. UPPERCASE: all caps.</div>
         </div>
 
         <div class="config-field">
           <label class="config-label" for="density">Length</label>
           <div class="config-control">
             <input type="text" id="density" value="40" inputmode="numeric">
-            <span class="info-btn" data-tooltip="density-tip">i</span>
+            <span class="info-btn" data-tip-html="Number of words to generate. Drag left/right or type (10–200).">i</span>
           </div>
-          <div id="density-tip" class="tooltip">Number of words to generate. Drag left/right or type (10–200).</div>
         </div>
 
       </div>
@@ -144,8 +125,7 @@
             <span class="toggle-track"><span class="toggle-thumb"></span></span>
             Stretch
           </label>
-          <span class="info-btn" data-tooltip="stretch-tip">i</span>
-          <div id="stretch-tip" class="tooltip">Injects same-finger bigram words (de, ed, ju, pl) for muscle memory training.</div>
+          <span class="info-btn" data-tip-html="Injects same-finger bigram words (de, ed, ju, pl) for muscle memory training.">i</span>
         </div>
 
         <div class="config-field">
@@ -154,8 +134,7 @@
             <span class="toggle-track"><span class="toggle-thumb"></span></span>
             Symbols
           </label>
-          <span class="info-btn" data-tooltip="symbols-tip">i</span>
-          <div id="symbols-tip" class="tooltip">Appends ; _ () {} [] = at ~15% frequency after words.</div>
+          <span class="info-btn" data-tip-html="Appends ; _ () {} [] = at ~15% frequency after words.">i</span>
         </div>
 
         <div class="config-field">
@@ -164,8 +143,7 @@
             <span class="toggle-track"><span class="toggle-thumb"></span></span>
             Glue
           </label>
-          <span class="info-btn" data-tooltip="glue-tip">i</span>
-          <div id="glue-tip" class="tooltip">Inserts the/and/to every 3–4 words to preserve typing rhythm.</div>
+          <span class="info-btn" data-tip-html="Inserts the/and/to every 3–4 words to preserve typing rhythm.">i</span>
         </div>
 
       </div>
@@ -184,6 +162,9 @@
       <button id="copy-btn">Copy Text</button>
     </div>
   </section>
+
+  <!-- Shared Tooltip (positioned via JS) -->
+  <div id="global-tooltip" class="tooltip"></div>
 
   <script type="module" src="js/app.js"></script>
 </body>

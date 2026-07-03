@@ -61,23 +61,6 @@ h1 {
     width: 100%;
   }
 
-  /* tooltips go below on mobile */
-  .tooltip {
-    position: fixed;
-    left: 12px;
-    right: 12px;
-    top: auto;
-    bottom: 12px;
-    width: auto;
-    transform: none;
-    border-radius: 8px;
-  }
-
-  .tooltip::before,
-  .tooltip::after {
-    display: none;
-  }
-
   textarea {
     height: 120px;
     font-size: 15px;
