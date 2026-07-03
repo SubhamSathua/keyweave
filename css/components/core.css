@@ -6,6 +6,136 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* ── App Header ── */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.brand-name {
+  color: var(--accent);
+  font-size: 20px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header-icon-btn {
+  background: transparent;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--text-muted);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s;
+}
+
+.header-icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.header-icon-btn:hover {
+  color: var(--accent);
+  background: var(--bg-keyboard);
+}
+
+/* ── Theme Switcher ── */
+.theme-switcher {
+  position: relative;
+}
+
+.theme-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px;
+  min-width: 120px;
+  box-shadow: var(--shadow-md);
+  z-index: 200;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  color: var(--text-primary);
+}
+
+.theme-switcher.open .theme-dropdown {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.theme-option {
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+  text-align: left;
+  transition: background 0.1s, color 0.1s;
+}
+
+.theme-option:hover {
+  background: var(--bg-keyboard);
+}
+
+.theme-option.active {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ── Theme Transition Overlay ── */
+.theme-transition {
+  position: fixed;
+  inset: 0;
+  background: var(--theme-transition-bg);
+  z-index: 10000;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+.theme-transition.animate {
+  animation: themeSlide 0.5s cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes themeSlide {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
 .row-selectors {
   display: flex;
   gap: 12px;

@@ -24,6 +24,9 @@
   --tooltip-bg: #1e1f22;
   --tooltip-border: #444;
   --tooltip-text: #d1d2d3;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --theme-transition-bg: #1e1f22;
 }
 
 [data-theme="light"] {
@@ -51,4 +54,7 @@
   --tooltip-bg: #ffffff;
   --tooltip-border: #ccc;
   --tooltip-text: #2c2e31;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --theme-transition-bg: #e8e8e8;
 }
