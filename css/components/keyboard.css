@@ -1,0 +1,42 @@
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  background: var(--bg-keyboard);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.kb-row {
+  display: flex;
+  gap: 6px;
+}
+
+.key-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--key-bg);
+  border: 1px solid var(--key-border);
+  border-radius: 4px;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: bold;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.key-label input {
+  margin: 0;
+  cursor: pointer;
+}
+
+.key-label:has(input:checked) {
+  background-color: var(--key-active-bg);
+  color: var(--key-active-text);
+  border-color: var(--key-active-bg);
+}

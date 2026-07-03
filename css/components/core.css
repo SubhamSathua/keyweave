@@ -1,0 +1,32 @@
+.section {
+  background-color: var(--bg-surface);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.row-selectors {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.row-selectors label {
+  background-color: var(--bg-surface);
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid var(--accent);
+  font-weight: bold;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.row-selectors label:has(input:checked) {
+  background-color: var(--accent);
+  color: var(--text-accent);
+}

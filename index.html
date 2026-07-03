@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Typing Drill Generator</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <h1>Custom Typing Drill Generator</h1>
+
+  <!-- Row Selection Masters -->
+  <section class="section row-selectors">
+    <label><input type="checkbox" id="master-top"> Top Row</label>
+    <label><input type="checkbox" id="master-home" checked> Home Row</label>
+    <label><input type="checkbox" id="master-bottom"> Bottom Row</label>
+  </section>
+
+  <!-- Visual Interactive Keyboard -->
+  <section class="section keyboard" id="keyboard-container">
+    <div class="kb-row">
+      <label class="key-label top-row-label">Q<input type="checkbox" class="key top-row" value="q"></label>
+      <label class="key-label top-row-label">W<input type="checkbox" class="key top-row" value="w"></label>
+      <label class="key-label top-row-label">E<input type="checkbox" class="key top-row" value="e"></label>
+      <label class="key-label top-row-label">R<input type="checkbox" class="key top-row" value="r"></label>
+      <label class="key-label top-row-label">T<input type="checkbox" class="key top-row" value="t"></label>
+      <label class="key-label top-row-label">Y<input type="checkbox" class="key top-row" value="y"></label>
+      <label class="key-label top-row-label">U<input type="checkbox" class="key top-row" value="u"></label>
+      <label class="key-label top-row-label">I<input type="checkbox" class="key top-row" value="i"></label>
+      <label class="key-label top-row-label">O<input type="checkbox" class="key top-row" value="o"></label>
+      <label class="key-label top-row-label">P<input type="checkbox" class="key top-row" value="p"></label>
+    </div>
+    <div class="kb-row">
+      <label class="key-label home-row-label">A<input type="checkbox" class="key home-row" value="a" checked></label>
+      <label class="key-label home-row-label">S<input type="checkbox" class="key home-row" value="s" checked></label>
+      <label class="key-label home-row-label">D<input type="checkbox" class="key home-row" value="d" checked></label>
+      <label class="key-label home-row-label">F<input type="checkbox" class="key home-row" value="f" checked></label>
+      <label class="key-label home-row-label">G<input type="checkbox" class="key home-row" value="g" checked></label>
+      <label class="key-label home-row-label">H<input type="checkbox" class="key home-row" value="h" checked></label>
+      <label class="key-label home-row-label">J<input type="checkbox" class="key home-row" value="j" checked></label>
+      <label class="key-label home-row-label">K<input type="checkbox" class="key home-row" value="k" checked></label>
+      <label class="key-label home-row-label">L<input type="checkbox" class="key home-row" value="l" checked></label>
+      <label class="key-label home-row-label">;<input type="checkbox" class="key home-row" value=";" checked></label>
+    </div>
+    <div class="kb-row">
+      <label class="key-label bottom-row-label">Z<input type="checkbox" class="key bottom-row" value="z"></label>
+      <label class="key-label bottom-row-label">X<input type="checkbox" class="key bottom-row" value="x"></label>
+      <label class="key-label bottom-row-label">C<input type="checkbox" class="key bottom-row" value="c"></label>
+      <label class="key-label bottom-row-label">V<input type="checkbox" class="key bottom-row" value="v"></label>
+      <label class="key-label bottom-row-label">B<input type="checkbox" class="key bottom-row" value="b"></label>
+      <label class="key-label bottom-row-label">N<input type="checkbox" class="key bottom-row" value="n"></label>
+      <label class="key-label bottom-row-label">M<input type="checkbox" class="key bottom-row" value="m"></label>
+      <label class="key-label bottom-row-label">,<input type="checkbox" class="key bottom-row" value=","></label>
+      <label class="key-label bottom-row-label">.<input type="checkbox" class="key bottom-row" value="."></label>
+    </div>
+  </section>
+
+  <!-- Controls & Output -->
+  <section class="section">
+    <div class="controls">
+      <label for="mode">Mode:</label>
+      <select id="mode">
+        <option value="realWords">Real Words (Strict)</option>
+        <option value="fakeWords">Fake Words (Trigrams)</option>
+        <option value="weighted">Weighted Overload</option>
+      </select>
+
+      <label for="density">Words:</label>
+      <input type="number" id="density" value="40" min="10" max="200">
+
+      <div class="toggles">
+        <label><input type="checkbox" id="same-finger"> Same-finger stretches</label>
+        <label><input type="checkbox" id="include-symbols"> Include symbols</label>
+        <label><input type="checkbox" id="glue-words" checked> Glue words</label>
+      </div>
+
+      <button id="generate-btn">Generate Text</button>
+    </div>
+
+    <textarea id="output" readonly placeholder="Your custom drill text will appear here..."></textarea>
+
+    <div class="actions">
+      <span id="toast" class="toast">Copied to clipboard!</span>
+      <button id="copy-btn">Copy Text</button>
+    </div>
+  </section>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
