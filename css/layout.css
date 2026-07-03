@@ -20,6 +20,13 @@ h1 {
     padding: 12px;
   }
 
+  /* Sections — tighter padding */
+  .section {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  /* Row selectors */
   .row-selectors {
     flex-wrap: wrap;
     gap: 8px;
@@ -33,32 +40,27 @@ h1 {
     min-width: 0;
   }
 
-  .config-grid {
-    grid-template-columns: 1fr;
-    gap: 0;
+  /* Keyboard — compact centered layout */
+  .keyboard {
+    gap: 4px;
+    padding: 12px 8px;
+    border-radius: 12px;
   }
 
-  .config-col + .config-col {
-    margin-top: 14px;
-    padding-top: 14px;
-    border-top: 1px solid var(--border);
+  .kb-row {
+    gap: 3px;
   }
 
-  .config-control input[type="text"],
-  .dropdown {
-    width: 100%;
+  .key-label {
+    font-size: 14px;
+    max-width: 2.2em;
+    height: 2.2em;
+    border-radius: 5px;
   }
 
-  .config-field {
-    justify-content: center;
-  }
-
+  /* Toggle switches */
   .toggle-switch {
     font-size: 12px;
-  }
-
-  .config-actions button {
-    width: 100%;
   }
 
   textarea {

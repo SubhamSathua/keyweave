@@ -252,3 +252,30 @@
   display: flex;
   justify-content: center;
 }
+
+/* ── Mobile ── */
+@media (max-width: 520px) {
+  .config-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .config-col + .config-col {
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .config-control input[type="text"],
+  .dropdown {
+    width: 100%;
+  }
+
+  .config-field {
+    justify-content: center;
+  }
+
+  .config-actions button {
+    width: 100%;
+  }
+}

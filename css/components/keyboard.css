@@ -1,29 +1,32 @@
 .keyboard {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
   background: var(--bg-keyboard);
-  padding: 15px;
+  padding: 16px 12px;
   border-radius: 8px;
   margin-bottom: 20px;
 }
 
 .kb-row {
   display: flex;
-  gap: 6px;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
 }
 
 .key-label {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: var(--key-bg);
   border: 1px solid var(--key-border);
-  border-radius: 4px;
-  width: 45px;
-  height: 45px;
+  border-radius: 6px;
+  flex: 1 1 0;
+  max-width: 2.8em;
+  height: 2.6em;
+  font-size: 16px;
   cursor: pointer;
   user-select: none;
   font-weight: bold;
