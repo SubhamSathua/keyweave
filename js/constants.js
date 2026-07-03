@@ -12,13 +12,6 @@ export const ROW_SELECTORS = {
   bottom: '.bottom-row'
 };
 
-export const ROW_MASTER_IDS = {
-  num:    'master-num',
-  top:    'master-top',
-  home:   'master-home',
-  bottom: 'master-bottom'
-};
-
 export const GLUE_WORDS = ['the','and','to','it','for','of','in','is'];
 
 export const SYMBOLS = [';', '_', '()', '{}', '[]', '='];

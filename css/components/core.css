@@ -8,22 +8,29 @@
 
 .row-selectors {
   display: flex;
-  gap: 20px;
+  gap: 12px;
   justify-content: center;
   margin-bottom: 20px;
 }
 
 .row-selectors label {
   background-color: var(--bg-surface);
-  padding: 10px 15px;
+  padding: 10px 18px;
   border-radius: 6px;
   cursor: pointer;
   border: 2px solid var(--accent);
   font-weight: bold;
+  font-size: 15px;
   color: var(--accent);
   display: flex;
   align-items: center;
   gap: 8px;
+  transition: background 0.15s, color 0.15s, opacity 0.15s;
+  user-select: none;
+}
+
+.row-selectors label:hover {
+  opacity: 0.8;
 }
 
 .row-selectors label:has(input:checked) {
@@ -31,6 +38,9 @@
   color: var(--text-accent);
 }
 
-.row-selectors label input {
-  accent-color: var(--accent);
+.row-selectors input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }

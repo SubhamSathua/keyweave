@@ -62,54 +62,36 @@ button:hover {
   border-color: var(--accent);
 }
 
-/* Density Range Slider */
+/* Density: Figma-style editable + draggable */
 .density-control {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.density-control input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 120px;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--border);
-  outline: none;
-  cursor: pointer;
-}
-
-.density-control input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--accent);
-  border: 2px solid var(--accent);
-  cursor: pointer;
-  transition: transform 0.1s;
-}
-
-.density-control input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-}
-
-.density-control input[type="range"]::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--accent);
-  border: 2px solid var(--accent);
-  cursor: pointer;
-}
-
-#density-value {
-  font-weight: bold;
+.density-control input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
   color: var(--accent);
-  min-width: 28px;
+  font-weight: bold;
+  font-size: 20px;
+  width: 52px;
   text-align: center;
+  cursor: ew-resize;
+  outline: none;
+  padding: 2px 4px;
+  transition: border-color 0.15s;
+  font-family: inherit;
+}
+
+.density-control input:hover {
+  border-bottom-color: var(--accent);
+}
+
+.density-control input:focus {
+  border-bottom-color: var(--accent);
+  cursor: text;
 }
 
 /* Toggle Switches */
