@@ -44,3 +44,165 @@
   width: 0;
   height: 0;
 }
+
+/* ── Config Card ── */
+.config-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 16px;
+}
+
+.config-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.config-row + .config-row {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.config-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.config-row--controls .config-field {
+  flex: 1;
+  min-width: 160px;
+}
+
+.config-row--toggles {
+  gap: 20px;
+}
+
+.config-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 50px;
+}
+
+.config-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.config-control select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: var(--select-bg);
+  color: var(--text-primary);
+  border: 2px solid var(--btn-border);
+  padding: 10px 36px 10px 14px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+  font-family: inherit;
+}
+
+.config-control::after {
+  content: '\25BE';
+  color: var(--accent);
+  font-size: 14px;
+  pointer-events: none;
+  margin-left: -28px;
+  position: relative;
+  z-index: 1;
+}
+
+.config-control select:focus {
+  border-color: var(--accent);
+}
+
+.config-control input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--accent);
+  font-weight: bold;
+  font-size: 20px;
+  width: 60px;
+  text-align: center;
+  cursor: ew-resize;
+  outline: none;
+  padding: 2px 4px;
+  transition: border-color 0.15s;
+  font-family: inherit;
+}
+
+.config-control input:hover {
+  border-bottom-color: var(--accent);
+}
+
+.config-control input:focus {
+  border-bottom-color: var(--accent);
+  cursor: text;
+}
+
+/* ── Info Button + Tooltip ── */
+.info-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text-muted);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  font-style: italic;
+  font-family: Georgia, 'Times New Roman', serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.info-btn:hover,
+.info-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tooltip {
+  display: none;
+  width: 100%;
+  font-size: 12px;
+  color: var(--tooltip-text);
+  background: var(--tooltip-bg);
+  border: 1px solid var(--tooltip-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  line-height: 1.4;
+  margin-top: 6px;
+}
+
+.tooltip.visible {
+  display: block;
+}
+
+/* ── Config Actions ── */
+.config-actions {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+}

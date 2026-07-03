@@ -68,46 +68,74 @@
     </div>
   </section>
 
-  <!-- Controls & Output -->
-  <section class="section">
-    <div class="controls">
-      <div class="select-wrapper">
-        <label for="mode">Mode:</label>
-        <select id="mode">
-          <option value="realWords">Real Words (Strict)</option>
-          <option value="fakeWords">Fake Words (Trigrams)</option>
-          <option value="weighted">Weighted Overload</option>
-        </select>
+  <!-- Configuration -->
+  <section class="section config">
+    <h2 class="config-title">Configuration</h2>
+
+    <div class="config-row config-row--controls">
+      <div class="config-field">
+        <label class="config-label" for="mode">Mode</label>
+        <div class="config-control">
+          <select id="mode">
+            <option value="realWords">Real Words (Strict)</option>
+            <option value="fakeWords">Fake Words (Trigrams)</option>
+            <option value="weighted">Weighted Overload</option>
+          </select>
+          <button type="button" class="info-btn" data-tooltip="mode-tip">i</button>
+        </div>
+        <span id="mode-tip" class="tooltip">Real Words: dictionary only. Fake: trigram-stitched pseudowords. Weighted: 60% focus keys + 40% standard.</span>
       </div>
 
-      <div class="density-control">
-        <label>Words:</label>
-        <input type="text" id="density" value="40" inputmode="numeric">
+      <div class="config-field">
+        <label class="config-label" for="density">Words</label>
+        <div class="config-control">
+          <input type="text" id="density" value="40" inputmode="numeric">
+          <button type="button" class="info-btn" data-tooltip="density-tip">i</button>
+        </div>
+        <span id="density-tip" class="tooltip">Words to generate. Drag left/right or type a number (10–200).</span>
       </div>
+    </div>
 
-      <div class="toggles">
+    <div class="config-row config-row--toggles">
+      <div class="config-field">
         <label class="toggle-switch">
           <input type="checkbox" id="same-finger">
           <span class="toggle-track"><span class="toggle-thumb"></span></span>
           Stretch
         </label>
+        <button type="button" class="info-btn" data-tooltip="stretch-tip">i</button>
+        <span id="stretch-tip" class="tooltip">Injects same-finger bigram words (de, ed, ju, pl) for muscle memory training.</span>
+      </div>
+
+      <div class="config-field">
         <label class="toggle-switch">
           <input type="checkbox" id="include-symbols">
           <span class="toggle-track"><span class="toggle-thumb"></span></span>
           Symbols
         </label>
+        <button type="button" class="info-btn" data-tooltip="symbols-tip">i</button>
+        <span id="symbols-tip" class="tooltip">Appends ; _ () {} [] = at ~15% frequency after words.</span>
+      </div>
+
+      <div class="config-field">
         <label class="toggle-switch">
           <input type="checkbox" id="glue-words" checked>
           <span class="toggle-track"><span class="toggle-thumb"></span></span>
           Glue
         </label>
+        <button type="button" class="info-btn" data-tooltip="glue-tip">i</button>
+        <span id="glue-tip" class="tooltip">Inserts the/and/to every 3–4 words to preserve typing rhythm.</span>
       </div>
-
-      <button id="generate-btn">Generate Text</button>
     </div>
 
-    <textarea id="output" readonly placeholder="Your custom drill text will appear here..."></textarea>
+    <div class="config-actions">
+      <button id="generate-btn">Generate Text</button>
+    </div>
+  </section>
 
+  <!-- Output -->
+  <section class="section output">
+    <textarea id="output" readonly placeholder="Your custom drill text will appear here..."></textarea>
     <div class="actions">
       <span id="toast" class="toast">Copied to clipboard!</span>
       <button id="copy-btn">Copy Text</button>

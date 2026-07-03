@@ -21,6 +21,9 @@
   --input-bg: #1e1f22;
   --input-border: #444;
   --select-bg: #2c2e31;
+  --tooltip-bg: #1e1f22;
+  --tooltip-border: #444;
+  --tooltip-text: #d1d2d3;
 }
 
 [data-theme="light"] {
@@ -45,4 +48,7 @@
   --input-bg: #ffffff;
   --input-border: #ccc;
   --select-bg: #ffffff;
+  --tooltip-bg: #ffffff;
+  --tooltip-border: #ccc;
+  --tooltip-text: #2c2e31;
 }
