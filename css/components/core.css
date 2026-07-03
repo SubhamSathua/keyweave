@@ -30,3 +30,7 @@
   background-color: var(--accent);
   color: var(--text-accent);
 }
+
+.row-selectors label input {
+  accent-color: var(--accent);
+}

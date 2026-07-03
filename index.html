@@ -11,6 +11,7 @@
 
   <!-- Row Selection Masters -->
   <section class="section row-selectors">
+    <label><input type="checkbox" id="master-num"> Number Row</label>
     <label><input type="checkbox" id="master-top"> Top Row</label>
     <label><input type="checkbox" id="master-home" checked> Home Row</label>
     <label><input type="checkbox" id="master-bottom"> Bottom Row</label>
@@ -19,59 +20,88 @@
   <!-- Visual Interactive Keyboard -->
   <section class="section keyboard" id="keyboard-container">
     <div class="kb-row">
-      <label class="key-label top-row-label">Q<input type="checkbox" class="key top-row" value="q"></label>
-      <label class="key-label top-row-label">W<input type="checkbox" class="key top-row" value="w"></label>
-      <label class="key-label top-row-label">E<input type="checkbox" class="key top-row" value="e"></label>
-      <label class="key-label top-row-label">R<input type="checkbox" class="key top-row" value="r"></label>
-      <label class="key-label top-row-label">T<input type="checkbox" class="key top-row" value="t"></label>
-      <label class="key-label top-row-label">Y<input type="checkbox" class="key top-row" value="y"></label>
-      <label class="key-label top-row-label">U<input type="checkbox" class="key top-row" value="u"></label>
-      <label class="key-label top-row-label">I<input type="checkbox" class="key top-row" value="i"></label>
-      <label class="key-label top-row-label">O<input type="checkbox" class="key top-row" value="o"></label>
-      <label class="key-label top-row-label">P<input type="checkbox" class="key top-row" value="p"></label>
+      <span class="key num-row" data-key="1">1</span>
+      <span class="key num-row" data-key="2">2</span>
+      <span class="key num-row" data-key="3">3</span>
+      <span class="key num-row" data-key="4">4</span>
+      <span class="key num-row" data-key="5">5</span>
+      <span class="key num-row" data-key="6">6</span>
+      <span class="key num-row" data-key="7">7</span>
+      <span class="key num-row" data-key="8">8</span>
+      <span class="key num-row" data-key="9">9</span>
+      <span class="key num-row" data-key="0">0</span>
     </div>
     <div class="kb-row">
-      <label class="key-label home-row-label">A<input type="checkbox" class="key home-row" value="a" checked></label>
-      <label class="key-label home-row-label">S<input type="checkbox" class="key home-row" value="s" checked></label>
-      <label class="key-label home-row-label">D<input type="checkbox" class="key home-row" value="d" checked></label>
-      <label class="key-label home-row-label">F<input type="checkbox" class="key home-row" value="f" checked></label>
-      <label class="key-label home-row-label">G<input type="checkbox" class="key home-row" value="g" checked></label>
-      <label class="key-label home-row-label">H<input type="checkbox" class="key home-row" value="h" checked></label>
-      <label class="key-label home-row-label">J<input type="checkbox" class="key home-row" value="j" checked></label>
-      <label class="key-label home-row-label">K<input type="checkbox" class="key home-row" value="k" checked></label>
-      <label class="key-label home-row-label">L<input type="checkbox" class="key home-row" value="l" checked></label>
-      <label class="key-label home-row-label">;<input type="checkbox" class="key home-row" value=";" checked></label>
+      <span class="key top-row" data-key="q">Q</span>
+      <span class="key top-row" data-key="w">W</span>
+      <span class="key top-row" data-key="e">E</span>
+      <span class="key top-row" data-key="r">R</span>
+      <span class="key top-row" data-key="t">T</span>
+      <span class="key top-row" data-key="y">Y</span>
+      <span class="key top-row" data-key="u">U</span>
+      <span class="key top-row" data-key="i">I</span>
+      <span class="key top-row" data-key="o">O</span>
+      <span class="key top-row" data-key="p">P</span>
     </div>
     <div class="kb-row">
-      <label class="key-label bottom-row-label">Z<input type="checkbox" class="key bottom-row" value="z"></label>
-      <label class="key-label bottom-row-label">X<input type="checkbox" class="key bottom-row" value="x"></label>
-      <label class="key-label bottom-row-label">C<input type="checkbox" class="key bottom-row" value="c"></label>
-      <label class="key-label bottom-row-label">V<input type="checkbox" class="key bottom-row" value="v"></label>
-      <label class="key-label bottom-row-label">B<input type="checkbox" class="key bottom-row" value="b"></label>
-      <label class="key-label bottom-row-label">N<input type="checkbox" class="key bottom-row" value="n"></label>
-      <label class="key-label bottom-row-label">M<input type="checkbox" class="key bottom-row" value="m"></label>
-      <label class="key-label bottom-row-label">,<input type="checkbox" class="key bottom-row" value=","></label>
-      <label class="key-label bottom-row-label">.<input type="checkbox" class="key bottom-row" value="."></label>
+      <span class="key home-row" data-key="a">A</span>
+      <span class="key home-row" data-key="s">S</span>
+      <span class="key home-row" data-key="d">D</span>
+      <span class="key home-row" data-key="f">F</span>
+      <span class="key home-row" data-key="g">G</span>
+      <span class="key home-row" data-key="h">H</span>
+      <span class="key home-row" data-key="j">J</span>
+      <span class="key home-row" data-key="k">K</span>
+      <span class="key home-row" data-key="l">L</span>
+      <span class="key home-row" data-key=";">;</span>
+    </div>
+    <div class="kb-row">
+      <span class="key bottom-row" data-key="z">Z</span>
+      <span class="key bottom-row" data-key="x">X</span>
+      <span class="key bottom-row" data-key="c">C</span>
+      <span class="key bottom-row" data-key="v">V</span>
+      <span class="key bottom-row" data-key="b">B</span>
+      <span class="key bottom-row" data-key="n">N</span>
+      <span class="key bottom-row" data-key="m">M</span>
+      <span class="key bottom-row" data-key=",">,</span>
+      <span class="key bottom-row" data-key=".">.</span>
     </div>
   </section>
 
   <!-- Controls & Output -->
   <section class="section">
     <div class="controls">
-      <label for="mode">Mode:</label>
-      <select id="mode">
-        <option value="realWords">Real Words (Strict)</option>
-        <option value="fakeWords">Fake Words (Trigrams)</option>
-        <option value="weighted">Weighted Overload</option>
-      </select>
+      <div class="select-wrapper">
+        <label for="mode">Mode:</label>
+        <select id="mode">
+          <option value="realWords">Real Words (Strict)</option>
+          <option value="fakeWords">Fake Words (Trigrams)</option>
+          <option value="weighted">Weighted Overload</option>
+        </select>
+      </div>
 
-      <label for="density">Words:</label>
-      <input type="number" id="density" value="40" min="10" max="200">
+      <div class="density-control">
+        <label for="density">Words:</label>
+        <input type="range" id="density" value="40" min="10" max="200">
+        <span id="density-value">40</span>
+      </div>
 
       <div class="toggles">
-        <label><input type="checkbox" id="same-finger"> Same-finger stretches</label>
-        <label><input type="checkbox" id="include-symbols"> Include symbols</label>
-        <label><input type="checkbox" id="glue-words" checked> Glue words</label>
+        <label class="toggle-switch">
+          <input type="checkbox" id="same-finger">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          Stretch
+        </label>
+        <label class="toggle-switch">
+          <input type="checkbox" id="include-symbols">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          Symbols
+        </label>
+        <label class="toggle-switch">
+          <input type="checkbox" id="glue-words" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          Glue
+        </label>
       </div>
 
       <button id="generate-btn">Generate Text</button>
