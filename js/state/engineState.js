@@ -13,11 +13,12 @@ import { DEFAULT_DENSITY } from '../constants.js';
 export const engineState = {
   activeKeys:       new Set(),
   heavyFocusKeys:   new Set(),
-  generationMode:   'realWords',   // 'realWords' | 'fakeWords' | 'weighted'
+  generationMode:   'fakeWords',    // 'realWords' | 'fakeWords' | 'weighted'
+  caseMode:         'lower',        // 'lower' | 'mixed' | 'upper'
   textDensity:      DEFAULT_DENSITY,
   preferences: {
     sameFingerStretches: false,
-    includeSymbols:      false,
-    addGlueWords:        true
+    includeSymbols:      true,
+    addGlueWords:        false
   }
 };

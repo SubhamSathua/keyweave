@@ -2,12 +2,67 @@ import { engineState } from '../state/engineState.js';
 import { DEFAULT_DENSITY } from '../constants.js';
 
 export function mountControls() {
+  mountCustomDropdowns();
   mountInfoTooltips();
-  mountModeSelect();
   mountDensityInput();
   mountToggles();
 }
 
+/* ── Custom Dropdowns ── */
+function mountCustomDropdowns() {
+  document.querySelectorAll('.dropdown').forEach(dropdown => {
+    const btn = dropdown.querySelector('.dropdown-btn');
+    const menu = dropdown.querySelector('.dropdown-menu');
+    const items = dropdown.querySelectorAll('.dropdown-item');
+    const name = dropdown.dataset.name;
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeAllDropdowns(dropdown);
+      dropdown.classList.toggle('open');
+    });
+
+    items.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectDropdownItem(dropdown, item, name);
+        dropdown.classList.remove('open');
+      });
+    });
+  });
+
+  // close all on outside click
+  document.addEventListener('click', () => {
+    closeAllDropdowns();
+  });
+
+  // close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAllDropdowns();
+  });
+}
+
+function closeAllDropdowns(except) {
+  document.querySelectorAll('.dropdown.open').forEach(d => {
+    if (d !== except) d.classList.remove('open');
+  });
+}
+
+function selectDropdownItem(dropdown, item, name) {
+  const items = dropdown.querySelectorAll('.dropdown-item');
+  items.forEach(i => i.classList.remove('selected'));
+  item.classList.add('selected');
+  dropdown.querySelector('.dropdown-btn').textContent = item.textContent;
+
+  // sync engineState
+  if (name === 'mode') {
+    engineState.generationMode = item.dataset.value;
+  } else if (name === 'case') {
+    engineState.caseMode = item.dataset.value;
+  }
+}
+
+/* ── Info Tooltips (floating, click-toggle) ── */
 function mountInfoTooltips() {
   const config = document.querySelector('.config');
   if (!config) return;
@@ -22,7 +77,7 @@ function mountInfoTooltips() {
 
     const isVisible = tip.classList.contains('visible');
 
-    // close all other tooltips first
+    // close all other tooltips
     config.querySelectorAll('.tooltip.visible').forEach(t => {
       t.classList.remove('visible');
     });
@@ -36,7 +91,7 @@ function mountInfoTooltips() {
     }
   });
 
-  // close tooltips when clicking outside
+  // close tooltips on outside click
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.config')) {
       config.querySelectorAll('.tooltip.visible').forEach(t => {
@@ -49,17 +104,10 @@ function mountInfoTooltips() {
   });
 }
 
-function mountModeSelect() {
-  const mode = document.getElementById('mode');
-  mode.addEventListener('change', () => {
-    engineState.generationMode = mode.value;
-  });
-}
-
+/* ── Density Input (drag-to-scrub + type) ── */
 function mountDensityInput() {
   const densityInput = document.getElementById('density');
 
-  // --- Figma-style density: click-to-edit + drag-to-scrub ---
   let dragStartX = 0;
   let dragStartVal = 0;
   let isDragging = false;
@@ -109,10 +157,10 @@ function mountDensityInput() {
     engineState.textDensity = val;
   });
 
-  // Sync initial value
   engineState.textDensity = parseInt(densityInput.value) || DEFAULT_DENSITY;
 }
 
+/* ── Toggle Switches ── */
 function mountToggles() {
   const sameFinger = document.getElementById('same-finger');
   const includeSymbols = document.getElementById('include-symbols');

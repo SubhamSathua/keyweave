@@ -42,8 +42,8 @@ h1 {
     min-width: 0;
   }
 
-  .config-control select,
-  .config-control input {
+  .config-control input[type="text"],
+  .dropdown {
     width: 100%;
   }
 
@@ -63,6 +63,10 @@ h1 {
 
   .config-actions button {
     width: 100%;
+  }
+
+  .tooltip-modes {
+    gap: 8px;
   }
 
   textarea {

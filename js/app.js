@@ -14,7 +14,7 @@ import { mountKeyboard } from './components/keyboard.js';
 import { mountRowMasters } from './components/rowMaster.js';
 import { mountControls } from './components/controls.js';
 import { mountOutput } from './components/output.js';
-import { generateDrillText } from './utils/generator.js';
+import { generateDrillText, applyCase } from './utils/generator.js';
 
 function init() {
   mountKeyboard();
@@ -23,7 +23,8 @@ function init() {
   mountOutput();
 
   document.getElementById('generate-btn').addEventListener('click', () => {
-    const text = generateDrillText(engineState);
+    let text = generateDrillText(engineState);
+    text = applyCase(text, engineState.caseMode);
     document.getElementById('output').value = text;
   });
 }
