@@ -3,7 +3,6 @@ import { DEFAULT_DENSITY } from '../constants.js';
 
 export function mountControls() {
   mountCustomDropdowns();
-  mountInfoTooltips();
   mountDensityInput();
   mountToggles();
 }
@@ -60,48 +59,6 @@ function selectDropdownItem(dropdown, item, name) {
   } else if (name === 'case') {
     engineState.caseMode = item.dataset.value;
   }
-}
-
-/* ── Info Tooltips (floating, click-toggle) ── */
-function mountInfoTooltips() {
-  const config = document.querySelector('.config');
-  if (!config) return;
-
-  config.addEventListener('click', (e) => {
-    const btn = e.target.closest('.info-btn');
-    if (!btn) return;
-
-    const tipId = btn.getAttribute('data-tooltip');
-    const tip = document.getElementById(tipId);
-    if (!tip) return;
-
-    const isVisible = tip.classList.contains('visible');
-
-    // close all other tooltips
-    config.querySelectorAll('.tooltip.visible').forEach(t => {
-      t.classList.remove('visible');
-    });
-    config.querySelectorAll('.info-btn.active').forEach(b => {
-      b.classList.remove('active');
-    });
-
-    if (!isVisible) {
-      tip.classList.add('visible');
-      btn.classList.add('active');
-    }
-  });
-
-  // close tooltips on outside click
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.config')) {
-      config.querySelectorAll('.tooltip.visible').forEach(t => {
-        t.classList.remove('visible');
-      });
-      config.querySelectorAll('.info-btn.active').forEach(b => {
-        b.classList.remove('active');
-      });
-    }
-  });
 }
 
 /* ── Density Input (drag-to-scrub + type) ── */

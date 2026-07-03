@@ -72,97 +72,102 @@
   <section class="section config">
     <h2 class="config-title">Configuration</h2>
 
-    <div class="config-row config-row--controls">
-      <!-- Mode Dropdown -->
-      <div class="config-field">
-        <label class="config-label">Mode</label>
-        <div class="config-control">
-          <div class="dropdown" data-name="mode" data-default="fakeWords">
-            <button type="button" class="dropdown-btn">Fake Words (Trigrams)</button>
-            <div class="dropdown-menu">
-              <div class="dropdown-item" data-value="realWords">Real Words (Strict)</div>
-              <div class="dropdown-item selected" data-value="fakeWords">Fake Words (Trigrams)</div>
-              <div class="dropdown-item" data-value="weighted">Weighted Overload</div>
+    <div class="config-grid">
+      <!-- Col 1: Mode, Case, Length -->
+      <div class="config-col">
+
+        <div class="config-field">
+          <label class="config-label">Mode</label>
+          <div class="config-control">
+            <div class="dropdown" data-name="mode" data-default="fakeWords">
+              <button type="button" class="dropdown-btn">Fake Words (Trigrams)</button>
+              <div class="dropdown-menu">
+                <div class="dropdown-item" data-value="realWords">Real Words (Strict)</div>
+                <div class="dropdown-item selected" data-value="fakeWords">Fake Words (Trigrams)</div>
+                <div class="dropdown-item" data-value="weighted">Weighted Overload</div>
+              </div>
+            </div>
+            <span class="info-btn" data-tooltip="mode-tip">i</span>
+          </div>
+          <div id="mode-tip" class="tooltip tooltip--wide">
+            <div class="tooltip-head">Generation Modes</div>
+            <div class="tooltip-modes">
+              <div class="tooltip-mode">
+                <span class="tooltip-mode-name">Real Words</span>
+                <span class="tooltip-mode-desc">Dictionary words only, filtered by active keys.</span>
+              </div>
+              <div class="tooltip-mode">
+                <span class="tooltip-mode-name">Fake Words</span>
+                <span class="tooltip-mode-desc">Trigram-stitched pseudowords, pronounceable.</span>
+              </div>
+              <div class="tooltip-mode">
+                <span class="tooltip-mode-name">Weighted Overload</span>
+                <span class="tooltip-mode-desc">60% focus keys + 40% standard spacing.</span>
+              </div>
             </div>
           </div>
-          <button type="button" class="info-btn" data-tooltip="mode-tip">i</button>
         </div>
-        <div id="mode-tip" class="tooltip tooltip--wide">
-          <div class="tooltip-head">Generation Modes</div>
-          <div class="tooltip-modes">
-            <div class="tooltip-mode">
-              <span class="tooltip-mode-name">Real Words</span>
-              <span class="tooltip-mode-desc">Dictionary words only, filtered by active keys.</span>
+
+        <div class="config-field">
+          <label class="config-label">Case</label>
+          <div class="config-control">
+            <div class="dropdown" data-name="case" data-default="lower">
+              <button type="button" class="dropdown-btn">lowercase</button>
+              <div class="dropdown-menu">
+                <div class="dropdown-item selected" data-value="lower">lowercase</div>
+                <div class="dropdown-item" data-value="mixed">Mixed Case</div>
+                <div class="dropdown-item" data-value="upper">UPPERCASE</div>
+              </div>
             </div>
-            <div class="tooltip-mode">
-              <span class="tooltip-mode-name">Fake Words</span>
-              <span class="tooltip-mode-desc">Trigram-stitched pseudowords, pronounceable.</span>
-            </div>
-            <div class="tooltip-mode">
-              <span class="tooltip-mode-name">Weighted Overload</span>
-              <span class="tooltip-mode-desc">60% focus keys + 40% standard spacing.</span>
-            </div>
+            <span class="info-btn" data-tooltip="case-tip">i</span>
           </div>
+          <div id="case-tip" class="tooltip">lowercase: all small. Mixed: random capitalization. UPPERCASE: all caps.</div>
         </div>
-      </div>
 
-      <!-- Case Dropdown -->
-      <div class="config-field">
-        <label class="config-label">Case</label>
-        <div class="config-control">
-          <div class="dropdown" data-name="case" data-default="lower">
-            <button type="button" class="dropdown-btn">lowercase</button>
-            <div class="dropdown-menu">
-              <div class="dropdown-item selected" data-value="lower">lowercase</div>
-              <div class="dropdown-item" data-value="mixed">Mixed Case</div>
-              <div class="dropdown-item" data-value="upper">UPPERCASE</div>
-            </div>
+        <div class="config-field">
+          <label class="config-label" for="density">Length</label>
+          <div class="config-control">
+            <input type="text" id="density" value="40" inputmode="numeric">
+            <span class="info-btn" data-tooltip="density-tip">i</span>
           </div>
-          <button type="button" class="info-btn" data-tooltip="case-tip">i</button>
+          <div id="density-tip" class="tooltip">Number of words to generate. Drag left/right or type (10–200).</div>
         </div>
-        <span id="case-tip" class="tooltip">lowercase: all small. Mixed: random capitalization. UPPERCASE: all caps.</span>
+
       </div>
 
-      <!-- Drill Length -->
-      <div class="config-field">
-        <label class="config-label" for="density">Length</label>
-        <div class="config-control">
-          <input type="text" id="density" value="40" inputmode="numeric">
-          <button type="button" class="info-btn" data-tooltip="density-tip">i</button>
+      <!-- Col 2: Stretch, Symbols, Glue -->
+      <div class="config-col">
+
+        <div class="config-field">
+          <label class="toggle-switch">
+            <input type="checkbox" id="same-finger">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            Stretch
+          </label>
+          <span class="info-btn" data-tooltip="stretch-tip">i</span>
+          <div id="stretch-tip" class="tooltip">Injects same-finger bigram words (de, ed, ju, pl) for muscle memory training.</div>
         </div>
-        <span id="density-tip" class="tooltip">Number of words to generate. Drag left/right or type (10–200).</span>
-      </div>
-    </div>
 
-    <div class="config-row config-row--toggles">
-      <div class="config-field">
-        <label class="toggle-switch">
-          <input type="checkbox" id="same-finger">
-          <span class="toggle-track"><span class="toggle-thumb"></span></span>
-          Stretch
-        </label>
-        <button type="button" class="info-btn" data-tooltip="stretch-tip">i</button>
-        <span id="stretch-tip" class="tooltip">Injects same-finger bigram words (de, ed, ju, pl) for muscle memory training.</span>
-      </div>
+        <div class="config-field">
+          <label class="toggle-switch">
+            <input type="checkbox" id="include-symbols" checked>
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            Symbols
+          </label>
+          <span class="info-btn" data-tooltip="symbols-tip">i</span>
+          <div id="symbols-tip" class="tooltip">Appends ; _ () {} [] = at ~15% frequency after words.</div>
+        </div>
 
-      <div class="config-field">
-        <label class="toggle-switch">
-          <input type="checkbox" id="include-symbols" checked>
-          <span class="toggle-track"><span class="toggle-thumb"></span></span>
-          Symbols
-        </label>
-        <button type="button" class="info-btn" data-tooltip="symbols-tip">i</button>
-        <span id="symbols-tip" class="tooltip">Appends ; _ () {} [] = at ~15% frequency after words.</span>
-      </div>
+        <div class="config-field">
+          <label class="toggle-switch">
+            <input type="checkbox" id="glue-words">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            Glue
+          </label>
+          <span class="info-btn" data-tooltip="glue-tip">i</span>
+          <div id="glue-tip" class="tooltip">Inserts the/and/to every 3–4 words to preserve typing rhythm.</div>
+        </div>
 
-      <div class="config-field">
-        <label class="toggle-switch">
-          <input type="checkbox" id="glue-words">
-          <span class="toggle-track"><span class="toggle-thumb"></span></span>
-          Glue
-        </label>
-        <button type="button" class="info-btn" data-tooltip="glue-tip">i</button>
-        <span id="glue-tip" class="tooltip">Inserts the/and/to every 3–4 words to preserve typing rhythm.</span>
       </div>
     </div>
 

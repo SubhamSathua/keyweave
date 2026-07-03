@@ -55,17 +55,16 @@
   margin: 0 0 16px;
 }
 
-.config-row {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  flex-wrap: wrap;
+.config-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
 }
 
-.config-row + .config-row {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
+.config-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .config-field {
@@ -74,15 +73,6 @@
   gap: 6px;
   flex-wrap: wrap;
   position: relative;
-}
-
-.config-row--controls .config-field {
-  flex: 1;
-  min-width: 140px;
-}
-
-.config-row--toggles {
-  gap: 20px;
 }
 
 .config-label {
@@ -206,7 +196,7 @@
   font-weight: 700;
 }
 
-/* ── Info Button + Floating Tooltip ── */
+/* ── Info Button ── */
 .info-btn {
   width: 20px;
   height: 20px;
@@ -218,7 +208,7 @@
   font-weight: 700;
   font-style: italic;
   font-family: Georgia, 'Times New Roman', serif;
-  cursor: pointer;
+  cursor: default;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -228,15 +218,10 @@
   transition: border-color 0.15s, color 0.15s;
 }
 
-.info-btn:hover,
-.info-btn.active {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
+/* ── Floating Tooltip (pure CSS hover) ── */
 .tooltip {
   display: none;
-  width: 100%;
+  width: 220px;
   font-size: 12px;
   color: var(--tooltip-text);
   background: var(--tooltip-bg);
@@ -244,14 +229,50 @@
   border-radius: 6px;
   padding: 8px 10px;
   line-height: 1.4;
-  margin-top: 6px;
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
 }
 
-.tooltip.visible {
+.tooltip::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 6px solid var(--tooltip-border);
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 5px solid var(--tooltip-bg);
+}
+
+/* show tooltip on info-btn hover */
+.config-field:has(.info-btn:hover) > .tooltip {
   display: block;
 }
 
+/* highlight info-btn on hover */
+.info-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .tooltip--wide {
+  width: 260px;
   padding: 12px 14px;
 }
 

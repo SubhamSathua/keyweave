@@ -33,24 +33,20 @@ h1 {
     min-width: 0;
   }
 
-  .config-row {
-    flex-direction: column;
-    gap: 12px;
+  .config-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 
-  .config-row--controls .config-field {
-    min-width: 0;
+  .config-col + .config-col {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
   }
 
   .config-control input[type="text"],
   .dropdown {
     width: 100%;
-  }
-
-  .config-row--toggles {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
   }
 
   .config-field {
@@ -65,8 +61,21 @@ h1 {
     width: 100%;
   }
 
-  .tooltip-modes {
-    gap: 8px;
+  /* tooltips go below on mobile */
+  .tooltip {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    top: auto;
+    bottom: 12px;
+    width: auto;
+    transform: none;
+    border-radius: 8px;
+  }
+
+  .tooltip::before,
+  .tooltip::after {
+    display: none;
   }
 
   textarea {
