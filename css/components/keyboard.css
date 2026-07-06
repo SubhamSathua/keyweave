@@ -18,6 +18,12 @@
   width: 100%;
 }
 
+/* Brick stagger — each row indented by ~0.5 key width */
+.kb-row:nth-child(1) { padding: 0 1.4em; }   /* num row — 11 keys, slight indent */
+.kb-row:nth-child(2) { padding: 0 0; }        /* top row — 12 keys, full width */
+.kb-row:nth-child(3) { padding: 0 1.4em; }    /* home row — 11 keys, ~0.5 key indent */
+.kb-row:nth-child(4) { padding: 0 2.8em; }    /* bottom row — 10 keys, ~1 key indent */
+
 .key-label {
   display: flex;
   align-items: center;
