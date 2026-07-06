@@ -477,22 +477,64 @@
                     <button type="button" class="modal-close" id="modal-close">&times;</button>
                 </div>
                 <div class="modal-body">
+                    <!-- Symbols -->
                     <div class="modal-field">
-                        <label>Symbols <span class="modal-val" id="sym-val">15</span>%</label>
+                        <div class="modal-label-row">
+                            <label for="modal-include-symbols">Symbols Toggle</label>
+                            <label class="toggle-switch modal-toggle">
+                                <input type="checkbox" id="modal-include-symbols" />
+                                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                            </label>
+                        </div>
+                        <label class="modal-sub-label">Frequency <span class="modal-val" id="sym-val">15</span>%</label>
                         <input type="range" class="modal-slider" id="sym-slider" min="0" max="50" value="15" />
                     </div>
+
+                    <!-- Glue Words -->
                     <div class="modal-field">
-                        <label>Glue Words <span class="modal-val" id="glue-val">20</span>%</label>
+                        <div class="modal-label-row">
+                            <label for="modal-glue-words">Glue Words</label>
+                            <label class="toggle-switch modal-toggle">
+                                <input type="checkbox" id="modal-glue-words" />
+                                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                            </label>
+                        </div>
+                        <label class="modal-sub-label">Frequency <span class="modal-val" id="glue-val">20</span>%</label>
                         <input type="range" class="modal-slider" id="glue-slider" min="0" max="50" value="20" />
                     </div>
+
+                    <!-- Stretch Words -->
                     <div class="modal-field">
-                        <label>Stretch Words <span class="modal-val" id="stretch-val">25</span>%</label>
+                        <div class="modal-label-row">
+                            <label for="modal-same-finger">Stretch Words</label>
+                            <label class="toggle-switch modal-toggle">
+                                <input type="checkbox" id="modal-same-finger" />
+                                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                            </label>
+                        </div>
+                        <label class="modal-sub-label">Frequency <span class="modal-val" id="stretch-val">25</span>%</label>
                         <input type="range" class="modal-slider" id="stretch-slider" min="0" max="50" value="25" />
                     </div>
+
+                    <!-- Mixed Case -->
                     <div class="modal-field">
-                        <label>Mixed Case <span class="modal-val" id="case-val">50</span>%</label>
+                        <label>Mixed Case <span class="modal-val" id="case-val">50</span>% <span class="case-label" id="case-label">· mixed</span></label>
                         <input type="range" class="modal-slider" id="case-slider" min="0" max="100" value="50" />
                     </div>
+
+                    <!-- Number Row Injection -->
+                    <div class="modal-field">
+                        <label>Number Sequences <span class="modal-val" id="num-val">10</span>%</label>
+                        <input type="range" class="modal-slider" id="num-slider" min="0" max="50" value="10" />
+                    </div>
+
+                    <!-- Weighted Mode Focus Split -->
+                    <div class="modal-field">
+                        <label>Focus-Key Weight <span class="modal-val" id="focus-val">60</span>%</label>
+                        <input type="range" class="modal-slider" id="focus-slider" min="10" max="90" value="60" />
+                    </div>
+
+                    <!-- Difficulty -->
                     <div class="modal-field">
                         <label>Difficulty</label>
                         <div class="dropdown" data-name="difficulty" data-default="mid">
@@ -506,6 +548,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="modal-btn modal-btn-secondary" id="modal-reset">Reset</button>
                     <button type="button" class="modal-btn" id="modal-done">Done</button>
                 </div>
             </div>

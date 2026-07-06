@@ -19,7 +19,7 @@ export function generateDrillText(state) {
     }
   }
 
-  const hasLetters = [...activeSet].some(ch => /[a-z]/i.test(ch));
+  const hasLetterKeys = [...activeSet].some(ch => /[a-z]/i.test(ch));
   const validTrigrams = commonTrigrams.filter(t => isTypeable(t, activeSet));
   let trigramFallback = validTrigrams.length >= 3
     ? validTrigrams
@@ -36,9 +36,11 @@ export function generateDrillText(state) {
   const targetCount = state.textDensity;
 
   const p = state.preferences;
-  const stretchPct = (p.stretchFreq || 25) / 100;
-  const symbolPct = (p.symbolFreq || 15) / 100;
-  const gluePct = (p.glueFreq || 20) / 100;
+  const stretchPct = (p.stretchFreq ?? 25) / 100;
+  const symbolPct = (p.symbolFreq ?? 15) / 100;
+  const gluePct = (p.glueFreq ?? 20) / 100;
+  const numPct = (p.numberFreq ?? 10) / 100;
+  const weightedPct = (p.weightedFocusPct ?? 60) / 100;
 
   while (finalWords.length < targetCount) {
     let chosenWord = '';
@@ -50,9 +52,20 @@ export function generateDrillText(state) {
       }
     }
 
+    /* Number sequence injection (only if number keys are active) */
+    if (!chosenWord && hasLetterKeys && Math.random() < numPct) {
+      const numKeys = [...activeSet].filter(ch => /[0-9]/.test(ch));
+      if (numKeys.length > 0) {
+        let s = '';
+        const len = 3 + Math.floor(Math.random() * 4);
+        for (let i = 0; i < len; i++) s += numKeys[Math.floor(Math.random() * numKeys.length)];
+        chosenWord = s;
+      }
+    }
+
     if (!chosenWord) {
       if (state.generationMode === 'weighted' && focusSet.size > 0) {
-        if (Math.random() < 0.6) {
+        if (Math.random() < weightedPct) {
           const focusArr = [...focusSet];
           const targetKey = focusArr[Math.floor(Math.random() * focusArr.length)];
           const t1 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || '';
@@ -64,7 +77,7 @@ export function generateDrillText(state) {
           chosenWord = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || randomActiveChars(4);
         }
       } else if (state.generationMode === 'fakeWords') {
-        if (!hasLetters && validTrigrams.length === 0) {
+        if (!hasLetterKeys && validTrigrams.length === 0) {
           chosenWord = randomActiveChars(4 + Math.floor(Math.random() * 4));
         } else {
           const t1 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || randomActiveChars(3);

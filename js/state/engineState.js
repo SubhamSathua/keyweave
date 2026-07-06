@@ -24,6 +24,8 @@ export const engineState = {
     symbolFreq:          15,
     glueFreq:            20,
     stretchFreq:         25,
-    caseMixPct:          50
+    caseMixPct:          50,
+    numberFreq:          10,       /* % chance to inject number sequences */
+    weightedFocusPct:    60        /* % focus-key words in weighted mode */
   }
 };

@@ -216,7 +216,9 @@ function applyPreset(preset) {
       symbolFreq: 0,
       glueFreq: 0,
       stretchFreq: 0,
-      caseMixPct: 0
+      caseMixPct: 0,
+      numberFreq: 0,
+      weightedFocusPct: 60
     },
     mid: {
       mode: 'fakeWords',
@@ -228,7 +230,9 @@ function applyPreset(preset) {
       symbolFreq: 15,
       glueFreq: 0,
       stretchFreq: 0,
-      caseMixPct: 0
+      caseMixPct: 0,
+      numberFreq: 10,
+      weightedFocusPct: 60
     },
     hard: {
       mode: 'realWords',
@@ -240,7 +244,9 @@ function applyPreset(preset) {
       symbolFreq: 15,
       glueFreq: 20,
       stretchFreq: 25,
-      caseMixPct: 50
+      caseMixPct: 50,
+      numberFreq: 10,
+      weightedFocusPct: 60
     }
   };
 
@@ -264,6 +270,8 @@ function applyPreset(preset) {
   engineState.preferences.glueFreq = cfg.glueFreq;
   engineState.preferences.stretchFreq = cfg.stretchFreq;
   engineState.preferences.caseMixPct = cfg.caseMixPct;
+  engineState.preferences.numberFreq = cfg.numberFreq;
+  engineState.preferences.weightedFocusPct = cfg.weightedFocusPct;
 
   engineState.generationMode = cfg.mode;
   engineState.caseMode = cfg.case;
@@ -286,65 +294,154 @@ function mountAdvancedModal() {
   const openBtn = document.getElementById('adv-modal-btn');
   const closeBtn = document.getElementById('modal-close');
   const doneBtn = document.getElementById('modal-done');
+  const resetBtn = document.getElementById('modal-reset');
   if (!overlay || !openBtn) return;
 
+  /* ── Open: sync all UI elements from engineState ── */
   openBtn.addEventListener('click', () => {
-    syncSliderFromState();
+    syncAllModalUI();
     overlay.classList.add('open');
   });
 
-  const close = () => overlay.classList.remove('open');
+  const close = () => {
+    closeAllDropdowns();
+    overlay.classList.remove('open');
+  };
   if (closeBtn) closeBtn.addEventListener('click', close);
   if (doneBtn) doneBtn.addEventListener('click', () => {
-    syncStateFromSliders();
+    syncStateFromModalUI();
     close();
   });
+  if (resetBtn) resetBtn.addEventListener('click', resetModalDefaults);
+
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) close();
   });
 
-  // Live slider value display
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) {
+      close();
+    }
+  });
+
+  /* ── Live slider value display + case label ── */
   document.querySelectorAll('.modal-slider').forEach(slider => {
     const valSpan = document.getElementById(slider.id.replace('slider', 'val'));
     if (valSpan) {
-      slider.addEventListener('input', () => { valSpan.textContent = slider.value; });
+      slider.addEventListener('input', () => {
+        valSpan.textContent = slider.value;
+        if (slider.id === 'case-slider') updateCaseLabel(parseInt(slider.value));
+      });
     }
   });
 }
 
-function syncSliderFromState() {
+/* ── Sync engineState → all modal UI elements ── */
+function syncAllModalUI() {
   const p = engineState.preferences;
-  setSlider('sym-slider', p.symbolFreq, 'sym-val');
-  setSlider('glue-slider', p.glueFreq, 'glue-val');
-  setSlider('stretch-slider', p.stretchFreq, 'stretch-val');
-  const casePct = engineState.caseMode === 'mixed' ? (p.caseMixPct || 50) : 0;
-  setSlider('case-slider', engineState.caseMode === 'upper' ? 100 : casePct, 'case-val');
+
+  // Toggles
+  document.getElementById('modal-include-symbols').checked = p.includeSymbols;
+  document.getElementById('modal-glue-words').checked = p.addGlueWords;
+  document.getElementById('modal-same-finger').checked = p.sameFingerStretches;
+
+  // Sliders
+  setSliderVal('sym-slider',    'sym-val',    p.symbolFreq);
+  setSliderVal('glue-slider',   'glue-val',   p.glueFreq);
+  setSliderVal('stretch-slider','stretch-val',p.stretchFreq);
+  setSliderVal('num-slider',    'num-val',    p.numberFreq);
+  setSliderVal('focus-slider',  'focus-val',  p.weightedFocusPct);
+
+  // Case slider (determine position from current caseMode + caseMixPct)
+  let casePos;
+  if (engineState.caseMode === 'lower') casePos = 0;
+  else if (engineState.caseMode === 'upper') casePos = 100;
+  else casePos = p.caseMixPct ?? 50;
+  setSliderVal('case-slider', 'case-val', casePos);
+  updateCaseLabel(casePos);
+
+  // Difficulty dropdown — reflect current state
+  selectDropdownVal('difficulty', engineState.difficulty);
 }
 
-function setSlider(id, val, valId) {
-  const slider = document.getElementById(id);
-  if (!slider) return;
-  slider.value = val;
+function setSliderVal(sliderId, valId, val) {
+  const slider = document.getElementById(sliderId);
+  if (slider) slider.value = val;
   const span = document.getElementById(valId);
   if (span) span.textContent = val;
 }
 
-function syncStateFromSliders() {
-  const p = engineState.preferences;
-  p.symbolFreq = parseInt(document.getElementById('sym-slider')?.value || 15);
-  p.glueFreq = parseInt(document.getElementById('glue-slider')?.value || 20);
-  p.stretchFreq = parseInt(document.getElementById('stretch-slider')?.value || 25);
+function updateCaseLabel(pct) {
+  const label = document.getElementById('case-label');
+  if (!label) return;
+  if (pct === 0)      label.textContent = '· lower';
+  else if (pct === 100) label.textContent = '· UPPER';
+  else                 label.textContent = '· mixed';
+}
 
-  const casePct = parseInt(document.getElementById('case-slider')?.value || 0);
+/* ── Sync modal UI → engineState ── */
+function syncStateFromModalUI() {
+  const p = engineState.preferences;
+
+  // Toggles
+  p.includeSymbols = document.getElementById('modal-include-symbols').checked;
+  p.addGlueWords = document.getElementById('modal-glue-words').checked;
+  p.sameFingerStretches = document.getElementById('modal-same-finger').checked;
+
+  // Mirror to main-UI toggles
+  document.getElementById('include-symbols').checked = p.includeSymbols;
+  document.getElementById('glue-words').checked = p.addGlueWords;
+  document.getElementById('same-finger').checked = p.sameFingerStretches;
+
+  // Frequency sliders (parseInt returns NaN for missing, fallback only on NaN)
+  p.symbolFreq = parseInt(document.getElementById('sym-slider')?.value);
+  if (isNaN(p.symbolFreq)) p.symbolFreq = 15;
+  p.glueFreq = parseInt(document.getElementById('glue-slider')?.value);
+  if (isNaN(p.glueFreq)) p.glueFreq = 20;
+  p.stretchFreq = parseInt(document.getElementById('stretch-slider')?.value);
+  if (isNaN(p.stretchFreq)) p.stretchFreq = 25;
+  p.numberFreq = parseInt(document.getElementById('num-slider')?.value);
+  if (isNaN(p.numberFreq)) p.numberFreq = 10;
+  p.weightedFocusPct = parseInt(document.getElementById('focus-slider')?.value);
+  if (isNaN(p.weightedFocusPct)) p.weightedFocusPct = 60;
+
+  // Case slider
+  const caseEl = document.getElementById('case-slider');
+  let casePct = caseEl ? parseInt(caseEl.value) : 0;
+  if (isNaN(casePct)) casePct = 0;
   if (casePct === 0) {
     engineState.caseMode = 'lower';
+    p.caseMixPct = 0;
     selectDropdownVal('case', 'lower');
   } else if (casePct === 100) {
     engineState.caseMode = 'upper';
+    p.caseMixPct = 100;
     selectDropdownVal('case', 'upper');
   } else {
     engineState.caseMode = 'mixed';
     p.caseMixPct = casePct;
     selectDropdownVal('case', 'mixed');
   }
+
+  // Difficulty dropdown syncs automatically via selectDropdownItem
+}
+
+/* ── Reset modal to safe defaults (does NOT apply — just resets UI) ── */
+function resetModalDefaults() {
+  // Toggles off
+  document.getElementById('modal-include-symbols').checked = false;
+  document.getElementById('modal-glue-words').checked = false;
+  document.getElementById('modal-same-finger').checked = false;
+
+  // Sliders to zero/min
+  setSliderVal('sym-slider',    'sym-val',    0);
+  setSliderVal('glue-slider',   'glue-val',   0);
+  setSliderVal('stretch-slider','stretch-val',0);
+  setSliderVal('num-slider',    'num-val',    0);
+  setSliderVal('focus-slider',  'focus-val',  50);
+  setSliderVal('case-slider',   'case-val',   0);
+  updateCaseLabel(0);
+
+  // Difficulty → mid
+  selectDropdownVal('difficulty', 'mid');
 }
