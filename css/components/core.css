@@ -86,7 +86,7 @@
   position: absolute;
   top: calc(100% + 6px);
   right: 0;
-  background: var(--bg-surface);
+  background: var(--theme-dropdown-bg);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 4px;
@@ -97,7 +97,7 @@
   transform: translateY(-8px);
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
-  color: var(--text-primary);
+  color: var(--theme-dropdown-text);
 }
 
 .theme-switcher.open .theme-dropdown {
@@ -107,7 +107,7 @@
 }
 
 .theme-option {
-  background: transparent;
+  background: var(--theme-dropdown-option-bg);
   border: none;
   padding: 8px 12px;
   font-size: 14px;
@@ -120,11 +120,13 @@
 }
 
 .theme-option:hover {
-  background: var(--border);
+  background: var(--theme-dropdown-option-hover-bg);
+  color: var(--theme-dropdown-text-hover);
 }
 
 .theme-option.active {
-  color: var(--accent);
+  background: var(--theme-dropdown-option-active-bg);
+  color: var(--theme-dropdown-text-active);
   font-weight: 700;
 }
 

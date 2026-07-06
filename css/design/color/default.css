@@ -1,5 +1,4 @@
-:root,
-[data-theme="dark"] {
+:root {
   --bg-primary: #323437;
   --bg-surface: #2c2e31;
   --bg-keyboard: #1e1f22;
@@ -27,9 +26,16 @@
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
   --theme-transition-bg: #1e1f22;
+  --theme-dropdown-bg: #2c2e31;
+  --theme-dropdown-option-bg: transparent;
+  --theme-dropdown-option-hover-bg: #3c3f44;
+  --theme-dropdown-option-active-bg: rgba(226, 183, 20, 0.12);
+  --theme-dropdown-text: #d1d2d3;
+  --theme-dropdown-text-hover: #ffffff;
+  --theme-dropdown-text-active: #e2b714;
 }
 
-[data-theme="light"] {
+:root[data-theme="light"] {
   --bg-primary: #f5f5f5;
   --bg-surface: #ffffff;
   --bg-keyboard: #e8e8e8;
@@ -57,4 +63,11 @@
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
   --theme-transition-bg: #e8e8e8;
+  --theme-dropdown-bg: #ffffff;
+  --theme-dropdown-option-bg: transparent;
+  --theme-dropdown-option-hover-bg: #f0f0f0;
+  --theme-dropdown-option-active-bg: rgba(212, 164, 19, 0.1);
+  --theme-dropdown-text: #2c2e31;
+  --theme-dropdown-text-hover: #1a1a1a;
+  --theme-dropdown-text-active: #d4a413;
 }
