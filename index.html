@@ -147,6 +147,12 @@
                 <label class="key-label"
                     >0<input type="checkbox" class="key num-row" value="0"
                 /></label>
+                <label class="key-label"
+                    >-<input type="checkbox" class="key num-row" value="-"
+                /></label>
+                <label class="key-label"
+                    >=<input type="checkbox" class="key num-row" value="="
+                /></label>
             </div>
             <div class="kb-row">
                 <label class="key-label"
@@ -265,6 +271,7 @@
                 /></label>
             </div>
             <div class="kb-row">
+                <button type="button" class="key-label shift-btn" id="shift-config-btn">⇧&nbsp;Config</button>
                 <label class="key-label"
                     >Z<input type="checkbox" class="key bottom-row" value="z"
                 /></label>
@@ -569,6 +576,36 @@
                 <div class="modal-footer">
                     <button type="button" class="modal-btn modal-btn-secondary" id="modal-reset">Reset</button>
                     <button type="button" class="modal-btn" id="modal-done">Done</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shift Config Modal -->
+        <div class="shift-overlay" id="shift-modal">
+            <div class="shift-content">
+                <div class="shift-header">
+                    <button type="button" class="shift-back" id="shift-back" aria-label="Back">
+                        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                    </button>
+                    <h3>Shift Keys</h3>
+                </div>
+                <div class="shift-body" id="shift-body">
+                    <!-- Populated by JS -->
+                </div>
+                <div class="shift-footer">
+                    <button type="button" class="shift-btn-cancel" id="shift-cancel">Cancel</button>
+                    <button type="button" class="shift-btn-done" id="shift-done">Done</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Warning Confirm -->
+        <div class="confirm-overlay" id="shift-confirm">
+            <div class="confirm-box">
+                <p class="confirm-msg">Discard changes?</p>
+                <div class="confirm-actions">
+                    <button type="button" class="confirm-btn confirm-no" id="confirm-no">Cancel</button>
+                    <button type="button" class="confirm-btn confirm-yes" id="confirm-yes">Discard</button>
                 </div>
             </div>
         </div>

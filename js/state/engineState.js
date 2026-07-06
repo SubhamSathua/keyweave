@@ -13,6 +13,7 @@ import { DEFAULT_DENSITY } from '../constants.js';
 export const engineState = {
   activeKeys:       new Set(),
   heavyFocusKeys:   new Set(),
+  shiftKeys:        new Set(),      // explicitly selected shift symbols
   generationMode:   'fakeWords',    // 'realWords' | 'fakeWords' | 'weighted'
   caseMode:         'lower',        // 'lower' | 'mixed' | 'upper'
   difficulty:       'mid',          // 'easy' | 'mid' | 'hard'

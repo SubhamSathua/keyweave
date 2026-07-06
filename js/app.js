@@ -14,6 +14,7 @@ import { mountKeyboard } from './components/keyboard.js';
 import { mountRowMasters } from './components/rowMaster.js';
 import { mountControls } from './components/controls.js';
 import { mountOutput } from './components/output.js';
+import { mountShiftConfig } from './components/shiftConfig.js';
 import { generateDrillText, applyCase } from './utils/generator.js';
 
 function mountThemeSwitcher() {
@@ -85,6 +86,7 @@ function init() {
   mountKeyboard();
   mountRowMasters();
   mountControls();
+  mountShiftConfig();
   mountOutput();
 
   document.getElementById('generate-btn').addEventListener('click', () => {

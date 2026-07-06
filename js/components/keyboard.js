@@ -31,10 +31,10 @@ export function mountKeyboard() {
     syncRowMasters();
   });
 
-  // Right-click for heavy focus
+  // Right-click for heavy focus (skip shift button)
   document.getElementById('keyboard-container')?.addEventListener('contextmenu', (e) => {
     const label = e.target.closest('.key-label');
-    if (!label) return;
+    if (!label || label.classList.contains('shift-btn')) return;
     e.preventDefault();
     label.classList.toggle('heavy-focus');
     const cb = label.querySelector('input[type="checkbox"]');

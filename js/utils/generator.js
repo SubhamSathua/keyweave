@@ -6,13 +6,18 @@ import { isTypeable } from './filters.js';
 export function generateDrillText(state) {
   const activeSet = state.activeKeys;
   const focusSet = state.heavyFocusKeys;
+  const shiftSet = state.shiftKeys;
 
   if (activeSet.size === 0) return '';
+
+  /* Merge shift keys into the effective set for typeability checks */
+  const effectiveSet = new Set(activeSet);
+  shiftSet.forEach(k => effectiveSet.add(k));
 
   let wordPool = [];
 
   if (state.generationMode === 'realWords') {
-    wordPool = allWords.filter(w => isTypeable(w, activeSet));
+    wordPool = allWords.filter(w => isTypeable(w, effectiveSet));
 
     if (wordPool.length < 5) {
       state.generationMode = 'fakeWords';
@@ -20,7 +25,7 @@ export function generateDrillText(state) {
   }
 
   const hasLetterKeys = [...activeSet].some(ch => /[a-z]/i.test(ch));
-  const validTrigrams = commonTrigrams.filter(t => isTypeable(t, activeSet));
+  const validTrigrams = commonTrigrams.filter(t => isTypeable(t, effectiveSet));
   let trigramFallback = validTrigrams.length >= 3
     ? validTrigrams
     : [...activeSet].slice(0, 10);
@@ -46,7 +51,7 @@ export function generateDrillText(state) {
     let chosenWord = '';
 
     if (p.sameFingerStretches && Math.random() < stretchPct) {
-      const matchStretches = awkwardSameFinger.filter(w => isTypeable(w, activeSet));
+      const matchStretches = awkwardSameFinger.filter(w => isTypeable(w, effectiveSet));
       if (matchStretches.length > 0) {
         chosenWord = matchStretches[Math.floor(Math.random() * matchStretches.length)];
       }
