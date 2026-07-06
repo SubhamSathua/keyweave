@@ -5,6 +5,7 @@ body {
   max-width: 800px;
   margin: 40px auto;
   padding: 20px;
+  font-size: clamp(14px, 2.5vw, 16px);
 }
 
 /* ── Mobile ── */
@@ -73,5 +74,133 @@ body {
   textarea {
     height: 120px;
     font-size: 15px;
+  }
+}
+
+/* ── Very Small Screens (≤360px, e.g. 304×638) ── */
+@media (max-width: 360px) {
+  body {
+    margin: 6px auto;
+    padding: 6px;
+  }
+
+  .app-header {
+    margin-bottom: 10px;
+  }
+
+  .brand-name {
+    font-size: 13px;
+  }
+
+  .brand-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .header-icon-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .section {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+
+  .row-selectors {
+    gap: 5px;
+  }
+
+  .row-selectors label {
+    padding: 5px 8px;
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .keyboard {
+    gap: 3px;
+    padding: 8px 4px;
+  }
+
+  .kb-row {
+    gap: 2px;
+  }
+
+  .key-label {
+    font-size: 11px;
+    max-width: 2em;
+    height: 2em;
+    border-radius: 4px;
+  }
+
+  .config-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .config-col + .config-col {
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  .config-label {
+    font-size: 11px;
+    min-width: 40px;
+  }
+
+  .config-control input[type="text"] {
+    font-size: 13px;
+    width: 48px;
+    padding: 5px 4px;
+  }
+
+  .dropdown-btn {
+    font-size: 12px;
+    padding: 6px 28px 6px 8px;
+  }
+
+  .dropdown-item {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .toggle-switch {
+    font-size: 10px;
+  }
+
+  .toggle-track {
+    width: 28px;
+    height: 16px;
+  }
+
+  .toggle-thumb {
+    width: 12px;
+    height: 12px;
+  }
+
+  .toggle-switch input:checked + .toggle-track .toggle-thumb {
+    transform: translateX(12px);
+  }
+
+  button {
+    font-size: 13px;
+    padding: 7px 14px;
+  }
+
+  textarea {
+    height: 90px;
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .theme-dropdown {
+    min-width: 100px;
+  }
+
+  .theme-option {
+    font-size: 12px;
+    padding: 6px 10px;
   }
 }

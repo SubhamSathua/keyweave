@@ -1,26 +1,83 @@
-/**
- * generator.js — Text Generation Pipeline
- * 
- * Use case: Pure function that consumes engineState and returns a
- * formatted drill string. Pipeline order: character filter →
- * mode selection (real/fake/weighted) → psychological post-
- * processors (same-finger, symbols, glue words). No DOM access;
- * works entirely off state so it's testable in isolation.
- */
-
-import { typingDictionary } from '../data/dictionary.js';
+import { allWords, awkwardSameFinger } from '../data/dictionary.js';
 import { commonTrigrams } from '../data/trigrams.js';
 import { GLUE_WORDS, SYMBOLS } from '../constants.js';
+import { isTypeable } from './filters.js';
 
 export function generateDrillText(state) {
-  // TODO: implement full pipeline
-  // 1. Build active-keys regex
-  // 2. Filter word pool
-  // 3. Run mode logic
-  // 4. Apply post-processors
-  // 5. Apply case transformation
-  // 6. Return joined string
-  return '';
+  const activeSet = state.activeKeys;
+  const focusSet = state.heavyFocusKeys;
+
+  if (activeSet.size === 0) return '';
+
+  let wordPool = [];
+
+  if (state.generationMode === 'realWords') {
+    wordPool = allWords.filter(w => isTypeable(w, activeSet));
+
+    if (wordPool.length < 5) {
+      state.generationMode = 'fakeWords';
+    }
+  }
+
+  const validTrigrams = commonTrigrams.filter(t => isTypeable(t, activeSet));
+  let trigramFallback = validTrigrams.length >= 3
+    ? validTrigrams
+    : [...activeSet].slice(0, 5);
+
+  let finalWords = [];
+  const targetCount = state.textDensity;
+
+  while (finalWords.length < targetCount) {
+    let chosenWord = '';
+
+    if (state.preferences.sameFingerStretches && Math.random() < 0.25) {
+      const matchStretches = awkwardSameFinger.filter(w => isTypeable(w, activeSet));
+      if (matchStretches.length > 0) {
+        chosenWord = matchStretches[Math.floor(Math.random() * matchStretches.length)];
+      }
+    }
+
+    if (!chosenWord) {
+      if (state.generationMode === 'weighted' && focusSet.size > 0) {
+        if (Math.random() < 0.6) {
+          const focusArr = [...focusSet];
+          const targetKey = focusArr[Math.floor(Math.random() * focusArr.length)];
+          const t1 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || '';
+          const t2 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || '';
+          const combined = t1 + t2;
+          const insertIdx = Math.floor(Math.random() * (combined.length + 1));
+          chosenWord = combined.slice(0, insertIdx) + targetKey + combined.slice(insertIdx);
+        } else {
+          chosenWord = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || 'the';
+        }
+      } else if (state.generationMode === 'fakeWords') {
+        const t1 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || 'the';
+        const t2 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || 'the';
+        chosenWord = t1 + t2;
+      } else {
+        chosenWord = wordPool[Math.floor(Math.random() * wordPool.length)] || 'the';
+      }
+    }
+
+    if (state.preferences.includeSymbols && Math.random() < 0.15) {
+      const sym = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+      if (sym === '_') {
+        chosenWord = chosenWord + '_value';
+      } else if (sym.length === 2) {
+        chosenWord = sym[0] + chosenWord + sym[1];
+      } else {
+        chosenWord = chosenWord + sym;
+      }
+    }
+
+    if (state.preferences.addGlueWords && Math.random() < 0.20 && finalWords.length > 0) {
+      finalWords.push(GLUE_WORDS[Math.floor(Math.random() * GLUE_WORDS.length)]);
+    }
+
+    finalWords.push(chosenWord);
+  }
+
+  return finalWords.slice(0, targetCount).join(' ');
 }
 
 export function applyCase(text, caseMode) {

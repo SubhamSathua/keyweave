@@ -28,7 +28,7 @@
   flex: 1 1 0;
   max-width: 2.8em;
   height: 2.6em;
-  font-size: 16px;
+  font-size: clamp(12px, 2.8vw, 16px);
   cursor: pointer;
   user-select: none;
   font-weight: bold;

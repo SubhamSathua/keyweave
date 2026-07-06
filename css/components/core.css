@@ -1,133 +1,151 @@
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .section {
-  background-color: var(--bg-surface);
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  opacity: 0;
-  animation: fadeIn 0.6s ease forwards;
+    background-color: var(--bg-surface);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards;
 }
 
-.section:nth-of-type(2) { animation-delay: 0.1s; }
-.section:nth-of-type(3) { animation-delay: 0.15s; }
-.section:nth-of-type(4) { animation-delay: 0.2s; }
+.section:nth-of-type(2) {
+    animation-delay: 0.1s;
+}
+.section:nth-of-type(3) {
+    animation-delay: 0.15s;
+}
+.section:nth-of-type(4) {
+    animation-delay: 0.2s;
+}
 
 /* ── App Header ── */
 .app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
 }
 
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .brand-icon {
-  width: 28px;
-  height: 28px;
-  color: var(--accent);
-  flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    color: var(--accent);
+    flex-shrink: 0;
 }
 
 .brand-name {
   color: var(--accent);
-  font-size: 20px;
+  font-size: clamp(16px, 3.5vw, 20px);
   margin: 0;
   white-space: nowrap;
 }
 
 .header-actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .header-icon-btn {
-  background: transparent;
-  border: none;
-  padding: 6px;
-  cursor: pointer;
-  color: var(--text-muted);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.3s, background 0.3s;
+    background: transparent;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    color: var(--text-muted);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        color 0.3s,
+        background 0.3s;
 }
 
 .header-icon-btn svg {
-  width: 20px;
-  height: 20px;
+    width: 20px;
+    height: 20px;
 }
 
 .header-icon-btn:hover {
-  color: var(--accent);
-  background: var(--bg-keyboard);
+    color: var(--accent);
+    background: var(--bg-keyboard);
 }
 
 /* ── Theme Switcher ── */
 .theme-switcher {
-  position: relative;
+    position: relative;
 }
 
 .theme-dropdown {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  position: absolute;
-  top: calc(100% + 6px);
-  right: 0;
-  background: var(--theme-dropdown-bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 4px;
-  min-width: 120px;
-  box-shadow: var(--shadow-md);
-  z-index: 200;
-  opacity: 0;
-  transform: translateY(-8px);
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  color: var(--theme-dropdown-text);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: var(--theme-dropdown-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px;
+    min-width: 120px;
+    box-shadow: var(--shadow-md);
+    z-index: 200;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+    color: var(--theme-dropdown-text);
 }
 
 .theme-switcher.open .theme-dropdown {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .theme-option {
   background: var(--theme-dropdown-option-bg);
   border: none;
   padding: 8px 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: inherit;
-  cursor: pointer;
-  border-radius: 6px;
-  text-align: left;
-  transition: background 0.3s, color 0.3s;
+  font-size: clamp(12px, 2.5vw, 14px);
+    font-weight: 500;
+    color: inherit;
+    cursor: pointer;
+    border-radius: 6px;
+    text-align: left;
+    transition:
+        background 0.3s,
+        color 0.3s;
 }
 
 .theme-option:hover {
-  background: var(--theme-dropdown-option-hover-bg);
-  color: var(--theme-dropdown-text-hover);
+    background: var(--theme-dropdown-option-hover-bg);
+    color: var(--theme-dropdown-text-hover);
 }
 
 .theme-option.active {
-  background: var(--theme-dropdown-option-active-bg);
-  color: var(--theme-dropdown-text-active);
-  font-weight: 700;
+    background: var(--theme-dropdown-option-active-bg);
+    color: var(--theme-dropdown-text-active);
+    font-weight: 700;
 }
 
 /* ── Theme Transition ── */
@@ -135,285 +153,293 @@ html.theme-transitioning,
 html.theme-transitioning *,
 html.theme-transitioning *::before,
 html.theme-transitioning *::after {
-  transition: background-color 0.6s ease !important;
+    transition: background-color 0.6s ease !important;
 }
 
 .row-selectors {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 .row-selectors label {
-  background-color: var(--bg-surface);
-  padding: 10px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  border: 2px solid var(--accent);
-  font-weight: bold;
-  font-size: 15px;
-  color: var(--accent);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: background 0.3s, color 0.3s, opacity 0.3s;
-  user-select: none;
+    background-color: var(--bg-surface);
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid var(--accent);
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition:
+        background 0.3s,
+        color 0.3s,
+        opacity 0.3s;
+    user-select: none;
 }
 
 .row-selectors label:hover {
-  opacity: 0.8;
+    opacity: 0.8;
 }
 
 .row-selectors label:has(input:checked) {
-  background-color: var(--accent);
-  color: var(--text-accent);
+    background-color: var(--accent);
+    color: var(--text-accent);
 }
 
 .row-selectors input {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
 /* ── Config Card ── */
 .config-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin: 0 0 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 16px;
 }
 
 .config-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
 }
 
 .config-col {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
 .config-field {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
 }
 
 .config-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-muted);
-  min-width: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 50px;
 }
 
 .config-control {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
 }
 
 /* ── Drill Length Input ── */
 .config-control input[type="text"] {
-  background: var(--input-bg);
-  border: 2px solid var(--input-border);
-  border-radius: 6px;
-  color: var(--accent);
-  font-weight: bold;
-  font-size: 16px;
-  width: 64px;
-  text-align: center;
-  cursor: ew-resize;
-  outline: none;
-  padding: 8px 6px;
-  transition: border-color 0.3s;
-  font-family: inherit;
+    background: var(--input-bg);
+    border: 2px solid var(--input-border);
+    border-radius: 6px;
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 16px;
+    width: 64px;
+    text-align: center;
+    cursor: ew-resize;
+    outline: none;
+    padding: 8px 6px;
+    transition: border-color 0.3s;
+    font-family: inherit;
 }
 
 .config-control input[type="text"]:hover {
-  border-color: var(--accent);
+    border-color: var(--accent);
 }
 
 .config-control input[type="text"]:focus {
-  border-color: var(--accent);
-  cursor: text;
+    border-color: var(--accent);
+    cursor: text;
 }
 
 /* ── Custom Dropdown ── */
 .dropdown {
-  position: relative;
-  flex: 1;
+    position: relative;
+    flex: 1;
 }
 
 .dropdown-btn {
-  width: 100%;
-  background: var(--input-bg);
-  color: var(--text-primary);
-  border: 2px solid var(--input-border);
-  padding: 8px 32px 8px 12px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  text-align: left;
-  font-family: inherit;
-  transition: border-color 0.3s;
-  position: relative;
+    width: 100%;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    border: 2px solid var(--input-border);
+    padding: 8px 32px 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: border-color 0.3s;
+    position: relative;
 }
 
 .dropdown-btn::after {
-  content: '';
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 5px solid var(--text-muted);
-  transform: translateY(-50%);
-  pointer-events: none;
-  transition: transform 0.3s;
+    content: "";
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--text-muted);
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: transform 0.3s;
 }
 
 .dropdown.open .dropdown-btn {
-  border-color: var(--accent);
+    border-color: var(--accent);
 }
 
 .dropdown.open .dropdown-btn::after {
-  transform: translateY(-50%) rotate(180deg);
+    transform: translateY(-50%) rotate(180deg);
 }
 
 .dropdown-menu {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  background: var(--input-bg);
-  border: 2px solid var(--border);
-  border-radius: 6px;
-  padding: 4px 0;
-  z-index: 100;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  transform: translateY(-4px);
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--input-bg);
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 0;
+    z-index: 100;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+    transform: translateY(-4px);
 }
 
 .dropdown.open .dropdown-menu {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
 }
 
 .dropdown-item {
-  padding: 8px 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: background 0.3s;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
 .dropdown-item:hover {
-  background: var(--border);
+    background: var(--border);
 }
 
 .dropdown-item.selected {
-  color: var(--accent);
-  font-weight: 700;
+    color: var(--accent);
+    font-weight: 700;
 }
 
 /* ── Info Button ── */
 .info-btn {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1.5px solid var(--text-muted);
-  background: transparent;
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  font-style: italic;
-  font-family: Georgia, 'Times New Roman', serif;
-  cursor: default;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  line-height: 1;
-  flex-shrink: 0;
-  transition: border-color 0.3s, color 0.3s;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid var(--text-muted);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    font-style: italic;
+    font-family: Georgia, "Times New Roman", serif;
+    cursor: default;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
+    transition:
+        border-color 0.3s,
+        color 0.3s;
 }
 
 .info-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent);
 }
 
 /* ── Global Tooltip (JS-positioned) ── */
 .tooltip {
-  position: fixed;
-  z-index: 9999;
-  max-width: 280px;
-  min-width: 160px;
-  font-size: 12px;
-  color: var(--tooltip-text);
-  background: var(--tooltip-bg);
-  border: 1px solid var(--tooltip-border);
-  border-radius: 6px;
-  padding: 8px 10px;
-  line-height: 1.4;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+    position: fixed;
+    z-index: 9999;
+    max-width: 280px;
+    min-width: 160px;
+    font-size: 12px;
+    color: var(--tooltip-text);
+    background: var(--tooltip-bg);
+    border: 1px solid var(--tooltip-border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    line-height: 1.4;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .tooltip.visible {
-  opacity: 1;
+    opacity: 1;
 }
 
 /* ── Config Actions ── */
 .config-actions {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  justify-content: center;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
 }
 
 /* ── Mobile ── */
 @media (max-width: 520px) {
-  .config-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
+    .config-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
 
-  .config-col + .config-col {
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-  }
+    .config-col + .config-col {
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+    }
 
-  .config-control input[type="text"],
-  .dropdown {
-    width: 100%;
-  }
+    .config-control input[type="text"],
+    .dropdown {
+        width: 100%;
+    }
 
-  .config-field {
-    justify-content: center;
-  }
+    .config-field {
+        justify-content: center;
+    }
 
-  .config-actions button {
-    width: 100%;
-  }
+    .config-actions button {
+        width: 100%;
+    }
 }
