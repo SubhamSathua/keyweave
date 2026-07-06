@@ -238,7 +238,8 @@ const PRESET_CONFIGS = {
     stretchFreq: 0,
     caseMixPct: 0,
     numberFreq: 0,
-    weightedFocusPct: 60
+    weightedFocusPct: 60,
+    enterFreq: 0
   },
   mid: {
     mode: 'fakeWords',
@@ -252,7 +253,8 @@ const PRESET_CONFIGS = {
     stretchFreq: 0,
     caseMixPct: 0,
     numberFreq: 10,
-    weightedFocusPct: 60
+    weightedFocusPct: 60,
+    enterFreq: 5
   },
   hard: {
     mode: 'realWords',
@@ -266,7 +268,8 @@ const PRESET_CONFIGS = {
     stretchFreq: 25,
     caseMixPct: 50,
     numberFreq: 10,
-    weightedFocusPct: 60
+    weightedFocusPct: 60,
+    enterFreq: 5
   }
 };
 
@@ -293,6 +296,7 @@ function applyPreset(preset) {
   engineState.preferences.caseMixPct = cfg.caseMixPct;
   engineState.preferences.numberFreq = cfg.numberFreq;
   engineState.preferences.weightedFocusPct = cfg.weightedFocusPct;
+  engineState.preferences.enterFreq = cfg.enterFreq;
 
   engineState.generationMode = cfg.mode;
   engineState.caseMode = cfg.case;
@@ -325,6 +329,7 @@ function applyPresetToModalUI(preset) {
   setSliderVal('glue-slider',   'glue-val',   cfg.glueFreq);
   setSliderVal('stretch-slider','stretch-val',cfg.stretchFreq);
   setSliderVal('num-slider',    'num-val',    cfg.numberFreq);
+  setSliderVal('enter-slider',  'enter-val',  cfg.enterFreq);
   setSliderVal('focus-slider',  'focus-val',  cfg.weightedFocusPct);
 
   // Case slider
@@ -447,6 +452,7 @@ function syncAllModalUI() {
   setSliderVal('glue-slider',   'glue-val',   p.glueFreq);
   setSliderVal('stretch-slider','stretch-val',p.stretchFreq);
   setSliderVal('num-slider',    'num-val',    p.numberFreq);
+  setSliderVal('enter-slider',  'enter-val',  p.enterFreq);
   setSliderVal('focus-slider',  'focus-val',  p.weightedFocusPct);
 
   // Case slider (determine position from current caseMode + caseMixPct)
@@ -502,6 +508,8 @@ function syncStateFromModalUI() {
   if (isNaN(p.stretchFreq)) p.stretchFreq = 25;
   p.numberFreq = parseInt(document.getElementById('num-slider')?.value);
   if (isNaN(p.numberFreq)) p.numberFreq = 10;
+  p.enterFreq = parseInt(document.getElementById('enter-slider')?.value);
+  if (isNaN(p.enterFreq)) p.enterFreq = 5;
   p.weightedFocusPct = parseInt(document.getElementById('focus-slider')?.value);
   if (isNaN(p.weightedFocusPct)) p.weightedFocusPct = 60;
 
@@ -538,6 +546,7 @@ function resetModalDefaults() {
   setSliderVal('glue-slider',   'glue-val',   0);
   setSliderVal('stretch-slider','stretch-val',0);
   setSliderVal('num-slider',    'num-val',    0);
+  setSliderVal('enter-slider',  'enter-val',  0);
   setSliderVal('focus-slider',  'focus-val',  50);
   setSliderVal('case-slider',   'case-val',   0);
   updateCaseLabel(0);

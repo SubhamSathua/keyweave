@@ -52,6 +52,15 @@ export function mountKeyboard() {
     }
     syncRowMasters();
   });
+
+  /* ── Enter key checkbox ── */
+  const enterCb = document.querySelector('.enter-key input');
+  if (enterCb) {
+    engineState.enterEnabled = enterCb.checked;
+    enterCb.addEventListener('change', () => {
+      engineState.enterEnabled = enterCb.checked;
+    });
+  }
 }
 
 function syncRowMasters() {

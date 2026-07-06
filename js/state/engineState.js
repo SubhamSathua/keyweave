@@ -14,6 +14,7 @@ export const engineState = {
   activeKeys:       new Set(),
   heavyFocusKeys:   new Set(),
   shiftKeys:        new Set(),      // explicitly selected shift symbols
+  enterEnabled:     false,          // enter key checkbox
   generationMode:   'fakeWords',    // 'realWords' | 'fakeWords' | 'weighted'
   caseMode:         'lower',        // 'lower' | 'mixed' | 'upper'
   difficulty:       'mid',          // 'easy' | 'mid' | 'hard'
@@ -26,7 +27,8 @@ export const engineState = {
     glueFreq:            20,
     stretchFreq:         25,
     caseMixPct:          50,
-    numberFreq:          10,       /* % chance to inject number sequences */
-    weightedFocusPct:    60        /* % focus-key words in weighted mode */
+    numberFreq:          10,
+    weightedFocusPct:    60,
+    enterFreq:           5         /* % of spaces to replace with newline */
   }
 };

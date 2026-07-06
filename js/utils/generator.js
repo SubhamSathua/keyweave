@@ -128,7 +128,32 @@ export function generateDrillText(state) {
     finalWords.push(chosenWord);
   }
 
-  return finalWords.slice(0, targetCount).join(' ');
+  const words = finalWords.slice(0, targetCount);
+  if (state.enterEnabled && state.preferences.enterFreq > 0) {
+    return insertNewlines(words, state.preferences.enterFreq);
+  }
+  return words.join(' ');
+}
+
+function insertNewlines(words, pct) {
+  if (pct <= 0 || words.length < 2) return words.join(' ');
+  const spaces = words.length - 1;
+  let count = Math.round(spaces * (pct / 100));
+  if (count < 1) count = 1;
+  count = Math.min(count, spaces);
+
+  const positions = Array.from({ length: spaces }, (_, i) => i);
+  for (let i = positions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [positions[i], positions[j]] = [positions[j], positions[i]];
+  }
+  const nlPositions = new Set(positions.slice(0, count));
+
+  let result = words[0];
+  for (let i = 1; i < words.length; i++) {
+    result += (nlPositions.has(i - 1) ? '\n' : ' ') + words[i];
+  }
+  return result;
 }
 
 export function applyCase(text, caseMode, caseMixPct) {
