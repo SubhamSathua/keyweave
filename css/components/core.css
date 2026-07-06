@@ -408,6 +408,36 @@ html.theme-transitioning *::after {
     opacity: 1;
 }
 
+/* ── Advanced Config Toggle ── */
+.advanced-toggle {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  text-align: left;
+  font-family: inherit;
+  transition: color 0.3s;
+}
+
+.advanced-toggle:hover {
+  color: var(--accent);
+}
+
+.advanced-panel {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.advanced-panel.open {
+  display: flex;
+}
+
 /* ── Config Actions ── */
 .config-actions {
     margin-top: 16px;

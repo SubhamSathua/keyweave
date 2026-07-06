@@ -6,6 +6,7 @@ export function mountControls() {
   mountTooltips();
   mountDensityInput();
   mountToggles();
+  mountAdvancedToggle();
 }
 
 /* ── Custom Dropdowns ── */
@@ -59,6 +60,8 @@ function selectDropdownItem(dropdown, item, name) {
     engineState.generationMode = item.dataset.value;
   } else if (name === 'case') {
     engineState.caseMode = item.dataset.value;
+  } else if (name === 'difficulty') {
+    engineState.difficulty = item.dataset.value;
   }
 }
 
@@ -186,5 +189,17 @@ function mountToggles() {
 
   glueWords.addEventListener('change', () => {
     engineState.preferences.addGlueWords = glueWords.checked;
+  });
+}
+
+/* ── Advanced Config Toggle ── */
+function mountAdvancedToggle() {
+  const toggle = document.getElementById('advanced-toggle');
+  const panel = document.getElementById('advanced-panel');
+  if (!toggle || !panel) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = panel.classList.toggle('open');
+    toggle.textContent = 'Advanced Config ' + (isOpen ? '▾' : '▸');
   });
 }

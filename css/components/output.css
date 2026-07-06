@@ -77,6 +77,29 @@ textarea {
   resize: vertical;
 }
 
+textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: var(--input-bg);
+  border-radius: 4px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+textarea {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--input-bg);
+}
+
 .actions {
   display: flex;
   justify-content: space-between;

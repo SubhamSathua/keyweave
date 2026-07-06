@@ -77,6 +77,22 @@ body {
   }
 }
 
+/* ── Small Screens: Row selectors 2×2 grid ── */
+@media (max-width: 520px) {
+  .row-selectors {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .row-selectors label {
+    flex: unset;
+    justify-content: center;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
+
 /* ── Very Small Screens (≤360px, e.g. 304×638) ── */
 @media (max-width: 360px) {
   body {

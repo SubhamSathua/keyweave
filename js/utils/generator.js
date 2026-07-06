@@ -19,10 +19,18 @@ export function generateDrillText(state) {
     }
   }
 
+  const hasLetters = [...activeSet].some(ch => /[a-z]/i.test(ch));
   const validTrigrams = commonTrigrams.filter(t => isTypeable(t, activeSet));
   let trigramFallback = validTrigrams.length >= 3
     ? validTrigrams
-    : [...activeSet].slice(0, 5);
+    : [...activeSet].slice(0, 10);
+
+  function randomActiveChars(length) {
+    const arr = [...activeSet];
+    let s = '';
+    for (let i = 0; i < length; i++) s += arr[Math.floor(Math.random() * arr.length)];
+    return s;
+  }
 
   let finalWords = [];
   const targetCount = state.textDensity;
@@ -48,14 +56,18 @@ export function generateDrillText(state) {
           const insertIdx = Math.floor(Math.random() * (combined.length + 1));
           chosenWord = combined.slice(0, insertIdx) + targetKey + combined.slice(insertIdx);
         } else {
-          chosenWord = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || 'the';
+          chosenWord = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || randomActiveChars(4);
         }
       } else if (state.generationMode === 'fakeWords') {
-        const t1 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || 'the';
-        const t2 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || 'the';
-        chosenWord = t1 + t2;
+        if (!hasLetters && validTrigrams.length === 0) {
+          chosenWord = randomActiveChars(4 + Math.floor(Math.random() * 4));
+        } else {
+          const t1 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || randomActiveChars(3);
+          const t2 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || randomActiveChars(3);
+          chosenWord = t1 + t2;
+        }
       } else {
-        chosenWord = wordPool[Math.floor(Math.random() * wordPool.length)] || 'the';
+        chosenWord = wordPool[Math.floor(Math.random() * wordPool.length)] || randomActiveChars(4);
       }
     }
 

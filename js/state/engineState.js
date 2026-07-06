@@ -15,6 +15,7 @@ export const engineState = {
   heavyFocusKeys:   new Set(),
   generationMode:   'fakeWords',    // 'realWords' | 'fakeWords' | 'weighted'
   caseMode:         'lower',        // 'lower' | 'mixed' | 'upper'
+  difficulty:       'mid',          // 'easy' | 'mid' | 'hard'
   textDensity:      DEFAULT_DENSITY,
   preferences: {
     sameFingerStretches: false,
