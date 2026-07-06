@@ -21,7 +21,6 @@ function mountThemeSwitcher() {
   const themeSwitcher = document.querySelector('.theme-switcher');
   const themeOptions = document.querySelectorAll('.theme-option');
   const html = document.documentElement;
-  const transition = document.getElementById('theme-transition');
 
   // Load saved theme or default to system
   const savedTheme = localStorage.getItem('theme') || 'system';
@@ -61,13 +60,16 @@ function mountThemeSwitcher() {
       : theme;
 
     if (animate && html.getAttribute('data-theme') !== newTheme) {
-      transition.classList.add('animate');
-      transition.addEventListener('animationend', () => {
-        transition.classList.remove('animate');
-      }, { once: true });
+      html.classList.add('theme-transitioning');
+      html.setAttribute('data-theme', newTheme);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          html.classList.remove('theme-transitioning');
+        });
+      });
+    } else {
+      html.setAttribute('data-theme', newTheme);
     }
-
-    html.setAttribute('data-theme', newTheme);
   }
 
   // Listen for system theme changes when in system mode

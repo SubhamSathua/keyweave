@@ -130,23 +130,12 @@
   font-weight: 700;
 }
 
-/* ── Theme Transition Overlay ── */
-.theme-transition {
-  position: fixed;
-  inset: 0;
-  background: var(--theme-transition-bg);
-  z-index: 10000;
-  transform: translateY(-100%);
-  pointer-events: none;
-}
-
-.theme-transition.animate {
-  animation: themeSlide 0.6s cubic-bezier(.4,0,.2,1);
-}
-
-@keyframes themeSlide {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
+/* ── Theme Transition ── */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 0.6s ease !important;
 }
 
 .row-selectors {

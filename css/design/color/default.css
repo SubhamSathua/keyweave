@@ -25,7 +25,6 @@
   --tooltip-text: #d1d2d3;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --theme-transition-bg: #1e1f22;
   --theme-dropdown-bg: #2c2e31;
   --theme-dropdown-option-bg: transparent;
   --theme-dropdown-option-hover-bg: #3c3f44;
@@ -62,7 +61,6 @@
   --tooltip-text: #2c2e31;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
-  --theme-transition-bg: #e8e8e8;
   --theme-dropdown-bg: #ffffff;
   --theme-dropdown-option-bg: transparent;
   --theme-dropdown-option-hover-bg: #f0f0f0;
