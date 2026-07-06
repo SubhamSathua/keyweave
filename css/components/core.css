@@ -448,8 +448,9 @@ html.theme-transitioning *::after {
 }
 
 .preset-btn:hover {
+  background: var(--accent);
+  color: var(--text-accent);
   border-color: var(--accent);
-  color: var(--accent);
 }
 
 .preset-btn.active {
@@ -463,6 +464,12 @@ html.theme-transitioning *::after {
   font-size: 16px;
   padding: 4px 8px;
   line-height: 1;
+}
+
+.preset-btn.adv-btn:hover {
+  background: var(--accent);
+  color: var(--text-accent);
+  border-color: var(--accent);
 }
 
 /* ── Advanced Config Modal ── */
@@ -481,12 +488,15 @@ html.theme-transitioning *::after {
 }
 
 .modal-content {
+  display: flex;
+  flex-direction: column;
   background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 0;
   width: 90%;
   max-width: 360px;
+  max-height: 85vh;
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
   animation: modalIn 0.25s ease;
 }
@@ -497,11 +507,16 @@ html.theme-transitioning *::after {
 }
 
 .modal-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px 12px;
+  background: var(--bg-surface);
   border-bottom: 1px solid var(--border);
+  border-radius: 12px 12px 0 0;
 }
 
 .modal-header h3 {
@@ -516,12 +531,15 @@ html.theme-transitioning *::after {
   color: var(--text-muted);
   font-size: 22px;
   cursor: pointer;
-  padding: 0;
+  padding: 2px 8px;
   line-height: 1;
+  border-radius: 4px;
+  transition: color 0.3s, background 0.3s;
 }
 
 .modal-close:hover {
-  color: var(--accent);
+  color: var(--text-primary);
+  background: var(--bg-tint);
 }
 
 .modal-body {
@@ -529,6 +547,33 @@ html.theme-transitioning *::after {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Custom scrollbar for modal body */
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+.modal-body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }
 
 /* ── Modal Field Groups (tinted sections) ── */
@@ -589,6 +634,11 @@ html.theme-transitioning *::after {
   width: 100%;
   accent-color: var(--accent);
   cursor: pointer;
+}
+
+.modal-slider:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .modal-footer {

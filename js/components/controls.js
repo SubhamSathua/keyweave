@@ -225,53 +225,53 @@ function mountPresets() {
   });
 }
 
-function applyPreset(preset) {
-  const configs = {
-    easy: {
-      mode: 'fakeWords',
-      case: 'lower',
-      sameFinger: false,
-      symbols: false,
-      glue: false,
-      difficulty: 'easy',
-      symbolFreq: 0,
-      glueFreq: 0,
-      stretchFreq: 0,
-      caseMixPct: 0,
-      numberFreq: 0,
-      weightedFocusPct: 60
-    },
-    mid: {
-      mode: 'fakeWords',
-      case: 'lower',
-      sameFinger: false,
-      symbols: true,
-      glue: false,
-      difficulty: 'mid',
-      symbolFreq: 15,
-      glueFreq: 0,
-      stretchFreq: 0,
-      caseMixPct: 0,
-      numberFreq: 10,
-      weightedFocusPct: 60
-    },
-    hard: {
-      mode: 'realWords',
-      case: 'mixed',
-      sameFinger: true,
-      symbols: true,
-      glue: true,
-      difficulty: 'hard',
-      symbolFreq: 15,
-      glueFreq: 20,
-      stretchFreq: 25,
-      caseMixPct: 50,
-      numberFreq: 10,
-      weightedFocusPct: 60
-    }
-  };
+const PRESET_CONFIGS = {
+  easy: {
+    mode: 'fakeWords',
+    case: 'lower',
+    sameFinger: false,
+    symbols: false,
+    glue: false,
+    difficulty: 'easy',
+    symbolFreq: 0,
+    glueFreq: 0,
+    stretchFreq: 0,
+    caseMixPct: 0,
+    numberFreq: 0,
+    weightedFocusPct: 60
+  },
+  mid: {
+    mode: 'fakeWords',
+    case: 'lower',
+    sameFinger: false,
+    symbols: true,
+    glue: false,
+    difficulty: 'mid',
+    symbolFreq: 15,
+    glueFreq: 0,
+    stretchFreq: 0,
+    caseMixPct: 0,
+    numberFreq: 10,
+    weightedFocusPct: 60
+  },
+  hard: {
+    mode: 'realWords',
+    case: 'mixed',
+    sameFinger: true,
+    symbols: true,
+    glue: true,
+    difficulty: 'hard',
+    symbolFreq: 15,
+    glueFreq: 20,
+    stretchFreq: 25,
+    caseMixPct: 50,
+    numberFreq: 10,
+    weightedFocusPct: 60
+  }
+};
 
-  const cfg = configs[preset];
+function applyPreset(preset) {
+  const cfg = PRESET_CONFIGS[preset];
   if (!cfg) return;
 
   selectDropdownVal('mode', cfg.mode);
@@ -296,11 +296,51 @@ function applyPreset(preset) {
 
   engineState.generationMode = cfg.mode;
   engineState.caseMode = cfg.case;
-  if (cfg.difficulty) engineState.difficulty = cfg.difficulty;
+  if (cfg.difficulty) {
+    engineState.difficulty = cfg.difficulty;
+    // Sync modal's difficulty dropdown too
+    const modalBody = document.querySelector('.modal-body');
+    if (modalBody) selectDropdownVal('difficulty', cfg.difficulty, modalBody);
+  }
 }
 
-function selectDropdownVal(name, value) {
-  const dropdown = document.querySelector(`.dropdown[data-name="${name}"]`);
+function syncActivePresetBtn(difficulty) {
+  document.querySelectorAll('.preset-btn[data-preset]').forEach(b => {
+    b.classList.toggle('active', b.dataset.preset === difficulty);
+  });
+}
+
+/* ── Apply a preset to modal UI fields (does NOT touch engineState) ── */
+function applyPresetToModalUI(preset) {
+  const cfg = PRESET_CONFIGS[preset];
+  if (!cfg) return;
+
+  // Toggles
+  document.getElementById('modal-include-symbols').checked = cfg.symbols;
+  document.getElementById('modal-glue-words').checked = cfg.glue;
+  document.getElementById('modal-same-finger').checked = cfg.sameFinger;
+
+  // Sliders
+  setSliderVal('sym-slider',    'sym-val',    cfg.symbolFreq);
+  setSliderVal('glue-slider',   'glue-val',   cfg.glueFreq);
+  setSliderVal('stretch-slider','stretch-val',cfg.stretchFreq);
+  setSliderVal('num-slider',    'num-val',    cfg.numberFreq);
+  setSliderVal('focus-slider',  'focus-val',  cfg.weightedFocusPct);
+
+  // Case slider
+  let casePos;
+  if (cfg.case === 'lower') casePos = 0;
+  else if (cfg.case === 'upper') casePos = 100;
+  else casePos = cfg.caseMixPct ?? 50;
+  setSliderVal('case-slider', 'case-val', casePos);
+  updateCaseLabel(casePos);
+
+  updateSliderDisabledStates();
+}
+
+function selectDropdownVal(name, value, root) {
+  root = root || document;
+  const dropdown = root.querySelector(`.dropdown[data-name="${name}"]`);
   if (!dropdown) return;
   const item = dropdown.querySelector(`.dropdown-item[data-value="${value}"]`);
   if (!item) return;
@@ -368,6 +408,19 @@ function mountAdvancedModal() {
       toggle.addEventListener('change', updateSliderDisabledStates);
     }
   });
+
+  /* ── Difficulty dropdown in modal → update modal preview + sync home page ── */
+  const diffModal = document.querySelector('.modal-body .dropdown[data-name="difficulty"]');
+  if (diffModal) {
+    diffModal.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const val = item.dataset.value;
+        applyPresetToModalUI(val);
+        selectDropdownVal('difficulty', val); // sync home page dropdown
+        syncActivePresetBtn(val); // sync home page preset buttons
+      });
+    });
+  }
 }
 
 function updateSliderDisabledStates() {
@@ -406,6 +459,9 @@ function syncAllModalUI() {
 
   // Difficulty dropdown — reflect current state
   selectDropdownVal('difficulty', engineState.difficulty);
+
+  // Sync slider disabled states
+  updateSliderDisabledStates();
 }
 
 function setSliderVal(sliderId, valId, val) {
@@ -488,4 +544,7 @@ function resetModalDefaults() {
 
   // Difficulty → mid
   selectDropdownVal('difficulty', 'mid');
+
+  // Sync slider disabled states
+  updateSliderDisabledStates();
 }

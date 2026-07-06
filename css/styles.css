@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
 @import url('design/color/default.css');
 @import url('layout.css');
 @import url('components/core.css');
 @import url('components/keyboard.css');
 @import url('components/output.css');
 @import url('utilities/helper.css');
+
+::selection {
+  background: var(--accent);
+  color: var(--text-accent);
+}
