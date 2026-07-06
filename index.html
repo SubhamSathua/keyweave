@@ -1,202 +1,468 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Custom Typing Drill Generator</title>
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-  <!-- Header -->
-  <header class="app-header">
-    <div class="brand">
-      <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="4" width="20" height="16" rx="2" ry="2"/>
-        <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/>
-      </svg>
-      <h1 class="brand-name">Custom Typing Drill Generator</h1>
-    </div>
-    <div class="header-actions">
-      <button class="header-icon-btn" id="settings-btn" title="Settings">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-        </svg>
-      </button>
-      <div class="theme-switcher">
-        <button class="header-icon-btn" id="theme-btn" title="Theme">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-        </button>
-        <div class="theme-dropdown" id="theme-dropdown">
-          <button class="theme-option" data-theme="system">System</button>
-          <button class="theme-option" data-theme="light">Light</button>
-          <button class="theme-option" data-theme="dark">Dark</button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Row Selection Masters -->
-  <section class="section row-selectors">
-    <label><input type="checkbox" class="row-master" data-row="num"> Number Row</label>
-    <label><input type="checkbox" class="row-master" data-row="top"> Top Row</label>
-    <label><input type="checkbox" class="row-master" data-row="home" checked> Home Row</label>
-    <label><input type="checkbox" class="row-master" data-row="bottom"> Bottom Row</label>
-  </section>
-
-  <!-- Visual Interactive Keyboard -->
-  <section class="section keyboard" id="keyboard-container">
-    <div class="kb-row">
-      <label class="key-label">1<input type="checkbox" class="key num-row" value="1"></label>
-      <label class="key-label">2<input type="checkbox" class="key num-row" value="2"></label>
-      <label class="key-label">3<input type="checkbox" class="key num-row" value="3"></label>
-      <label class="key-label">4<input type="checkbox" class="key num-row" value="4"></label>
-      <label class="key-label">5<input type="checkbox" class="key num-row" value="5"></label>
-      <label class="key-label">6<input type="checkbox" class="key num-row" value="6"></label>
-      <label class="key-label">7<input type="checkbox" class="key num-row" value="7"></label>
-      <label class="key-label">8<input type="checkbox" class="key num-row" value="8"></label>
-      <label class="key-label">9<input type="checkbox" class="key num-row" value="9"></label>
-      <label class="key-label">0<input type="checkbox" class="key num-row" value="0"></label>
-    </div>
-    <div class="kb-row">
-      <label class="key-label">Q<input type="checkbox" class="key top-row" value="q"></label>
-      <label class="key-label">W<input type="checkbox" class="key top-row" value="w"></label>
-      <label class="key-label">E<input type="checkbox" class="key top-row" value="e"></label>
-      <label class="key-label">R<input type="checkbox" class="key top-row" value="r"></label>
-      <label class="key-label">T<input type="checkbox" class="key top-row" value="t"></label>
-      <label class="key-label">Y<input type="checkbox" class="key top-row" value="y"></label>
-      <label class="key-label">U<input type="checkbox" class="key top-row" value="u"></label>
-      <label class="key-label">I<input type="checkbox" class="key top-row" value="i"></label>
-      <label class="key-label">O<input type="checkbox" class="key top-row" value="o"></label>
-      <label class="key-label">P<input type="checkbox" class="key top-row" value="p"></label>
-    </div>
-    <div class="kb-row">
-      <label class="key-label">A<input type="checkbox" class="key home-row" value="a" checked></label>
-      <label class="key-label">S<input type="checkbox" class="key home-row" value="s" checked></label>
-      <label class="key-label">D<input type="checkbox" class="key home-row" value="d" checked></label>
-      <label class="key-label">F<input type="checkbox" class="key home-row" value="f" checked></label>
-      <label class="key-label">G<input type="checkbox" class="key home-row" value="g" checked></label>
-      <label class="key-label">H<input type="checkbox" class="key home-row" value="h" checked></label>
-      <label class="key-label">J<input type="checkbox" class="key home-row" value="j" checked></label>
-      <label class="key-label">K<input type="checkbox" class="key home-row" value="k" checked></label>
-      <label class="key-label">L<input type="checkbox" class="key home-row" value="l" checked></label>
-      <label class="key-label">;<input type="checkbox" class="key home-row" value=";" checked></label>
-    </div>
-    <div class="kb-row">
-      <label class="key-label">Z<input type="checkbox" class="key bottom-row" value="z"></label>
-      <label class="key-label">X<input type="checkbox" class="key bottom-row" value="x"></label>
-      <label class="key-label">C<input type="checkbox" class="key bottom-row" value="c"></label>
-      <label class="key-label">V<input type="checkbox" class="key bottom-row" value="v"></label>
-      <label class="key-label">B<input type="checkbox" class="key bottom-row" value="b"></label>
-      <label class="key-label">N<input type="checkbox" class="key bottom-row" value="n"></label>
-      <label class="key-label">M<input type="checkbox" class="key bottom-row" value="m"></label>
-      <label class="key-label">,<input type="checkbox" class="key bottom-row" value=","></label>
-      <label class="key-label">.<input type="checkbox" class="key bottom-row" value="."></label>
-    </div>
-  </section>
-
-  <!-- Configuration -->
-  <section class="section config">
-    <h2 class="config-title">Configuration</h2>
-
-    <div class="config-grid">
-      <!-- Col 1: Mode, Case, Length -->
-      <div class="config-col">
-
-        <div class="config-field">
-          <label class="config-label">Mode</label>
-          <div class="config-control">
-            <div class="dropdown" data-name="mode" data-default="fakeWords">
-              <button type="button" class="dropdown-btn">Fake Words (Trigrams)</button>
-              <div class="dropdown-menu">
-                <div class="dropdown-item" data-value="realWords">Real Words (Strict)</div>
-                <div class="dropdown-item selected" data-value="fakeWords">Fake Words (Trigrams)</div>
-                <div class="dropdown-item" data-value="weighted">Weighted Overload</div>
-              </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Custom Typing Drill Generator</title>
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+    <body>
+        -
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <svg
+                    class="brand-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
+                    <path
+                        d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"
+                    />
+                </svg>
+                <h1 class="brand-name">Custom Typing Drill Generator</h1>
             </div>
-            <span class="info-btn" data-tip-html="<b>Generation Modes</b><br><b>Real Words:</b> Dictionary words only, filtered by active keys.<br><b>Fake Words:</b> Trigram-stitched pseudowords, pronounceable.<br><b>Weighted:</b> 60% focus keys + 40% standard spacing.">i</span>
-          </div>
-        </div>
-
-        <div class="config-field">
-          <label class="config-label">Case</label>
-          <div class="config-control">
-            <div class="dropdown" data-name="case" data-default="lower">
-              <button type="button" class="dropdown-btn">lowercase</button>
-              <div class="dropdown-menu">
-                <div class="dropdown-item selected" data-value="lower">lowercase</div>
-                <div class="dropdown-item" data-value="mixed">Mixed Case</div>
-                <div class="dropdown-item" data-value="upper">UPPERCASE</div>
-              </div>
+            <div class="header-actions">
+                <button
+                    class="header-icon-btn"
+                    id="settings-btn"
+                    title="Settings"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+                        />
+                    </svg>
+                </button>
+                <div class="theme-switcher">
+                    <button
+                        class="header-icon-btn"
+                        id="theme-btn"
+                        title="Theme"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                    </button>
+                    <div class="theme-dropdown" id="theme-dropdown">
+                        <button class="theme-option" data-theme="system">
+                            System
+                        </button>
+                        <button class="theme-option" data-theme="light">
+                            Light
+                        </button>
+                        <button class="theme-option" data-theme="dark">
+                            Dark
+                        </button>
+                    </div>
+                </div>
             </div>
-            <span class="info-btn" data-tip-html="lowercase: all small. Mixed: random capitalization. UPPERCASE: all caps.">i</span>
-          </div>
-        </div>
+        </header>
 
-        <div class="config-field">
-          <label class="config-label" for="density">Length</label>
-          <div class="config-control">
-            <input type="text" id="density" value="40" inputmode="numeric">
-            <span class="info-btn" data-tip-html="Number of words to generate. Drag left/right or type (10–200).">i</span>
-          </div>
-        </div>
+        <!-- Row Selection Masters -->
+        <section class="section row-selectors">
+            <label
+                ><input type="checkbox" class="row-master" data-row="num" />
+                Number Row</label
+            >
+            <label
+                ><input type="checkbox" class="row-master" data-row="top" /> Top
+                Row</label
+            >
+            <label
+                ><input
+                    type="checkbox"
+                    class="row-master"
+                    data-row="home"
+                    checked
+                />
+                Home Row</label
+            >
+            <label
+                ><input type="checkbox" class="row-master" data-row="bottom" />
+                Bottom Row</label
+            >
+        </section>
 
-      </div>
+        <!-- Visual Interactive Keyboard -->
+        <section class="section keyboard" id="keyboard-container">
+            <div class="kb-row">
+                <label class="key-label"
+                    >1<input type="checkbox" class="key num-row" value="1"
+                /></label>
+                <label class="key-label"
+                    >2<input type="checkbox" class="key num-row" value="2"
+                /></label>
+                <label class="key-label"
+                    >3<input type="checkbox" class="key num-row" value="3"
+                /></label>
+                <label class="key-label"
+                    >4<input type="checkbox" class="key num-row" value="4"
+                /></label>
+                <label class="key-label"
+                    >5<input type="checkbox" class="key num-row" value="5"
+                /></label>
+                <label class="key-label"
+                    >6<input type="checkbox" class="key num-row" value="6"
+                /></label>
+                <label class="key-label"
+                    >7<input type="checkbox" class="key num-row" value="7"
+                /></label>
+                <label class="key-label"
+                    >8<input type="checkbox" class="key num-row" value="8"
+                /></label>
+                <label class="key-label"
+                    >9<input type="checkbox" class="key num-row" value="9"
+                /></label>
+                <label class="key-label"
+                    >0<input type="checkbox" class="key num-row" value="0"
+                /></label>
+            </div>
+            <div class="kb-row">
+                <label class="key-label"
+                    >Q<input type="checkbox" class="key top-row" value="q"
+                /></label>
+                <label class="key-label"
+                    >W<input type="checkbox" class="key top-row" value="w"
+                /></label>
+                <label class="key-label"
+                    >E<input type="checkbox" class="key top-row" value="e"
+                /></label>
+                <label class="key-label"
+                    >R<input type="checkbox" class="key top-row" value="r"
+                /></label>
+                <label class="key-label"
+                    >T<input type="checkbox" class="key top-row" value="t"
+                /></label>
+                <label class="key-label"
+                    >Y<input type="checkbox" class="key top-row" value="y"
+                /></label>
+                <label class="key-label"
+                    >U<input type="checkbox" class="key top-row" value="u"
+                /></label>
+                <label class="key-label"
+                    >I<input type="checkbox" class="key top-row" value="i"
+                /></label>
+                <label class="key-label"
+                    >O<input type="checkbox" class="key top-row" value="o"
+                /></label>
+                <label class="key-label"
+                    >P<input type="checkbox" class="key top-row" value="p"
+                /></label>
+            </div>
+            <div class="kb-row">
+                <label class="key-label"
+                    >A<input
+                        type="checkbox"
+                        class="key home-row"
+                        value="a"
+                        checked
+                /></label>
+                <label class="key-label"
+                    >S<input
+                        type="checkbox"
+                        class="key home-row"
+                        value="s"
+                        checked
+                /></label>
+                <label class="key-label"
+                    >D<input
+                        type="checkbox"
+                        class="key home-row"
+                        value="d"
+                        checked
+                /></label>
+                <label class="key-label"
+                    >F<input
+                        type="checkbox"
+                        class="key home-row"
+                        value="f"
+                        checked
+                /></label>
+                <label class="key-label"
+                    >G<input
+                        type="checkbox"
+                        class="key home-row"
+                        value="g"
+                        checked
+                /></label>
+                <label class="key-label"
+                    >H<input
+                        type="checkbox"
+                        class="key home-row"
+                        value="h"
+                        checked
+                /></label>
+                <label class="key-label"
+                    >J<input
+                        type="checkbox"
+                        class="key home-row"
+                        value="j"
+                        checked
+                /></label>
+                <label class="key-label"
+                    >K<input
+                        type="checkbox"
+                        class="key home-row"
+                        value="k"
+                        checked
+                /></label>
+                <label class="key-label"
+                    >L<input
+                        type="checkbox"
+                        class="key home-row"
+                        value="l"
+                        checked
+                /></label>
+                <label class="key-label"
+                    >;<input
+                        type="checkbox"
+                        class="key home-row"
+                        value=";"
+                        checked
+                /></label>
+            </div>
+            <div class="kb-row">
+                <label class="key-label"
+                    >Z<input type="checkbox" class="key bottom-row" value="z"
+                /></label>
+                <label class="key-label"
+                    >X<input type="checkbox" class="key bottom-row" value="x"
+                /></label>
+                <label class="key-label"
+                    >C<input type="checkbox" class="key bottom-row" value="c"
+                /></label>
+                <label class="key-label"
+                    >V<input type="checkbox" class="key bottom-row" value="v"
+                /></label>
+                <label class="key-label"
+                    >B<input type="checkbox" class="key bottom-row" value="b"
+                /></label>
+                <label class="key-label"
+                    >N<input type="checkbox" class="key bottom-row" value="n"
+                /></label>
+                <label class="key-label"
+                    >M<input type="checkbox" class="key bottom-row" value="m"
+                /></label>
+                <label class="key-label"
+                    >,<input type="checkbox" class="key bottom-row" value=","
+                /></label>
+                <label class="key-label"
+                    >.<input type="checkbox" class="key bottom-row" value="."
+                /></label>
+            </div>
+        </section>
 
-      <!-- Col 2: Stretch, Symbols, Glue -->
-      <div class="config-col">
+        <!-- Configuration -->
+        <section class="section config">
+            <h2 class="config-title">Configuration</h2>
 
-        <div class="config-field">
-          <label class="toggle-switch">
-            <input type="checkbox" id="same-finger">
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-            Stretch
-          </label>
-          <span class="info-btn" data-tip-html="Injects same-finger bigram words (de, ed, ju, pl) for muscle memory training.">i</span>
-        </div>
+            <div class="config-grid">
+                <!-- Col 1: Mode, Case, Length -->
+                <div class="config-col">
+                    <div class="config-field">
+                        <label class="config-label">Mode</label>
+                        <div class="config-control">
+                            <div
+                                class="dropdown"
+                                data-name="mode"
+                                data-default="fakeWords"
+                            >
+                                <button type="button" class="dropdown-btn">
+                                    Fake Words (Trigrams)
+                                </button>
+                                <div class="dropdown-menu">
+                                    <div
+                                        class="dropdown-item"
+                                        data-value="realWords"
+                                    >
+                                        Real Words (Strict)
+                                    </div>
+                                    <div
+                                        class="dropdown-item selected"
+                                        data-value="fakeWords"
+                                    >
+                                        Fake Words (Trigrams)
+                                    </div>
+                                    <div
+                                        class="dropdown-item"
+                                        data-value="weighted"
+                                    >
+                                        Weighted Overload
+                                    </div>
+                                </div>
+                            </div>
+                            <span
+                                class="info-btn"
+                                data-tip-html="<b>Generation Modes</b><br><b>Real Words:</b> Dictionary words only, filtered by active keys.<br><b>Fake Words:</b> Trigram-stitched pseudowords, pronounceable.<br><b>Weighted:</b> 60% focus keys + 40% standard spacing."
+                                >i</span
+                            >
+                        </div>
+                    </div>
 
-        <div class="config-field">
-          <label class="toggle-switch">
-            <input type="checkbox" id="include-symbols" checked>
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-            Symbols
-          </label>
-          <span class="info-btn" data-tip-html="Appends ; _ () {} [] = at ~15% frequency after words.">i</span>
-        </div>
+                    <div class="config-field">
+                        <label class="config-label">Case</label>
+                        <div class="config-control">
+                            <div
+                                class="dropdown"
+                                data-name="case"
+                                data-default="lower"
+                            >
+                                <button type="button" class="dropdown-btn">
+                                    lowercase
+                                </button>
+                                <div class="dropdown-menu">
+                                    <div
+                                        class="dropdown-item selected"
+                                        data-value="lower"
+                                    >
+                                        lowercase
+                                    </div>
+                                    <div
+                                        class="dropdown-item"
+                                        data-value="mixed"
+                                    >
+                                        Mixed Case
+                                    </div>
+                                    <div
+                                        class="dropdown-item"
+                                        data-value="upper"
+                                    >
+                                        UPPERCASE
+                                    </div>
+                                </div>
+                            </div>
+                            <span
+                                class="info-btn"
+                                data-tip-html="lowercase: all small. Mixed: random capitalization. UPPERCASE: all caps."
+                                >i</span
+                            >
+                        </div>
+                    </div>
 
-        <div class="config-field">
-          <label class="toggle-switch">
-            <input type="checkbox" id="glue-words">
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-            Glue
-          </label>
-          <span class="info-btn" data-tip-html="Inserts the/and/to every 3–4 words to preserve typing rhythm.">i</span>
-        </div>
+                    <div class="config-field">
+                        <label class="config-label" for="density">Length</label>
+                        <div class="config-control">
+                            <input
+                                type="text"
+                                id="density"
+                                value="40"
+                                inputmode="numeric"
+                            />
+                            <span
+                                class="info-btn"
+                                data-tip-html="Number of words to generate. Drag left/right or type (10–200)."
+                                >i</span
+                            >
+                        </div>
+                    </div>
+                </div>
 
-      </div>
-    </div>
+                <!-- Col 2: Stretch, Symbols, Glue -->
+                <div class="config-col">
+                    <div class="config-field">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="same-finger" />
+                            <span class="toggle-track"
+                                ><span class="toggle-thumb"></span
+                            ></span>
+                            Stretch
+                        </label>
+                        <span
+                            class="info-btn"
+                            data-tip-html="Injects same-finger bigram words (de, ed, ju, pl) for muscle memory training."
+                            >i</span
+                        >
+                    </div>
 
-    <div class="config-actions">
-      <button id="generate-btn">Generate Text</button>
-    </div>
-  </section>
+                    <div class="config-field">
+                        <label class="toggle-switch">
+                            <input
+                                type="checkbox"
+                                id="include-symbols"
+                                checked
+                            />
+                            <span class="toggle-track"
+                                ><span class="toggle-thumb"></span
+                            ></span>
+                            Symbols
+                        </label>
+                        <span
+                            class="info-btn"
+                            data-tip-html="Appends ; _ () {} [] = at ~15% frequency after words."
+                            >i</span
+                        >
+                    </div>
 
-  <!-- Output -->
-  <section class="section output">
-    <textarea id="output" readonly placeholder="Your custom drill text will appear here..."></textarea>
-    <div class="actions">
-      <span id="toast" class="toast">Copied to clipboard!</span>
-      <button id="copy-btn">Copy Text</button>
-    </div>
-  </section>
+                    <div class="config-field">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="glue-words" />
+                            <span class="toggle-track"
+                                ><span class="toggle-thumb"></span
+                            ></span>
+                            Glue
+                        </label>
+                        <span
+                            class="info-btn"
+                            data-tip-html="Inserts the/and/to every 3–4 words to preserve typing rhythm."
+                            >i</span
+                        >
+                    </div>
+                </div>
+            </div>
 
-  <!-- Shared Tooltip (positioned via JS) -->
-  <div id="global-tooltip" class="tooltip"></div>
+            <div class="config-actions">
+                <button id="generate-btn">Generate Text</button>
+            </div>
+        </section>
 
-  <!-- Theme Transition Overlay -->
-  <div class="theme-transition" id="theme-transition"></div>
+        <!-- Output -->
+        <section class="section output">
+            <textarea
+                id="output"
+                readonly
+                placeholder="Your custom drill text will appear here..."
+            ></textarea>
+            <div class="actions">
+                <span id="toast" class="toast">Copied to clipboard!</span>
+                <button id="copy-btn">Copy Text</button>
+            </div>
+        </section>
 
-  <script type="module" src="js/app.js"></script>
-</body>
+        <!-- Shared Tooltip (positioned via JS) -->
+        <div id="global-tooltip" class="tooltip"></div>
+
+        <!-- Theme Transition Overlay -->
+        <div class="theme-transition" id="theme-transition"></div>
+
+        <script type="module" src="js/app.js"></script>
+    </body>
 </html>

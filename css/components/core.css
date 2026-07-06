@@ -1,10 +1,21 @@
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .section {
   background-color: var(--bg-surface);
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
 }
+
+.section:nth-of-type(2) { animation-delay: 0.1s; }
+.section:nth-of-type(3) { animation-delay: 0.15s; }
+.section:nth-of-type(4) { animation-delay: 0.2s; }
 
 /* ── App Header ── */
 .app-header {
@@ -50,7 +61,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.15s, background 0.15s;
+  transition: color 0.3s, background 0.3s;
 }
 
 .header-icon-btn svg {
@@ -85,7 +96,7 @@
   opacity: 0;
   transform: translateY(-8px);
   pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   color: var(--text-primary);
 }
 
@@ -105,11 +116,11 @@
   cursor: pointer;
   border-radius: 6px;
   text-align: left;
-  transition: background 0.1s, color 0.1s;
+  transition: background 0.3s, color 0.3s;
 }
 
 .theme-option:hover {
-  background: var(--bg-keyboard);
+  background: var(--border);
 }
 
 .theme-option.active {
@@ -128,7 +139,7 @@
 }
 
 .theme-transition.animate {
-  animation: themeSlide 0.5s cubic-bezier(.4,0,.2,1);
+  animation: themeSlide 0.6s cubic-bezier(.4,0,.2,1);
 }
 
 @keyframes themeSlide {
@@ -155,7 +166,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: background 0.15s, color 0.15s, opacity 0.15s;
+  transition: background 0.3s, color 0.3s, opacity 0.3s;
   user-select: none;
 }
 
@@ -231,7 +242,7 @@
   cursor: ew-resize;
   outline: none;
   padding: 8px 6px;
-  transition: border-color 0.15s;
+  transition: border-color 0.3s;
   font-family: inherit;
 }
 
@@ -262,7 +273,7 @@
   cursor: pointer;
   text-align: left;
   font-family: inherit;
-  transition: border-color 0.15s;
+  transition: border-color 0.3s;
   position: relative;
 }
 
@@ -278,7 +289,7 @@
   border-top: 5px solid var(--text-muted);
   transform: translateY(-50%);
   pointer-events: none;
-  transition: transform 0.2s;
+  transition: transform 0.3s;
 }
 
 .dropdown.open .dropdown-btn {
@@ -290,7 +301,6 @@
 }
 
 .dropdown-menu {
-  display: none;
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
@@ -301,10 +311,16 @@
   padding: 4px 0;
   z-index: 100;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(-4px);
 }
 
 .dropdown.open .dropdown-menu {
-  display: block;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .dropdown-item {
@@ -313,7 +329,7 @@
   font-weight: 500;
   color: var(--text-primary);
   cursor: pointer;
-  transition: background 0.1s;
+  transition: background 0.3s;
 }
 
 .dropdown-item:hover {
@@ -344,7 +360,7 @@
   padding: 0;
   line-height: 1;
   flex-shrink: 0;
-  transition: border-color 0.15s, color 0.15s;
+  transition: border-color 0.3s, color 0.3s;
 }
 
 .info-btn:hover {
@@ -354,7 +370,6 @@
 
 /* ── Global Tooltip (JS-positioned) ── */
 .tooltip {
-  display: none;
   position: fixed;
   z-index: 9999;
   max-width: 280px;
@@ -368,10 +383,12 @@
   line-height: 1.4;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .tooltip.visible {
-  display: block;
+  opacity: 1;
 }
 
 /* ── Config Actions ── */
