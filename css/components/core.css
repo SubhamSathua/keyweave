@@ -84,8 +84,8 @@
 }
 
 .header-icon-btn:hover {
-    color: var(--accent);
-    background: var(--bg-keyboard);
+    color: var(--text-accent);
+    background: var(--accent);
 }
 
 /* ── Theme Switcher ── */
@@ -330,6 +330,18 @@ html.theme-transitioning *::after {
         opacity 0.3s ease,
         transform 0.3s ease;
     transform: translateY(-4px);
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.dropdown-up .dropdown-menu {
+    top: auto;
+    bottom: calc(100% + 4px);
+    transform: translateY(4px);
+}
+
+.dropdown-up.open .dropdown-menu {
+    transform: translateY(0);
 }
 
 .dropdown.open .dropdown-menu {
@@ -517,6 +529,16 @@ html.theme-transitioning *::after {
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+/* ── Modal Field Groups (tinted sections) ── */
+.modal-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--bg-tint);
+  border-radius: 8px;
+  padding: 14px;
 }
 
 .modal-field {

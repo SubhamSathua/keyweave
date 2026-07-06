@@ -2,6 +2,7 @@
   --bg-primary: #323437;
   --bg-surface: #2c2e31;
   --bg-keyboard: #1e1f22;
+  --bg-tint: #26282b;
   --accent: #e2b714;
   --accent-hover: #c9a50f;
   --text-primary: #d1d2d3;
@@ -38,6 +39,7 @@
   --bg-primary: #f5f5f5;
   --bg-surface: #ffffff;
   --bg-keyboard: #e8e8e8;
+  --bg-tint: #eeedeb;
   --accent: #d4a413;
   --accent-hover: #b8910f;
   --text-primary: #2c2e31;

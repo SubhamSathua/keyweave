@@ -21,7 +21,28 @@ function mountCustomDropdowns() {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       closeAllDropdowns(dropdown);
+      dropdown.classList.remove('dropdown-up');
       dropdown.classList.toggle('open');
+
+      // Flip upward if the menu would overflow the viewport
+      if (dropdown.classList.contains('open')) {
+        const menu = dropdown.querySelector('.dropdown-menu');
+        if (menu) {
+          menu.style.maxHeight = '';
+          const rect = menu.getBoundingClientRect();
+          const overflow = rect.bottom - window.innerHeight;
+          if (overflow > 0) {
+            dropdown.classList.add('dropdown-up');
+            // Re-check height after flip
+            requestAnimationFrame(() => {
+              const flippedRect = menu.getBoundingClientRect();
+              if (flippedRect.top < 0) {
+                menu.style.maxHeight = (flippedRect.bottom - 8) + 'px';
+              }
+            });
+          }
+        }
+      }
     });
 
     items.forEach(item => {
@@ -334,6 +355,29 @@ function mountAdvancedModal() {
       });
     }
   });
+
+  /* ── Disable ranges if toggles are off ── */
+  const toggles = [
+    'modal-include-symbols',
+    'modal-glue-words',
+    'modal-same-finger'
+  ];
+  toggles.forEach(id => {
+    const toggle = document.getElementById(id);
+    if (toggle) {
+      toggle.addEventListener('change', updateSliderDisabledStates);
+    }
+  });
+}
+
+function updateSliderDisabledStates() {
+  const symToggle = document.getElementById('modal-include-symbols');
+  const glueToggle = document.getElementById('modal-glue-words');
+  const stretchToggle = document.getElementById('modal-same-finger');
+
+  if (symToggle) document.getElementById('sym-slider').disabled = !symToggle.checked;
+  if (glueToggle) document.getElementById('glue-slider').disabled = !glueToggle.checked;
+  if (stretchToggle) document.getElementById('stretch-slider').disabled = !stretchToggle.checked;
 }
 
 /* ── Sync engineState → all modal UI elements ── */
