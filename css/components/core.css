@@ -905,18 +905,18 @@ html.theme-transitioning *::after {
 }
 
 .shift-base {
-  font-size: clamp(9px, 2.6vw, 14px);
-  font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text-primary);
-  line-height: 1;
-}
-
-.shift-symbol {
   font-size: clamp(7px, 1.8vw, 10px);
   font-weight: 600;
   font-family: 'JetBrains Mono', monospace;
   color: var(--text-muted);
+  line-height: 1;
+}
+
+.shift-symbol {
+  font-size: clamp(9px, 2.6vw, 14px);
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-primary);
   line-height: 1;
   align-self: flex-start;
   margin: 1px 0 -2px 2px;
@@ -954,7 +954,8 @@ html.theme-transitioning *::after {
 }
 
 .shift-btn-cancel:hover {
-  color: var(--text-muted);
+  color: #000;
+  background: var(--border);
   border-color: var(--text-muted);
 }
 
@@ -1034,7 +1035,8 @@ html.theme-transitioning *::after {
 }
 
 .confirm-no:hover {
-  color: var(--text-primary);
+  color: #000;
+  background: var(--border);
   border-color: var(--text-muted);
 }
 

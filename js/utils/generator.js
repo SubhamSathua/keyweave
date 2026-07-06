@@ -1,7 +1,32 @@
 import { allWords, awkwardSameFinger } from '../data/dictionary.js';
 import { commonTrigrams } from '../data/trigrams.js';
-import { GLUE_WORDS, SYMBOLS } from '../constants.js';
+import { GLUE_WORDS } from '../constants.js';
 import { isTypeable } from './filters.js';
+
+function deriveCategories(effectiveSet) {
+  const arr = [...effectiveSet];
+  return {
+    letterKeys: arr.filter(ch => /[a-z]/i.test(ch)),
+    numberKeys: arr.filter(ch => /[0-9]/.test(ch)),
+    symbolKeys: arr.filter(ch => !/[a-z0-9]/i.test(ch))
+  };
+}
+
+function pickRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function randomActiveChars(length, pool) {
+  if (pool.length === 0) return '';
+  let s = '';
+  for (let i = 0; i < length; i++) s += pickRandom(pool);
+  return s;
+}
+
+function pickTrigrams(validList) {
+  if (validList.length >= 3) return validList;
+  return null;
+}
 
 export function generateDrillText(state) {
   const activeSet = state.activeKeys;
@@ -10,32 +35,24 @@ export function generateDrillText(state) {
 
   if (activeSet.size === 0) return '';
 
-  /* Merge shift keys into the effective set for typeability checks */
   const effectiveSet = new Set(activeSet);
   shiftSet.forEach(k => effectiveSet.add(k));
+
+  const { letterKeys, numberKeys, symbolKeys } = deriveCategories(effectiveSet);
+  const hasLetterKeys = letterKeys.length > 0;
+  const allChars = [...effectiveSet];
 
   let wordPool = [];
 
   if (state.generationMode === 'realWords') {
     wordPool = allWords.filter(w => isTypeable(w, effectiveSet));
-
     if (wordPool.length < 5) {
       state.generationMode = 'fakeWords';
     }
   }
 
-  const hasLetterKeys = [...activeSet].some(ch => /[a-z]/i.test(ch));
   const validTrigrams = commonTrigrams.filter(t => isTypeable(t, effectiveSet));
-  let trigramFallback = validTrigrams.length >= 3
-    ? validTrigrams
-    : [...activeSet].slice(0, 10);
-
-  function randomActiveChars(length) {
-    const arr = [...activeSet];
-    let s = '';
-    for (let i = 0; i < length; i++) s += arr[Math.floor(Math.random() * arr.length)];
-    return s;
-  }
+  const trigramFallback = pickTrigrams(validTrigrams);
 
   let finalWords = [];
   const targetCount = state.textDensity;
@@ -53,60 +70,59 @@ export function generateDrillText(state) {
     if (p.sameFingerStretches && Math.random() < stretchPct) {
       const matchStretches = awkwardSameFinger.filter(w => isTypeable(w, effectiveSet));
       if (matchStretches.length > 0) {
-        chosenWord = matchStretches[Math.floor(Math.random() * matchStretches.length)];
+        chosenWord = pickRandom(matchStretches);
       }
     }
 
-    /* Number sequence injection (only if number keys are active) */
-    if (!chosenWord && hasLetterKeys && Math.random() < numPct) {
-      const numKeys = [...activeSet].filter(ch => /[0-9]/.test(ch));
-      if (numKeys.length > 0) {
-        let s = '';
-        const len = 3 + Math.floor(Math.random() * 4);
-        for (let i = 0; i < len; i++) s += numKeys[Math.floor(Math.random() * numKeys.length)];
-        chosenWord = s;
-      }
+    if (!chosenWord && hasLetterKeys && Math.random() < numPct && numberKeys.length > 0) {
+      const len = 3 + Math.floor(Math.random() * 4);
+      chosenWord = randomActiveChars(len, numberKeys);
     }
 
     if (!chosenWord) {
       if (state.generationMode === 'weighted' && focusSet.size > 0) {
         if (Math.random() < weightedPct) {
-          const focusArr = [...focusSet];
-          const targetKey = focusArr[Math.floor(Math.random() * focusArr.length)];
-          const t1 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || '';
-          const t2 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || '';
+          const targetKey = pickRandom([...focusSet]);
+          const t1 = trigramFallback ? pickRandom(trigramFallback) : randomActiveChars(3, allChars);
+          const t2 = trigramFallback ? pickRandom(trigramFallback) : randomActiveChars(3, allChars);
           const combined = t1 + t2;
           const insertIdx = Math.floor(Math.random() * (combined.length + 1));
           chosenWord = combined.slice(0, insertIdx) + targetKey + combined.slice(insertIdx);
         } else {
-          chosenWord = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || randomActiveChars(4);
+          chosenWord = trigramFallback
+            ? pickRandom(trigramFallback)
+            : randomActiveChars(4, allChars);
         }
       } else if (state.generationMode === 'fakeWords') {
-        if (!hasLetterKeys && validTrigrams.length === 0) {
-          chosenWord = randomActiveChars(4 + Math.floor(Math.random() * 4));
+        if (!hasLetterKeys && !trigramFallback) {
+          chosenWord = randomActiveChars(4 + Math.floor(Math.random() * 4), allChars);
         } else {
-          const t1 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || randomActiveChars(3);
-          const t2 = trigramFallback[Math.floor(Math.random() * trigramFallback.length)] || randomActiveChars(3);
+          const t1 = trigramFallback
+            ? pickRandom(trigramFallback)
+            : randomActiveChars(3, allChars);
+          const t2 = trigramFallback
+            ? pickRandom(trigramFallback)
+            : randomActiveChars(3, allChars);
           chosenWord = t1 + t2;
         }
       } else {
-        chosenWord = wordPool[Math.floor(Math.random() * wordPool.length)] || randomActiveChars(4);
+        chosenWord = wordPool.length > 0
+          ? pickRandom(wordPool)
+          : randomActiveChars(4, allChars);
       }
     }
 
-    if (p.includeSymbols && Math.random() < symbolPct) {
-      const sym = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
-      if (sym === '_') {
-        chosenWord = chosenWord + '_value';
-      } else if (sym.length === 2) {
-        chosenWord = sym[0] + chosenWord + sym[1];
+    if (p.includeSymbols && Math.random() < symbolPct && symbolKeys.length > 0) {
+      const sym = pickRandom(symbolKeys);
+      if (Math.random() < 0.5) {
+        chosenWord = sym + chosenWord;
       } else {
         chosenWord = chosenWord + sym;
       }
     }
 
     if (p.addGlueWords && Math.random() < gluePct && finalWords.length > 0) {
-      finalWords.push(GLUE_WORDS[Math.floor(Math.random() * GLUE_WORDS.length)]);
+      finalWords.push(pickRandom(GLUE_WORDS));
     }
 
     finalWords.push(chosenWord);

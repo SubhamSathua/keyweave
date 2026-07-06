@@ -33,6 +33,4 @@ export const ROW_SELECTORS = {
 
 export const GLUE_WORDS = ['the','and','to','it','for','of','in','is'];
 
-export const SYMBOLS = [';', '_', '()', '{}', '[]', '='];
-
 export const DEFAULT_DENSITY = 40;
