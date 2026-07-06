@@ -89,7 +89,7 @@ function init() {
 
   document.getElementById('generate-btn').addEventListener('click', () => {
     let text = generateDrillText(engineState);
-    text = applyCase(text, engineState.caseMode);
+    text = applyCase(text, engineState.caseMode, engineState.preferences.caseMixPct);
     document.getElementById('output').value = text;
   });
 }

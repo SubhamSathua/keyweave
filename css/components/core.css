@@ -157,9 +157,9 @@ html.theme-transitioning *::after {
 }
 
 .row-selectors {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
     margin-bottom: 20px;
 }
 
@@ -408,34 +408,159 @@ html.theme-transitioning *::after {
     opacity: 1;
 }
 
-/* ── Advanced Config Toggle ── */
-.advanced-toggle {
+/* ── Presets Row ── */
+.presets-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.preset-btns {
+  display: flex;
+  gap: 4px;
+}
+
+.preset-btn {
   background: transparent;
-  border: none;
+  border: 1px solid var(--border);
   color: var(--text-muted);
+  padding: 4px 12px;
+  border-radius: 4px;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  padding: 4px 0;
-  text-align: left;
   font-family: inherit;
-  transition: color 0.3s;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
 }
 
-.advanced-toggle:hover {
+.preset-btn:hover {
+  border-color: var(--accent);
   color: var(--accent);
 }
 
-.advanced-panel {
-  display: none;
-  flex-direction: column;
-  gap: 14px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border);
+.preset-btn.active {
+  background: var(--accent);
+  color: var(--text-accent);
+  border-color: var(--accent);
 }
 
-.advanced-panel.open {
+.preset-btn.adv-btn {
+  margin-left: auto;
+  font-size: 16px;
+  padding: 4px 8px;
+  line-height: 1;
+}
+
+/* ── Advanced Config Modal ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-overlay.open {
   display: flex;
+}
+
+.modal-content {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0;
+  width: 90%;
+  max-width: 360px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+  animation: modalIn 0.25s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: var(--accent);
+}
+
+.modal-body {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.modal-val {
+  color: var(--accent);
+}
+
+.modal-slider {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.modal-footer {
+  padding: 12px 20px 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-btn {
+  background: var(--accent);
+  color: var(--text-accent);
+  border: none;
+  padding: 8px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.modal-btn:hover {
+  opacity: 0.9;
 }
 
 /* ── Config Actions ── */

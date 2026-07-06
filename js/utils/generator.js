@@ -35,10 +35,15 @@ export function generateDrillText(state) {
   let finalWords = [];
   const targetCount = state.textDensity;
 
+  const p = state.preferences;
+  const stretchPct = (p.stretchFreq || 25) / 100;
+  const symbolPct = (p.symbolFreq || 15) / 100;
+  const gluePct = (p.glueFreq || 20) / 100;
+
   while (finalWords.length < targetCount) {
     let chosenWord = '';
 
-    if (state.preferences.sameFingerStretches && Math.random() < 0.25) {
+    if (p.sameFingerStretches && Math.random() < stretchPct) {
       const matchStretches = awkwardSameFinger.filter(w => isTypeable(w, activeSet));
       if (matchStretches.length > 0) {
         chosenWord = matchStretches[Math.floor(Math.random() * matchStretches.length)];
@@ -71,7 +76,7 @@ export function generateDrillText(state) {
       }
     }
 
-    if (state.preferences.includeSymbols && Math.random() < 0.15) {
+    if (p.includeSymbols && Math.random() < symbolPct) {
       const sym = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
       if (sym === '_') {
         chosenWord = chosenWord + '_value';
@@ -82,7 +87,7 @@ export function generateDrillText(state) {
       }
     }
 
-    if (state.preferences.addGlueWords && Math.random() < 0.20 && finalWords.length > 0) {
+    if (p.addGlueWords && Math.random() < gluePct && finalWords.length > 0) {
       finalWords.push(GLUE_WORDS[Math.floor(Math.random() * GLUE_WORDS.length)]);
     }
 
@@ -92,14 +97,16 @@ export function generateDrillText(state) {
   return finalWords.slice(0, targetCount).join(' ');
 }
 
-export function applyCase(text, caseMode) {
+export function applyCase(text, caseMode, caseMixPct) {
   switch (caseMode) {
     case 'upper':
       return text.toUpperCase();
-    case 'mixed':
+    case 'mixed': {
+      const pct = (caseMixPct || 50) / 100;
       return text.split('').map(ch =>
-        Math.random() < 0.5 ? ch.toUpperCase() : ch
+        Math.random() < pct ? ch.toUpperCase() : ch
       ).join('');
+    }
     case 'lower':
     default:
       return text.toLowerCase();

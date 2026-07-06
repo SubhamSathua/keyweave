@@ -20,6 +20,10 @@ export const engineState = {
   preferences: {
     sameFingerStretches: false,
     includeSymbols:      true,
-    addGlueWords:        false
+    addGlueWords:        false,
+    symbolFreq:          15,
+    glueFreq:            20,
+    stretchFreq:         25,
+    caseMixPct:          50
   }
 };

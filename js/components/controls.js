@@ -6,7 +6,8 @@ export function mountControls() {
   mountTooltips();
   mountDensityInput();
   mountToggles();
-  mountAdvancedToggle();
+  mountPresets();
+  mountAdvancedModal();
 }
 
 /* ── Custom Dropdowns ── */
@@ -192,14 +193,158 @@ function mountToggles() {
   });
 }
 
-/* ── Advanced Config Toggle ── */
-function mountAdvancedToggle() {
-  const toggle = document.getElementById('advanced-toggle');
-  const panel = document.getElementById('advanced-panel');
-  if (!toggle || !panel) return;
-
-  toggle.addEventListener('click', () => {
-    const isOpen = panel.classList.toggle('open');
-    toggle.textContent = 'Advanced Config ' + (isOpen ? '▾' : '▸');
+/* ── Presets ── */
+function mountPresets() {
+  document.querySelectorAll('.preset-btn[data-preset]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.preset-btn[data-preset]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyPreset(btn.dataset.preset);
+    });
   });
+}
+
+function applyPreset(preset) {
+  const configs = {
+    easy: {
+      mode: 'fakeWords',
+      case: 'lower',
+      sameFinger: false,
+      symbols: false,
+      glue: false,
+      difficulty: 'easy',
+      symbolFreq: 0,
+      glueFreq: 0,
+      stretchFreq: 0,
+      caseMixPct: 0
+    },
+    mid: {
+      mode: 'fakeWords',
+      case: 'lower',
+      sameFinger: false,
+      symbols: true,
+      glue: false,
+      difficulty: 'mid',
+      symbolFreq: 15,
+      glueFreq: 0,
+      stretchFreq: 0,
+      caseMixPct: 0
+    },
+    hard: {
+      mode: 'realWords',
+      case: 'mixed',
+      sameFinger: true,
+      symbols: true,
+      glue: true,
+      difficulty: 'hard',
+      symbolFreq: 15,
+      glueFreq: 20,
+      stretchFreq: 25,
+      caseMixPct: 50
+    }
+  };
+
+  const cfg = configs[preset];
+  if (!cfg) return;
+
+  selectDropdownVal('mode', cfg.mode);
+  selectDropdownVal('case', cfg.case);
+  if (cfg.difficulty) selectDropdownVal('difficulty', cfg.difficulty);
+
+  document.getElementById('same-finger').checked = cfg.sameFinger;
+  engineState.preferences.sameFingerStretches = cfg.sameFinger;
+
+  document.getElementById('include-symbols').checked = cfg.symbols;
+  engineState.preferences.includeSymbols = cfg.symbols;
+
+  document.getElementById('glue-words').checked = cfg.glue;
+  engineState.preferences.addGlueWords = cfg.glue;
+
+  engineState.preferences.symbolFreq = cfg.symbolFreq;
+  engineState.preferences.glueFreq = cfg.glueFreq;
+  engineState.preferences.stretchFreq = cfg.stretchFreq;
+  engineState.preferences.caseMixPct = cfg.caseMixPct;
+
+  engineState.generationMode = cfg.mode;
+  engineState.caseMode = cfg.case;
+  if (cfg.difficulty) engineState.difficulty = cfg.difficulty;
+}
+
+function selectDropdownVal(name, value) {
+  const dropdown = document.querySelector(`.dropdown[data-name="${name}"]`);
+  if (!dropdown) return;
+  const item = dropdown.querySelector(`.dropdown-item[data-value="${value}"]`);
+  if (!item) return;
+  dropdown.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('selected'));
+  item.classList.add('selected');
+  dropdown.querySelector('.dropdown-btn').textContent = item.textContent;
+}
+
+/* ── Advanced Config Modal ── */
+function mountAdvancedModal() {
+  const overlay = document.getElementById('adv-modal');
+  const openBtn = document.getElementById('adv-modal-btn');
+  const closeBtn = document.getElementById('modal-close');
+  const doneBtn = document.getElementById('modal-done');
+  if (!overlay || !openBtn) return;
+
+  openBtn.addEventListener('click', () => {
+    syncSliderFromState();
+    overlay.classList.add('open');
+  });
+
+  const close = () => overlay.classList.remove('open');
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  if (doneBtn) doneBtn.addEventListener('click', () => {
+    syncStateFromSliders();
+    close();
+  });
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
+
+  // Live slider value display
+  document.querySelectorAll('.modal-slider').forEach(slider => {
+    const valSpan = document.getElementById(slider.id.replace('slider', 'val'));
+    if (valSpan) {
+      slider.addEventListener('input', () => { valSpan.textContent = slider.value; });
+    }
+  });
+}
+
+function syncSliderFromState() {
+  const p = engineState.preferences;
+  setSlider('sym-slider', p.symbolFreq, 'sym-val');
+  setSlider('glue-slider', p.glueFreq, 'glue-val');
+  setSlider('stretch-slider', p.stretchFreq, 'stretch-val');
+  const casePct = engineState.caseMode === 'mixed' ? (p.caseMixPct || 50) : 0;
+  setSlider('case-slider', engineState.caseMode === 'upper' ? 100 : casePct, 'case-val');
+}
+
+function setSlider(id, val, valId) {
+  const slider = document.getElementById(id);
+  if (!slider) return;
+  slider.value = val;
+  const span = document.getElementById(valId);
+  if (span) span.textContent = val;
+}
+
+function syncStateFromSliders() {
+  const p = engineState.preferences;
+  p.symbolFreq = parseInt(document.getElementById('sym-slider')?.value || 15);
+  p.glueFreq = parseInt(document.getElementById('glue-slider')?.value || 20);
+  p.stretchFreq = parseInt(document.getElementById('stretch-slider')?.value || 25);
+
+  const casePct = parseInt(document.getElementById('case-slider')?.value || 0);
+  if (casePct === 0) {
+    engineState.caseMode = 'lower';
+    selectDropdownVal('case', 'lower');
+  } else if (casePct === 100) {
+    engineState.caseMode = 'upper';
+    selectDropdownVal('case', 'upper');
+  } else {
+    engineState.caseMode = 'mixed';
+    p.caseMixPct = casePct;
+    selectDropdownVal('case', 'mixed');
+  }
 }

@@ -436,25 +436,14 @@
                         >
                     </div>
 
-                    <button type="button" class="advanced-toggle" id="advanced-toggle">
-                        Advanced Config ▸
-                    </button>
-
-                    <div class="advanced-panel" id="advanced-panel">
-                        <div class="config-field">
-                            <label class="config-label">Difficulty</label>
-                            <div class="config-control">
-                                <div class="dropdown" data-name="difficulty" data-default="mid">
-                                    <button type="button" class="dropdown-btn">Medium</button>
-                                    <div class="dropdown-menu">
-                                        <div class="dropdown-item" data-value="easy">Easy</div>
-                                        <div class="dropdown-item selected" data-value="mid">Medium</div>
-                                        <div class="dropdown-item" data-value="hard">Hard</div>
-                                    </div>
-                                </div>
-                                <span class="info-btn" data-tip-html="Word difficulty filter: Easy, Medium, or Hard words only.">i</span>
-                            </div>
+                    <div class="presets-row">
+                        <span class="config-label">Preset</span>
+                        <div class="preset-btns">
+                            <button type="button" class="preset-btn" data-preset="easy">Easy</button>
+                            <button type="button" class="preset-btn active" data-preset="mid">Mid</button>
+                            <button type="button" class="preset-btn" data-preset="hard">Hard</button>
                         </div>
+                        <button type="button" class="preset-btn adv-btn" id="adv-modal-btn">⚙</button>
                     </div>
                 </div>
             </div>
@@ -479,6 +468,48 @@
 
         <!-- Shared Tooltip (positioned via JS) -->
         <div id="global-tooltip" class="tooltip"></div>
+
+        <!-- Advanced Config Modal -->
+        <div class="modal-overlay" id="adv-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Advanced Config</h3>
+                    <button type="button" class="modal-close" id="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-field">
+                        <label>Symbols <span class="modal-val" id="sym-val">15</span>%</label>
+                        <input type="range" class="modal-slider" id="sym-slider" min="0" max="50" value="15" />
+                    </div>
+                    <div class="modal-field">
+                        <label>Glue Words <span class="modal-val" id="glue-val">20</span>%</label>
+                        <input type="range" class="modal-slider" id="glue-slider" min="0" max="50" value="20" />
+                    </div>
+                    <div class="modal-field">
+                        <label>Stretch Words <span class="modal-val" id="stretch-val">25</span>%</label>
+                        <input type="range" class="modal-slider" id="stretch-slider" min="0" max="50" value="25" />
+                    </div>
+                    <div class="modal-field">
+                        <label>Mixed Case <span class="modal-val" id="case-val">50</span>%</label>
+                        <input type="range" class="modal-slider" id="case-slider" min="0" max="100" value="50" />
+                    </div>
+                    <div class="modal-field">
+                        <label>Difficulty</label>
+                        <div class="dropdown" data-name="difficulty" data-default="mid">
+                            <button type="button" class="dropdown-btn">Medium</button>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-item" data-value="easy">Easy</div>
+                                <div class="dropdown-item selected" data-value="mid">Medium</div>
+                                <div class="dropdown-item" data-value="hard">Hard</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-btn" id="modal-done">Done</button>
+                </div>
+            </div>
+        </div>
 
         <script type="module" src="js/app.js"></script>
     </body>
