@@ -11,5 +11,8 @@
 export const commonTrigrams = [
   'the','and','tha','ent','ing','ion','tio','for','nde','has',
   'nce','edt','tis','oft','sth','men','her','all','pro','ali',
-  'ter','res','hat','ere','ate','con','int','pla','ear','ion'
+  'ter','res','hat','ere','ate','con','int','pla','ear','ion',
+  'com','ous','ble','der','per','ver','est','ist','ant','ity',
+  'ful','ness','ment','able','tion','sion','ation','ould','ight','ough',
+  'igh','ould','eigh','ough','tion','sion','ation','ement','ally','ence'
 ];

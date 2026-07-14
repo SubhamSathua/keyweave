@@ -36,6 +36,16 @@ function findMissingKeys(words, activeKeys) {
   return activeKeys.filter(k => !usedChars.has(k.toLowerCase()));
 }
 
+function countKeyOccurrences(words, key) {
+  let count = 0;
+  words.forEach(w => {
+    for (const ch of w) {
+      if (ch.toLowerCase() === key.toLowerCase()) count++;
+    }
+  });
+  return count;
+}
+
 function createWordForKey(key, trigramPool, allChars) {
   const k = key.toLowerCase();
   if (trigramPool && trigramPool.length >= 2) {
@@ -114,9 +124,13 @@ export function generateDrillText(state) {
           const insertIdx = Math.floor(Math.random() * (combined.length + 1));
           chosenWord = combined.slice(0, insertIdx) + targetKey + combined.slice(insertIdx);
         } else {
-          chosenWord = trigramFallback
+          const t1 = trigramFallback
             ? pickRandom(trigramFallback)
             : randomActiveChars(4, allChars);
+          const t2 = trigramFallback
+            ? pickRandom(trigramFallback)
+            : randomActiveChars(4, allChars);
+          chosenWord = t1 + t2;
         }
       } else if (state.generationMode === 'fakeWords') {
         if (!hasLetterKeys && !trigramFallback) {
@@ -169,7 +183,24 @@ export function generateDrillText(state) {
         const pos = insertPositions[idx % insertPositions.length];
         words.splice(pos + 1, 0, fw);
       });
-      words = words.slice(0, targetCount + fillerWords.length);
+    }
+
+    if (focusSet.size > 0) {
+      const targetPerFocus = Math.max(3, Math.round(targetCount * weightedPct / focusSet.size));
+      const focusWords = [];
+      focusSet.forEach(fk => {
+        const count = countKeyOccurrences(words, fk);
+        if (count < targetPerFocus) {
+          const needed = targetPerFocus - count;
+          for (let i = 0; i < needed; i++) {
+            focusWords.push(createWordForKey(fk, trigramFallback, letterKeys));
+          }
+        }
+      });
+      if (focusWords.length > 0) {
+        const insertAt = Math.floor(words.length / 2);
+        words.splice(insertAt, 0, ...focusWords);
+      }
     }
   }
 
