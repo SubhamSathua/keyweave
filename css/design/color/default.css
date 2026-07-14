@@ -41,7 +41,7 @@
   --preset-btn-active: #e2b714;
   --accent-rgb: 226, 183, 20;
   --text-primary-rgb: 100, 100, 100;
-  --star-color: #3dc4ff;
+  --star-color: #1d48eb;
 }
 
 :root[data-appearance="light"] {
@@ -87,5 +87,5 @@
   --preset-btn-active: #d4a413;
   --accent-rgb: 212, 164, 19;
   --text-primary-rgb: 44, 46, 49;
-  --star-color: #2ba4d9;
+  --star-color: #1d48eb;
 }

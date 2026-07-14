@@ -103,7 +103,23 @@ async function init() {
 
   const settingsModal = document.getElementById('settings-modal');
   const settingsClose = settingsModal.querySelector('.settings-close');
-  const closeSettings = () => settingsModal.classList.remove('open');
+  const aboutModal = document.getElementById('about-modal');
+  const aboutClose = aboutModal.querySelector('.about-close');
+  const privacyModal = document.getElementById('privacy-modal');
+  const privacyClose = privacyModal.querySelector('.privacy-close');
+  const privacyBtn = aboutModal.querySelector('.about-privacy-btn');
+
+  const closeModal = (modal, callback) => {
+    modal.classList.add('closing');
+    setTimeout(() => {
+      modal.classList.remove('open', 'closing');
+      if (callback) callback();
+    }, 200);
+  };
+
+  const closeSettings = () => closeModal(settingsModal);
+  const closeAbout = () => closeModal(aboutModal);
+  const closePrivacy = () => closeModal(privacyModal);
 
   document.getElementById('settings-btn').addEventListener('click', () => {
     populateThemeChips();
@@ -115,8 +131,34 @@ async function init() {
   settingsModal.addEventListener('click', (e) => {
     if (e.target === settingsModal) closeSettings();
   });
+
+  document.getElementById('sett-about').addEventListener('click', () => {
+    closeModal(settingsModal);
+    setTimeout(() => aboutModal.classList.add('open'), 200);
+  });
+
+  if (aboutClose) aboutClose.addEventListener('click', closeAbout);
+  aboutModal.addEventListener('click', (e) => {
+    if (e.target === aboutModal) closeAbout();
+  });
+
+  if (privacyBtn) {
+    privacyBtn.addEventListener('click', () => {
+      privacyModal.classList.add('open');
+    });
+  }
+
+  if (privacyClose) privacyClose.addEventListener('click', closePrivacy);
+  privacyModal.addEventListener('click', (e) => {
+    if (e.target === privacyModal) closePrivacy();
+  });
+
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && settingsModal.classList.contains('open')) closeSettings();
+    if (e.key === 'Escape') {
+      if (privacyModal.classList.contains('open')) closePrivacy();
+      else if (aboutModal.classList.contains('open')) closeAbout();
+      else if (settingsModal.classList.contains('open')) closeSettings();
+    }
   });
 
   wireAppearanceBtns();

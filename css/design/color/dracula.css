@@ -48,6 +48,7 @@
   --preset-btn-active: #ff79c6;
   --accent-rgb: 189, 147, 249;
   --text-primary-rgb: 248, 248, 242;
+  --star-color: #2c2f3b;
 }
 
 :root[data-theme="dracula"][data-appearance="light"] {
@@ -93,4 +94,5 @@
   --preset-btn-active: #e2005a;
   --accent-rgb: 100, 74, 201;
   --text-primary-rgb: 31, 31, 31;
+  --star-color: #ffffff;
 }

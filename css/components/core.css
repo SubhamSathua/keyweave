@@ -239,7 +239,15 @@ html.theme-transitioning *::after {
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    margin: 0 0 4px;
+}
+
+.config-hint {
+    font-size: 11px;
+    color: var(--text-muted);
     margin: 0 0 16px;
+    opacity: 0.7;
+    font-style: italic;
 }
 
 .config-grid {
@@ -531,13 +539,22 @@ html.theme-transitioning *::after {
   max-width: 480px;
   max-height: 85vh;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-  animation: modalIn 0.25s ease;
+  animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-sizing: border-box;
 }
 
 @keyframes modalIn {
-  from { opacity: 0; transform: scale(0.95) translateY(10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes modalOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.8); }
+}
+
+.modal-overlay.closing .modal-content {
+  animation: modalOut 0.2s ease forwards;
 }
 
 .modal-header {
@@ -659,6 +676,107 @@ html.theme-transitioning *::after {
   font-size: 12px;
   font-weight: 500;
   color: var(--modal-group-text);
+}
+
+/* ── About Modal ── */
+.about-body {
+  align-items: center;
+  text-align: center;
+}
+
+.about-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.about-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+}
+
+.about-name {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.about-version {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.about-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.about-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.about-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--text-primary);
+  background: var(--modal-group-bg);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.about-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+.about-link:hover {
+  background: var(--btn-hover-bg);
+  color: var(--btn-hover-text);
+  border-color: var(--accent);
+}
+
+.about-privacy-btn {
+  background: transparent;
+}
+
+.about-footer {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.about-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.about-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ── Privacy Modal ── */
+.privacy-body p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 12px;
 }
 
 .case-label {

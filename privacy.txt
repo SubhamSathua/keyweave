@@ -1,0 +1,17 @@
+Privacy Policy — KeyWeave
+Last updated: July 14, 2026
+
+KeyWeave is a client-side web application. All typing drills are generated locally in your browser.
+
+Data Collection
+We do not collect, store, or transmit any personal data. There are no analytics, cookies, or tracking technologies used.
+
+Local Storage
+Your theme and preference settings are stored locally in your browser and never leave your device.
+
+Third-Party Services
+KeyWeave does not connect to any external servers or APIs.
+
+Open Source
+KeyWeave is fully open source. You can review the source code on GitHub:
+https://github.com/SubhamSathua/keyweave

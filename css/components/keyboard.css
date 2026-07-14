@@ -13,6 +13,21 @@
   box-sizing: border-box;
 }
 
+.kb-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.kb-hint {
+  font-size: 11px;
+  color: var(--accent);
+  margin: 8px 0 0;
+  font-style: italic;
+  opacity: 0.8;
+}
+
 .kb-row {
   display: flex;
   justify-content: center;
@@ -246,14 +261,12 @@
   }
 }
 
-.key-label.heavy-focus::after {
-  content: '\2605';
+.heavy-star {
   position: absolute;
-  top: -6px;
-  right: -6px;
-  font-size: 12px;
-  color: var(--accent);
-  line-height: 1;
+  top: 2px;
+  right: 2px;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
 }
 
 /* Home row bars — bumps on F and J */
