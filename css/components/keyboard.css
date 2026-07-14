@@ -179,3 +179,32 @@
   color: var(--accent);
   line-height: 1;
 }
+
+/* Home row bars — bumps on F and J */
+.key-label:has(input[value="f"]):not(.active)::before,
+.key-label:has(input[value="j"]):not(.active)::before {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: var(--bg-primary);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.key-label:has(input[value="f"]).active::before,
+.key-label:has(input[value="j"]).active::before {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: var(--key-active-text);
+  border-radius: 1px;
+  pointer-events: none;
+}

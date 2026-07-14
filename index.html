@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="default" data-appearance="dark">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,43 +46,6 @@
                         />
                     </svg>
                 </button>
-                <div class="theme-switcher">
-                    <button
-                        class="header-icon-btn"
-                        id="theme-btn"
-                        title="Theme"
-                    >
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <circle cx="12" cy="12" r="5" />
-                            <line x1="12" y1="1" x2="12" y2="3" />
-                            <line x1="12" y1="21" x2="12" y2="23" />
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                            <line x1="1" y1="12" x2="3" y2="12" />
-                            <line x1="21" y1="12" x2="23" y2="12" />
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                        </svg>
-                    </button>
-                    <div class="theme-dropdown" id="theme-dropdown">
-                        <button class="theme-option" data-theme="system">
-                            System
-                        </button>
-                        <button class="theme-option" data-theme="light">
-                            Light
-                        </button>
-                        <button class="theme-option" data-theme="dark">
-                            Dark
-                        </button>
-                    </div>
-                </div>
             </div>
         </header>
 
@@ -590,6 +553,74 @@
                 <div class="modal-footer">
                     <button type="button" class="modal-btn modal-btn-secondary" id="modal-reset">Reset</button>
                     <button type="button" class="modal-btn" id="modal-done">Done</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div class="modal-overlay" id="settings-modal">
+            <div class="modal-content settings-content">
+                <div class="modal-header">
+                    <h3>Settings</h3>
+                    <button type="button" class="modal-close settings-close">&times;</button>
+                </div>
+                <div class="modal-body settings-body">
+                    <div class="sett-section">
+                        <span class="sett-section-label">Theme Colors</span>
+                        <div class="sett-theme-row" id="sett-theme-row">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="sett-section">
+                        <span class="sett-section-label">Appearance</span>
+                        <div class="sett-appearance-row">
+                            <button class="sett-appearance-btn" data-appearance="dark">Dark</button>
+                            <button class="sett-appearance-btn" data-appearance="light">Light</button>
+                        </div>
+                    </div>
+
+                    <hr class="sett-divider">
+
+                    <a class="settings-card" id="sett-feedback" href="https://github.com/anomalyco/opencode/issues" target="_blank" rel="noopener">
+                        <span class="sett-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        </span>
+                        <span class="sett-info">
+                            <span class="sett-label">Feedback</span>
+                            <span class="sett-desc">Share your thoughts and report issues</span>
+                        </span>
+                    </a>
+
+                    <a class="settings-card" id="sett-docs" href="https://opencode.ai/docs" target="_blank" rel="noopener">
+                        <span class="sett-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        </span>
+                        <span class="sett-info">
+                            <span class="sett-label">Docs</span>
+                            <span class="sett-desc">Read the documentation</span>
+                        </span>
+                    </a>
+
+                    <a class="settings-card" id="sett-source" href="https://github.com/anomalyco/opencode" target="_blank" rel="noopener">
+                        <span class="sett-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                        </span>
+                        <span class="sett-info">
+                            <span class="sett-label">Source Code</span>
+                            <span class="sett-desc">View the project on GitHub</span>
+                        </span>
+                    </a>
+
+                    <button class="settings-card" id="sett-about">
+                        <span class="sett-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        </span>
+                        <span class="sett-info">
+                            <span class="sett-label">About</span>
+                            <span class="sett-desc">Custom Typing Drill Generator v1.0</span>
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>

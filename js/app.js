@@ -1,14 +1,3 @@
-/**
- * app.js — Application Entry Point
- * 
- * Use case: Bootstrap and wire all modules together. Initializes
- * engine state, mounts component event handlers, and starts the
- * generator pipeline on "Generate" click. This file is the
- * orchestration hub — it imports everything and connects the dots.
- * No DOM queries or business logic live here; it delegates to
- * component and utility modules.
- */
-
 import { engineState } from './state/engineState.js';
 import { mountKeyboard } from './components/keyboard.js';
 import { mountRowMasters } from './components/rowMaster.js';
@@ -16,73 +5,78 @@ import { mountControls } from './components/controls.js';
 import { mountOutput } from './components/output.js';
 import { mountShiftConfig } from './components/shiftConfig.js';
 import { generateDrillText, applyCase } from './utils/generator.js';
+import {
+  loadThemeManifest,
+  initTheme,
+  applyTheme,
+  applyAppearance,
+  getThemeList,
+  getCurrentTheme,
+  getCurrentAppearance
+} from './utils/theme.js';
 
-function mountThemeSwitcher() {
-  const themeBtn = document.getElementById('theme-btn');
-  const themeSwitcher = document.querySelector('.theme-switcher');
-  const themeOptions = document.querySelectorAll('.theme-option');
-  const html = document.documentElement;
-
-  // Load saved theme or default to system
-  const savedTheme = localStorage.getItem('theme') || 'system';
-  applyTheme(savedTheme, false);
-
-  // Toggle dropdown
-  themeBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    themeSwitcher.classList.toggle('open');
-  });
-
-  // Close on outside click
-  document.addEventListener('click', () => {
-    themeSwitcher.classList.remove('open');
-  });
-
-  // Theme selection
-  themeOptions.forEach((opt) => {
-    if (opt.dataset.theme === savedTheme) {
-      opt.classList.add('active');
-    }
-
-    opt.addEventListener('click', () => {
-      const theme = opt.dataset.theme;
-      applyTheme(theme, true);
-      localStorage.setItem('theme', theme);
-
-      themeOptions.forEach((o) => o.classList.remove('active'));
-      opt.classList.add('active');
-      themeSwitcher.classList.remove('open');
+function populateThemeChips() {
+  const row = document.getElementById('sett-theme-row');
+  if (!row) return;
+  const current = getCurrentTheme();
+  row.innerHTML = '';
+  getThemeList().forEach(t => {
+    const btn = document.createElement('button');
+    btn.className = 'sett-theme-chip' + (t.id === current ? ' active' : '');
+    btn.textContent = t.name;
+    btn.dataset.theme = t.id;
+    btn.addEventListener('click', () => {
+      applyTheme(t.id, getCurrentAppearance(), true);
+      populateThemeChips();
+      updateAppearanceBtns();
     });
-  });
-
-  function applyTheme(theme, animate) {
-    const newTheme = theme === 'system'
-      ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-      : theme;
-
-    if (animate && html.getAttribute('data-theme') !== newTheme) {
-      html.classList.add('theme-transitioning');
-      html.setAttribute('data-theme', newTheme);
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          html.classList.remove('theme-transitioning');
-        });
-      });
-    } else {
-      html.setAttribute('data-theme', newTheme);
-    }
-  }
-
-  // Listen for system theme changes when in system mode
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    if (localStorage.getItem('theme') === 'system') {
-      applyTheme('system', true);
-    }
+    row.appendChild(btn);
   });
 }
 
-function init() {
-  mountThemeSwitcher();
+function updateAppearanceBtns() {
+  const current = getCurrentAppearance();
+  document.querySelectorAll('.sett-appearance-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.appearance === current);
+  });
+}
+
+function wireAppearanceBtns() {
+  document.querySelectorAll('.sett-appearance-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      applyAppearance(btn.dataset.appearance);
+      updateAppearanceBtns();
+    });
+  });
+}
+
+async function init() {
+  await loadThemeManifest();
+
+  const savedTheme = localStorage.getItem('theme') || 'default';
+  const savedAppearance = localStorage.getItem('appearance') || 'dark';
+  initTheme(savedTheme, savedAppearance);
+
+  const settingsModal = document.getElementById('settings-modal');
+  const settingsClose = settingsModal.querySelector('.settings-close');
+  const closeSettings = () => settingsModal.classList.remove('open');
+
+  document.getElementById('settings-btn').addEventListener('click', () => {
+    populateThemeChips();
+    updateAppearanceBtns();
+    settingsModal.classList.add('open');
+  });
+
+  if (settingsClose) settingsClose.addEventListener('click', closeSettings);
+  settingsModal.addEventListener('click', (e) => {
+    if (e.target === settingsModal) closeSettings();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && settingsModal.classList.contains('open')) closeSettings();
+  });
+
+  wireAppearanceBtns();
+
   mountKeyboard();
   mountRowMasters();
   mountControls();
