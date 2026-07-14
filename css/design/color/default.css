@@ -33,6 +33,12 @@
   --theme-dropdown-text: #d1d2d3;
   --theme-dropdown-text-hover: #ffffff;
   --theme-dropdown-text-active: #e2b714;
+  --modal-group-bg: #26282b;
+  --modal-group-text: #646669;
+  --modal-val-text: #e2b714;
+  --toggle-on-bg: #e2b714;
+  --toggle-off-bg: #444;
+  --preset-btn-active: #e2b714;
 }
 
 :root[data-appearance="light"] {
@@ -70,4 +76,10 @@
   --theme-dropdown-text: #2c2e31;
   --theme-dropdown-text-hover: #1a1a1a;
   --theme-dropdown-text-active: #d4a413;
+  --modal-group-bg: #eeedeb;
+  --modal-group-text: #999;
+  --modal-val-text: #d4a413;
+  --toggle-on-bg: #d4a413;
+  --toggle-off-bg: #ccc;
+  --preset-btn-active: #d4a413;
 }

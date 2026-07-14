@@ -36,7 +36,7 @@ button:hover {
   position: relative;
   width: 34px;
   height: 20px;
-  background: var(--border);
+  background: var(--toggle-off-bg);
   border-radius: 10px;
   transition: background 0.3s;
   flex-shrink: 0;
@@ -54,7 +54,7 @@ button:hover {
 }
 
 .toggle-switch input:checked + .toggle-track {
-  background: var(--accent);
+  background: var(--toggle-on-bg);
 }
 
 .toggle-switch input:checked + .toggle-track .toggle-thumb {

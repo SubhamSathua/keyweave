@@ -450,9 +450,9 @@ html.theme-transitioning *::after {
 }
 
 .preset-btn.active {
-  background: var(--accent);
+  background: var(--preset-btn-active);
   color: var(--text-accent);
-  border-color: var(--accent);
+  border-color: var(--preset-btn-active);
 }
 
 .preset-btn.adv-btn {
@@ -577,7 +577,7 @@ html.theme-transitioning *::after {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  background: var(--bg-tint);
+  background: var(--modal-group-bg);
   border-radius: 8px;
   padding: 14px;
 }
@@ -591,7 +591,7 @@ html.theme-transitioning *::after {
 .modal-field label {
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-muted);
+  color: var(--modal-group-text);
 }
 
 .modal-label-row {
@@ -603,7 +603,7 @@ html.theme-transitioning *::after {
 .modal-label-row > label:first-child {
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-muted);
+  color: var(--modal-group-text);
 }
 
 .modal-toggle.toggle-switch {
@@ -613,7 +613,7 @@ html.theme-transitioning *::after {
 .modal-sub-label {
   font-size: 12px;
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--modal-group-text);
 }
 
 .case-label {
@@ -623,7 +623,7 @@ html.theme-transitioning *::after {
 }
 
 .modal-val {
-  color: var(--accent);
+  color: var(--modal-val-text);
 }
 
 .modal-slider {
@@ -1075,6 +1075,7 @@ html.theme-transitioning *::after {
 
 .settings-card:hover {
   background: var(--bg-tint);
+  color: var(--text-primary);
 }
 
 .sett-icon {
@@ -1161,6 +1162,7 @@ html.theme-transitioning *::after {
 .sett-theme-chip:hover {
   background: var(--bg-tint);
   border-color: var(--accent);
+  color: var(--text-primary);
 }
 
 .sett-theme-chip.active {
@@ -1192,6 +1194,7 @@ html.theme-transitioning *::after {
 .sett-appearance-btn:hover {
   background: var(--bg-tint);
   border-color: var(--accent);
+  color: var(--text-primary);
 }
 
 .sett-appearance-btn.active {
