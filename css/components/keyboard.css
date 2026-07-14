@@ -9,6 +9,8 @@
   margin-bottom: 20px;
   opacity: 0;
   animation: fadeIn 0.6s ease 0.1s forwards;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .kb-row {
@@ -16,6 +18,7 @@
   justify-content: center;
   gap: 5px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 /* Brick stagger — each row indented by ~0.5 key width */
@@ -32,8 +35,9 @@
   border: 1px solid var(--key-border);
   border-radius: 6px;
   flex: 1 1 0;
+  min-width: 2em;
   max-width: 2.8em;
-  height: 2.6em;
+  height: 2.8em;
   font-family: 'JetBrains Mono', monospace;
   font-size: clamp(12px, 2.8vw, 16px);
   cursor: pointer;
@@ -42,6 +46,7 @@
   color: var(--text-primary);
   transition: background 0.3s, border-color 0.3s, color 0.3s;
   position: relative;
+  box-sizing: border-box;
 }
 
 .key-label:hover {
@@ -63,14 +68,14 @@
 }
 
 /* Shift Config button on keyboard */
-.shift-btn {
+.key-label.shift-btn {
   background: var(--bg-surface);
   border: 1px dashed var(--accent);
   color: var(--accent);
   font-family: 'Nunito', sans-serif;
   cursor: pointer;
   flex: 0 0 auto;
-  height: 2.6em;
+  height: 2.8em;
   border-radius: 6px;
   padding: 0 6px;
   transition: background 0.3s, color 0.3s, border-color 0.3s;
@@ -80,6 +85,7 @@
   justify-content: center;
   user-select: none;
   line-height: 1.1;
+  box-sizing: border-box;
 }
 
 .shift-btn-text {
@@ -99,14 +105,14 @@
   line-height: 1;
 }
 
-.shift-btn:hover {
+.key-label.shift-btn:hover {
   background: var(--accent);
   color: var(--text-accent);
   border-style: solid;
 }
 
 /* Enter key — utility key, independent of row masters */
-.enter-key {
+.key-label.enter-key {
   flex: 0 0 auto;
   background: var(--bg-surface);
   border: 1px dashed var(--accent);
@@ -114,7 +120,7 @@
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
   border-radius: 6px;
-  height: 2.6em;
+  height: 2.8em;
   padding: 0 6px;
   cursor: pointer;
   display: flex;
@@ -124,20 +130,21 @@
   user-select: none;
   line-height: 1.1;
   transition: background 0.3s, color 0.3s, border-color 0.3s;
+  box-sizing: border-box;
 }
 
-.enter-key input {
+.key-label.enter-key input {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.enter-key:hover {
+.key-label.enter-key:hover {
   opacity: 0.85;
 }
 
-.enter-key:has(input:checked) {
+.key-label.enter-key:has(input:checked) {
   background: var(--key-active-bg);
   color: var(--key-active-text);
   border-color: var(--key-active-bg);
@@ -161,13 +168,82 @@
   line-height: 1;
 }
 
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — Mobile (≤520px)
+   ═══════════════════════════════════════════════════ */
 @media (max-width: 520px) {
   .shift-btn-text { display: none; }
   .shift-btn-icon { display: block; }
-  .shift-btn { flex: 0 0 auto; max-width: 2.8em; }
+  .key-label.shift-btn { flex: 0 0 auto; max-width: 2.5em; height: 3em; }
   .enter-label { display: none; }
   .enter-icon { display: block; }
-  .enter-key { flex: 0 0 auto; max-width: 2.8em; }
+  .key-label.enter-key { flex: 0 0 auto; max-width: 2.5em; height: 3em; }
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — Small Mobile (≤400px)
+   ═══════════════════════════════════════════════════ */
+@media (max-width: 400px) {
+  .keyboard {
+    gap: 3px;
+    padding: 8px 4px;
+  }
+
+  .kb-row {
+    gap: 2px;
+  }
+
+  .kb-row:nth-child(1) { padding: 0 0.8em; }
+  .kb-row:nth-child(3) { padding: 0 0.8em; }
+  .kb-row:nth-child(4) { padding: 0 1.6em; }
+
+  .key-label {
+    font-size: 11px;
+    height: 3em;
+    border-radius: 4px;
+    min-width: 1.8em;
+  }
+
+  .key-label.shift-btn, .key-label.enter-key {
+    max-width: 2.2em;
+    height: 3em;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — Very Small (≤360px)
+   ═══════════════════════════════════════════════════ */
+@media (max-width: 360px) {
+  .keyboard {
+    gap: 2px;
+    padding: 4px 2px;
+    border-radius: 6px;
+  }
+
+  .kb-row {
+    gap: 1px;
+  }
+
+  .kb-row:nth-child(1) { padding: 0 0.5em; }
+  .kb-row:nth-child(3) { padding: 0 0.5em; }
+  .kb-row:nth-child(4) { padding: 0 1em; }
+
+  .key-label {
+    font-size: 10px;
+    height: 2.5em;
+    border-radius: 3px;
+    min-width: 1.5em;
+  }
+
+  .key-label.shift-btn, .key-label.enter-key {
+    max-width: 2em;
+    height: 2.5em;
+    font-size: 9px;
+  }
+
+  .shift-btn-icon, .enter-icon {
+    font-size: 14px;
+  }
 }
 
 .key-label.heavy-focus::after {

@@ -6,6 +6,15 @@ body {
   margin: 40px auto;
   padding: 20px;
   font-size: clamp(14px, 2.5vw, 16px);
+  overflow-x: hidden;
+}
+
+/* ── Tablet ── */
+@media (max-width: 768px) {
+  body {
+    margin: 24px auto;
+    padding: 16px;
+  }
 }
 
 /* ── Mobile ── */
@@ -17,6 +26,21 @@ body {
 
   .app-header {
     margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .brand {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
   }
 
   .brand-name {
@@ -28,28 +52,17 @@ body {
     height: 22px;
   }
 
-  /* Sections — tighter padding */
   .section {
     padding: 14px;
     border-radius: 10px;
+    overflow: hidden;
   }
 
-  /* Row selectors — 2×2 grid */
-  .row-selectors {
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-  }
-
-  .row-selectors label {
-    padding: 8px 10px;
-    font-size: 12px;
-  }
-
-  /* Keyboard — compact centered layout */
   .keyboard {
     gap: 4px;
-    padding: 12px 8px;
+    padding: 10px 6px;
     border-radius: 12px;
+    overflow: hidden;
   }
 
   .kb-row {
@@ -57,13 +70,11 @@ body {
   }
 
   .key-label {
-    font-size: 14px;
-    max-width: 2.2em;
-    height: 2.2em;
+    font-size: 13px;
+    height: 3em;
     border-radius: 5px;
   }
 
-  /* Toggle switches */
   .toggle-switch {
     font-size: 12px;
   }
@@ -74,15 +85,76 @@ body {
   }
 }
 
-/* ── Very Small Screens (≤360px, e.g. 304×638) ── */
-@media (max-width: 360px) {
+/* ── Small Mobile (≤400px) ── */
+@media (max-width: 400px) {
   body {
-    margin: 6px auto;
-    padding: 6px;
+    margin: 10px auto;
+    padding: 8px;
   }
 
   .app-header {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+  }
+
+  .brand-name {
+    font-size: 14px;
+  }
+
+  .brand-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .header-icon-btn {
+    padding: 5px;
+  }
+
+  .header-icon-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .section {
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .keyboard {
+    gap: 3px;
+    padding: 8px 4px;
+  }
+
+  .kb-row {
+    gap: 2px;
+  }
+
+  .key-label {
+    font-size: 12px;
+    height: 3em;
+    border-radius: 4px;
+  }
+
+  .toggle-switch {
+    font-size: 11px;
+  }
+
+  textarea {
+    height: 100px;
+    font-size: 14px;
+  }
+}
+
+/* ── Very Small Screens (≤360px) ── */
+@media (max-width: 360px) {
+  body {
+    margin: 4px auto;
+    padding: 4px;
+    overflow-x: hidden;
+  }
+
+  .app-header {
+    margin-bottom: 8px;
+    gap: 8px;
   }
 
   .brand-name {
@@ -100,35 +172,30 @@ body {
   }
 
   .section {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-  }
-
-  .row-selectors {
-    gap: 5px;
-  }
-
-  .row-selectors label {
-    padding: 5px 8px;
-    font-size: 11px;
-    gap: 4px;
+    padding: 6px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
   .keyboard {
-    gap: 3px;
-    padding: 8px 4px;
+    gap: 2px;
+    padding: 4px 2px;
+    border-radius: 8px;
+    overflow: hidden;
   }
 
   .kb-row {
-    gap: 2px;
+    gap: 1px;
   }
 
   .key-label {
     font-size: 11px;
-    max-width: 2em;
-    height: 2em;
+    height: 2.5em;
     border-radius: 4px;
+    padding: 0;
+    min-width: 1.6em;
   }
 
   .config-grid {
@@ -182,14 +249,14 @@ body {
   }
 
   button {
-    font-size: 13px;
-    padding: 7px 14px;
+    font-size: 12px;
+    padding: 6px 12px;
   }
 
   textarea {
-    height: 90px;
-    font-size: 13px;
-    padding: 10px;
+    height: 80px;
+    font-size: 12px;
+    padding: 8px;
   }
 
   .theme-dropdown {
@@ -197,7 +264,7 @@ body {
   }
 
   .theme-option {
-    font-size: 12px;
-    padding: 6px 10px;
+    font-size: 11px;
+    padding: 5px 8px;
   }
 }

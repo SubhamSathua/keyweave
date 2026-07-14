@@ -171,21 +171,32 @@ html.theme-transitioning *::after {
     color: var(--accent);
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     transition:
         background 0.3s,
         color 0.3s,
-        opacity 0.3s;
+        border-color 0.3s,
+        transform 0.2s,
+        box-shadow 0.2s;
     user-select: none;
 }
 
 .row-selectors label:hover {
-    opacity: 0.8;
+    background-color: var(--bg-tint);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .row-selectors label:has(input:checked) {
     background-color: var(--accent);
     color: var(--text-accent);
+    border-color: var(--accent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.row-selectors label:active {
+    transform: scale(0.97);
 }
 
 .row-selectors input {
@@ -193,6 +204,31 @@ html.theme-transitioning *::after {
     opacity: 0;
     width: 0;
     height: 0;
+}
+
+/* ── Row Selectors — Responsive ── */
+@media (max-width: 520px) {
+    .row-selectors {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+
+    .row-selectors label {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 360px) {
+    .row-selectors {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 4px;
+    }
+
+    .row-selectors label {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
 }
 
 /* ── Config Card ── */
