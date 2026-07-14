@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yourusername.github.io/keyweave/sitemap.xml
+Sitemap: https://subhamsathua.github.io/keyweave/sitemap.xml
