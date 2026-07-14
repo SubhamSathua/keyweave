@@ -28,6 +28,31 @@ function pickTrigrams(validList) {
   return null;
 }
 
+function findMissingKeys(words, activeKeys) {
+  const usedChars = new Set();
+  words.forEach(w => {
+    for (const ch of w) usedChars.add(ch.toLowerCase());
+  });
+  return activeKeys.filter(k => !usedChars.has(k.toLowerCase()));
+}
+
+function createWordForKey(key, trigramPool, allChars) {
+  const k = key.toLowerCase();
+  if (trigramPool && trigramPool.length >= 2) {
+    const t1 = pickRandom(trigramPool);
+    const t2 = pickRandom(trigramPool);
+    const combined = t1 + t2;
+    const insertIdx = Math.floor(Math.random() * (combined.length + 1));
+    return combined.slice(0, insertIdx) + k + combined.slice(insertIdx);
+  }
+  if (allChars.length >= 2) {
+    const before = pickRandom(allChars);
+    const after = pickRandom(allChars);
+    return before + k + after;
+  }
+  return k;
+}
+
 export function generateDrillText(state) {
   const activeSet = state.activeKeys;
   const focusSet = state.heavyFocusKeys;
@@ -128,7 +153,26 @@ export function generateDrillText(state) {
     finalWords.push(chosenWord);
   }
 
-  const words = finalWords.slice(0, targetCount);
+  let words = finalWords.slice(0, targetCount);
+
+  if (hasLetterKeys) {
+    const missing = findMissingKeys(words, letterKeys);
+    if (missing.length > 0) {
+      const fillerWords = missing.map(k =>
+        createWordForKey(k, trigramFallback, letterKeys)
+      );
+      const insertPositions = [];
+      for (let i = 0; i < words.length && fillerWords.length > 0; i += 3) {
+        insertPositions.push(i);
+      }
+      fillerWords.forEach((fw, idx) => {
+        const pos = insertPositions[idx % insertPositions.length];
+        words.splice(pos + 1, 0, fw);
+      });
+      words = words.slice(0, targetCount + fillerWords.length);
+    }
+  }
+
   if (state.enterEnabled && state.preferences.enterFreq > 0) {
     return insertNewlines(words, state.preferences.enterFreq);
   }
