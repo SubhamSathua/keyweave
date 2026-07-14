@@ -1,6 +1,14 @@
 /**
+ * KeyWeave Typing Wordlists
+ *
+ * Base English wordlist derived from the Google 10000 English (USA, no swears) corpus.
+ * Credits to Josh Kaufman (@first20hours)
+ * Source: https://github.com/first20hours/google-10000-english
+ */
+
+/**
  * dictionary.js � Word Lists Organized by Keyboard Row
- * 
+ *
  * Use case: Static vocabulary data for the "Real Words" generation
  * mode. allWords contains ~10k common English words (no swear words).
  * awkwardSameFinger contains words with consecutive same-finger

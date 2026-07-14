@@ -1,3 +1,10 @@
+/**
+ * KeyWeave Design Theme
+ *
+ * Colors designed using the open-source Dracula Color Palette.
+ * Credits to Zeno Rocha and the Dracula Theme community.
+ * Source: https://draculatheme.com
+ */
 :root[data-theme="dracula"] {
   --bg-primary: #282A36;
   --bg-surface: #44475A;
