@@ -39,6 +39,8 @@
   --toggle-on-bg: #e2b714;
   --toggle-off-bg: #444;
   --preset-btn-active: #e2b714;
+  --accent-rgb: 226, 183, 20;
+  --text-primary-rgb: 100, 100, 100;
 }
 
 :root[data-appearance="light"] {
@@ -82,4 +84,6 @@
   --toggle-on-bg: #d4a413;
   --toggle-off-bg: #ccc;
   --preset-btn-active: #d4a413;
+  --accent-rgb: 212, 164, 19;
+  --text-primary-rgb: 44, 46, 49;
 }

@@ -40,6 +40,7 @@ button:hover {
   border-radius: 10px;
   transition: background 0.3s;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .toggle-thumb {
@@ -51,6 +52,7 @@ button:hover {
   border-radius: 50%;
   background: var(--text-primary);
   transition: transform 0.3s, background 0.3s;
+  z-index: 1;
 }
 
 .toggle-switch input:checked + .toggle-track {
@@ -60,6 +62,38 @@ button:hover {
 .toggle-switch input:checked + .toggle-track .toggle-thumb {
   transform: translateX(14px);
   background: var(--text-accent);
+}
+
+@keyframes toggle-ripple-on {
+  0% { background: var(--toggle-on-bg); box-shadow: 0 0 0 0 rgba(var(--accent-rgb, 228, 183, 12), 0.6); }
+  50% { background: var(--toggle-on-bg); box-shadow: 0 0 0 8px rgba(var(--accent-rgb, 228, 183, 12), 0); }
+  100% { background: var(--toggle-on-bg); box-shadow: 0 0 0 0 rgba(var(--accent-rgb, 228, 183, 12), 0); }
+}
+
+@keyframes toggle-ripple-off {
+  0% { background: var(--toggle-off-bg); box-shadow: 0 0 0 0 rgba(var(--text-primary-rgb, 100, 100, 100), 0.5); }
+  50% { background: var(--toggle-off-bg); box-shadow: 0 0 0 8px rgba(var(--text-primary-rgb, 100, 100, 100), 0); }
+  100% { background: var(--toggle-off-bg); box-shadow: 0 0 0 0 rgba(var(--text-primary-rgb, 100, 100, 100), 0); }
+}
+
+@keyframes jelly-toggle {
+  0% { transform: scale(1, 1); }
+  30% { transform: scale(1.15, 0.85); }
+  50% { transform: scale(0.9, 1.1); }
+  70% { transform: scale(1.05, 0.95); }
+  100% { transform: scale(1, 1); }
+}
+
+.toggle-track:has(.toggle-thumb) {
+  transition: background 0.3s, transform 0.1s;
+}
+
+.toggle-switch input:checked + .toggle-track {
+  animation: toggle-ripple-on 0.5s ease, jelly-toggle 0.4s ease;
+}
+
+.toggle-switch input:not(:checked) + .toggle-track {
+  animation: toggle-ripple-off 0.5s ease, jelly-toggle 0.4s ease;
 }
 
 /* Textarea */

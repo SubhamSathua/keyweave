@@ -390,15 +390,24 @@ function mountAdvancedModal() {
     }
   });
 
-  /* ── Live slider value display + case label ── */
+  /* ── Live slider value display + case label + track progress ── */
   document.querySelectorAll('.modal-slider').forEach(slider => {
     const valSpan = document.getElementById(slider.id.replace('slider', 'val'));
+    
+    const updateSliderProgress = () => {
+      const percentage = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+      slider.style.setProperty('--value', `${percentage}%`);
+    };
+    
     if (valSpan) {
       slider.addEventListener('input', () => {
         valSpan.textContent = slider.value;
+        updateSliderProgress();
         if (slider.id === 'case-slider') updateCaseLabel(parseInt(slider.value));
       });
     }
+    
+    updateSliderProgress();
   });
 
   /* ── Disable ranges if toggles are off ── */

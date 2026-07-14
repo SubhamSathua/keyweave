@@ -185,26 +185,49 @@
 .key-label:has(input[value="j"]):not(.active)::before {
   content: '';
   position: absolute;
-  bottom: 3px;
+  bottom: 2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 60%;
-  height: 2px;
-  background: var(--bg-primary);
-  border-radius: 1px;
+  width: 65%;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
   pointer-events: none;
+  opacity: 0.7;
 }
 
 .key-label:has(input[value="f"]).active::before,
 .key-label:has(input[value="j"]).active::before {
   content: '';
   position: absolute;
-  bottom: 3px;
+  bottom: 2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 60%;
-  height: 2px;
-  background: var(--key-active-text);
-  border-radius: 1px;
+  width: 65%;
+  height: 3px;
+  background: var(--text-primary);
+  border-radius: 2px;
   pointer-events: none;
+}
+
+@keyframes bump-ripple-dark {
+  0% { box-shadow: 0 0 0 0 rgba(228, 183, 12, 0.5); }
+  70% { box-shadow: 0 0 0 6px rgba(228, 183, 12, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(228, 183, 12, 0); }
+}
+
+@keyframes bump-ripple-light {
+  0% { box-shadow: 0 0 0 0 rgba(93, 64, 155, 0.5); }
+  70% { box-shadow: 0 0 0 6px rgba(93, 64, 155, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(93, 64, 155, 0); }
+}
+
+.key-label:has(input[value="f"]).active,
+.key-label:has(input[value="j"]).active {
+  animation: bump-ripple-dark 0.4s ease;
+}
+
+:root[data-appearance="light"] .key-label:has(input[value="f"]).active,
+:root[data-appearance="light"] .key-label:has(input[value="j"]).active {
+  animation: bump-ripple-light 0.4s ease;
 }

@@ -39,6 +39,8 @@
   --toggle-on-bg: #50fa7b;
   --toggle-off-bg: #6272A4;
   --preset-btn-active: #ff79c6;
+  --accent-rgb: 189, 147, 249;
+  --text-primary-rgb: 248, 248, 242;
 }
 
 :root[data-theme="dracula"][data-appearance="light"] {
@@ -82,4 +84,6 @@
   --toggle-on-bg: #00C632;
   --toggle-off-bg: #9691B5;
   --preset-btn-active: #e2005a;
+  --accent-rgb: 100, 74, 201;
+  --text-primary-rgb: 31, 31, 31;
 }
