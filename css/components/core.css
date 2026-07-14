@@ -48,6 +48,7 @@
     height: 28px;
     color: var(--accent);
     flex-shrink: 0;
+    border-radius: 4px;
 }
 
 .brand-name {
