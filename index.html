@@ -27,6 +27,35 @@
                 <h1 class="brand-name">Typing Drill</h1>
             </div>
             <div class="header-actions">
+                <div class="appearance-dropdown" id="appearance-dropdown">
+                    <button
+                        class="header-icon-btn"
+                        id="appearance-btn"
+                        title="Appearance"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                    </button>
+                    <div class="appearance-menu" id="appearance-menu">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
                 <button
                     class="header-icon-btn"
                     id="settings-btn"
@@ -574,10 +603,11 @@
 
                     <div class="sett-section">
                         <span class="sett-section-label">Appearance</span>
-                        <div class="sett-appearance-row">
-                            <button class="sett-appearance-btn" data-appearance="dark">Dark</button>
-                            <button class="sett-appearance-btn" data-appearance="light">Light</button>
-                        </div>
+                    <div class="sett-appearance-row">
+                        <button class="sett-appearance-btn" data-appearance="system">System</button>
+                        <button class="sett-appearance-btn" data-appearance="light">Light</button>
+                        <button class="sett-appearance-btn" data-appearance="dark">Dark</button>
+                    </div>
                     </div>
 
                     <hr class="sett-divider">

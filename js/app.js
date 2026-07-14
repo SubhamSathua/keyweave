@@ -12,7 +12,9 @@ import {
   applyAppearance,
   getThemeList,
   getCurrentTheme,
-  getCurrentAppearance
+  getCurrentAppearance,
+  getResolvedAppearance,
+  APPEARANCE_OPTIONS
 } from './utils/theme.js';
 
 function populateThemeChips() {
@@ -29,6 +31,7 @@ function populateThemeChips() {
       applyTheme(t.id, getCurrentAppearance(), true);
       populateThemeChips();
       updateAppearanceBtns();
+      updateAppearanceMenu();
     });
     row.appendChild(btn);
   });
@@ -46,8 +49,47 @@ function wireAppearanceBtns() {
     btn.addEventListener('click', () => {
       applyAppearance(btn.dataset.appearance);
       updateAppearanceBtns();
+      updateAppearanceMenu();
     });
   });
+}
+
+function populateAppearanceMenu() {
+  const menu = document.getElementById('appearance-menu');
+  if (!menu) return;
+  const current = getCurrentAppearance();
+  menu.innerHTML = '';
+  APPEARANCE_OPTIONS.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'appearance-option' + (opt.id === current ? ' active' : '');
+    btn.textContent = opt.name;
+    btn.dataset.appearance = opt.id;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      applyAppearance(opt.id);
+      updateAppearanceMenu();
+      updateAppearanceBtns();
+      closeAppearanceMenu();
+    });
+    menu.appendChild(btn);
+  });
+}
+
+function updateAppearanceMenu() {
+  const current = getCurrentAppearance();
+  document.querySelectorAll('.appearance-option').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.appearance === current);
+  });
+}
+
+function closeAppearanceMenu() {
+  document.getElementById('appearance-dropdown').classList.remove('open');
+}
+
+function toggleAppearanceMenu(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('appearance-dropdown');
+  dd.classList.toggle('open');
 }
 
 async function init() {
@@ -56,6 +98,8 @@ async function init() {
   const savedTheme = localStorage.getItem('theme') || 'default';
   const savedAppearance = localStorage.getItem('appearance') || 'dark';
   initTheme(savedTheme, savedAppearance);
+
+  populateAppearanceMenu();
 
   const settingsModal = document.getElementById('settings-modal');
   const settingsClose = settingsModal.querySelector('.settings-close');
@@ -76,6 +120,15 @@ async function init() {
   });
 
   wireAppearanceBtns();
+
+  document.getElementById('appearance-btn').addEventListener('click', toggleAppearanceMenu);
+
+  document.addEventListener('click', (e) => {
+    const dd = document.getElementById('appearance-dropdown');
+    if (dd.classList.contains('open') && !dd.contains(e.target)) {
+      closeAppearanceMenu();
+    }
+  });
 
   mountKeyboard();
   mountRowMasters();
