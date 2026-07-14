@@ -5,6 +5,7 @@ import { mountControls } from './components/controls.js';
 import { mountOutput } from './components/output.js';
 import { mountShiftConfig } from './components/shiftConfig.js';
 import { generateDrillText, applyCase } from './utils/generator.js';
+import { saveSettings, loadSettings, clearAllStorage } from './utils/storage.js';
 import {
   loadThemeManifest,
   initTheme,
@@ -95,9 +96,22 @@ function toggleAppearanceMenu(e) {
 async function init() {
   await loadThemeManifest();
 
-  const savedTheme = localStorage.getItem('theme') || 'default';
-  const savedAppearance = localStorage.getItem('appearance') || 'dark';
+  const savedTheme = localStorage.getItem('typing-drill-color') || 'default';
+  const savedAppearance = localStorage.getItem('typing-drill-theme-mode') || 'dark';
   initTheme(savedTheme, savedAppearance);
+
+  const savedState = await loadSettings();
+  if (savedState) {
+    engineState.activeKeys = new Set(savedState.activeKeys);
+    engineState.heavyFocusKeys = new Set(savedState.heavyFocusKeys);
+    engineState.shiftKeys = new Set(savedState.shiftKeys);
+    engineState.enterEnabled = savedState.enterEnabled;
+    engineState.generationMode = savedState.generationMode;
+    engineState.caseMode = savedState.caseMode;
+    engineState.difficulty = savedState.difficulty;
+    engineState.textDensity = savedState.textDensity;
+    Object.assign(engineState.preferences, savedState.preferences);
+  }
 
   populateAppearanceMenu();
 
@@ -172,16 +186,49 @@ async function init() {
     }
   });
 
+  document.getElementById('reset-btn')?.addEventListener('click', () => {
+    clearAllStorage();
+    engineState.activeKeys = new Set();
+    engineState.heavyFocusKeys = new Set();
+    engineState.shiftKeys = new Set();
+    engineState.enterEnabled = false;
+    engineState.generationMode = 'fakeWords';
+    engineState.caseMode = 'lower';
+    engineState.difficulty = 'mid';
+    engineState.textDensity = 40;
+    Object.assign(engineState.preferences, {
+      sameFingerStretches: false,
+      includeSymbols: true,
+      addGlueWords: false,
+      symbolFreq: 15,
+      glueFreq: 20,
+      stretchFreq: 25,
+      caseMixPct: 50,
+      numberFreq: 10,
+      weightedFocusPct: 60,
+      enterFreq: 5
+    });
+    location.reload();
+  });
+
   mountKeyboard();
   mountRowMasters();
   mountControls();
   mountShiftConfig();
   mountOutput();
 
+  document.querySelectorAll('.key').forEach(cb => {
+    cb.addEventListener('change', () => saveSettings(engineState));
+  });
+  document.querySelectorAll('.row-master').forEach(cb => {
+    cb.addEventListener('change', () => saveSettings(engineState));
+  });
+
   document.getElementById('generate-btn').addEventListener('click', () => {
     let text = generateDrillText(engineState);
     text = applyCase(text, engineState.caseMode, engineState.preferences.caseMixPct);
     document.getElementById('output').value = text;
+    saveSettings(engineState);
   });
 }
 

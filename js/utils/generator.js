@@ -28,26 +28,41 @@ function pickTrigrams(validList) {
   return null;
 }
 
-function findMissingKeys(words, activeKeys) {
+function findMissingKeys(words, keys) {
   const usedChars = new Set();
   words.forEach(w => {
     for (const ch of w) usedChars.add(ch.toLowerCase());
   });
-  return activeKeys.filter(k => !usedChars.has(k.toLowerCase()));
+  return keys.filter(k => !usedChars.has(k.toLowerCase()));
 }
 
-function countKeyOccurrences(words, key) {
-  let count = 0;
-  words.forEach(w => {
-    for (const ch of w) {
-      if (ch.toLowerCase() === key.toLowerCase()) count++;
-    }
-  });
-  return count;
+function countWordsContaining(words, key) {
+  const k = key.toLowerCase();
+  return words.filter(w => w.toLowerCase().includes(k)).length;
+}
+
+function isSymbol(ch) {
+  return !/[a-z0-9]/i.test(ch);
 }
 
 function createWordForKey(key, trigramPool, allChars) {
   const k = key.toLowerCase();
+
+  if (isSymbol(k)) {
+    if (trigramPool && trigramPool.length >= 1) {
+      const t = pickRandom(trigramPool);
+      if (Math.random() < 0.5) {
+        return k + t;
+      }
+      return t + k;
+    }
+    if (allChars.length >= 1) {
+      const base = pickRandom(allChars);
+      return k + base;
+    }
+    return k;
+  }
+
   if (trigramPool && trigramPool.length >= 2) {
     const t1 = pickRandom(trigramPool);
     const t2 = pickRandom(trigramPool);
@@ -61,6 +76,14 @@ function createWordForKey(key, trigramPool, allChars) {
     return before + k + after;
   }
   return k;
+}
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }
 
 export function generateDrillText(state) {
@@ -118,31 +141,25 @@ export function generateDrillText(state) {
       if (state.generationMode === 'weighted' && focusSet.size > 0) {
         if (Math.random() < weightedPct) {
           const targetKey = pickRandom([...focusSet]);
-          const t1 = trigramFallback ? pickRandom(trigramFallback) : randomActiveChars(3, allChars);
-          const t2 = trigramFallback ? pickRandom(trigramFallback) : randomActiveChars(3, allChars);
-          const combined = t1 + t2;
-          const insertIdx = Math.floor(Math.random() * (combined.length + 1));
-          chosenWord = combined.slice(0, insertIdx) + targetKey + combined.slice(insertIdx);
+          chosenWord = createWordForKey(targetKey, trigramFallback, allChars);
         } else {
-          const t1 = trigramFallback
-            ? pickRandom(trigramFallback)
-            : randomActiveChars(4, allChars);
-          const t2 = trigramFallback
-            ? pickRandom(trigramFallback)
-            : randomActiveChars(4, allChars);
-          chosenWord = t1 + t2;
+          if (trigramFallback) {
+            const t1 = pickRandom(trigramFallback);
+            const t2 = pickRandom(trigramFallback);
+            chosenWord = t1 + t2;
+          } else {
+            chosenWord = randomActiveChars(6, allChars);
+          }
         }
       } else if (state.generationMode === 'fakeWords') {
-        if (!hasLetterKeys && !trigramFallback) {
+        if (trigramFallback) {
+          const t1 = pickRandom(trigramFallback);
+          const t2 = pickRandom(trigramFallback);
+          chosenWord = t1 + t2;
+        } else if (!hasLetterKeys) {
           chosenWord = randomActiveChars(4 + Math.floor(Math.random() * 4), allChars);
         } else {
-          const t1 = trigramFallback
-            ? pickRandom(trigramFallback)
-            : randomActiveChars(3, allChars);
-          const t2 = trigramFallback
-            ? pickRandom(trigramFallback)
-            : randomActiveChars(3, allChars);
-          chosenWord = t1 + t2;
+          chosenWord = randomActiveChars(6, allChars);
         }
       } else {
         chosenWord = wordPool.length > 0
@@ -160,7 +177,7 @@ export function generateDrillText(state) {
       }
     }
 
-    if (p.addGlueWords && Math.random() < gluePct && finalWords.length > 0) {
+    if (p.addGlueWords && Math.random() < gluePct && finalWords.length > 0 && finalWords.length < targetCount - 1) {
       finalWords.push(pickRandom(GLUE_WORDS));
     }
 
@@ -175,32 +192,66 @@ export function generateDrillText(state) {
       const fillerWords = missing.map(k =>
         createWordForKey(k, trigramFallback, letterKeys)
       );
-      const insertPositions = [];
-      for (let i = 0; i < words.length && fillerWords.length > 0; i += 3) {
-        insertPositions.push(i);
-      }
       fillerWords.forEach((fw, idx) => {
-        const pos = insertPositions[idx % insertPositions.length];
-        words.splice(pos + 1, 0, fw);
+        const pos = (idx * 3) % words.length;
+        words[pos] = fw;
       });
     }
+  }
 
-    if (focusSet.size > 0) {
-      const targetPerFocus = Math.max(3, Math.round(targetCount * weightedPct / focusSet.size));
-      const focusWords = [];
-      focusSet.forEach(fk => {
-        const count = countKeyOccurrences(words, fk);
-        if (count < targetPerFocus) {
-          const needed = targetPerFocus - count;
-          for (let i = 0; i < needed; i++) {
-            focusWords.push(createWordForKey(fk, trigramFallback, letterKeys));
-          }
-        }
+  {
+    const allActiveKeys = [...effectiveSet];
+    const missing = findMissingKeys(words, allActiveKeys);
+    if (missing.length > 0) {
+      const fillerWords = missing.map(k =>
+        createWordForKey(k, trigramFallback, allChars)
+      );
+      fillerWords.forEach((fw, idx) => {
+        const pos = (idx * 3 + 1) % words.length;
+        words[pos] = fw;
       });
-      if (focusWords.length > 0) {
-        const insertAt = Math.floor(words.length / 2);
-        words.splice(insertAt, 0, ...focusWords);
+    }
+  }
+
+  if (focusSet.size > 0) {
+    const targetPerFocus = Math.max(2, Math.round(targetCount * weightedPct / focusSet.size));
+
+    const focusCounts = new Map();
+    focusSet.forEach(fk => {
+      focusCounts.set(fk, countWordsContaining(words, fk));
+    });
+
+    const needs = [];
+    focusSet.forEach(fk => {
+      const count = focusCounts.get(fk);
+      const needed = Math.max(0, targetPerFocus - count);
+      for (let i = 0; i < needed; i++) {
+        needs.push(fk);
       }
+    });
+
+    shuffleArray(needs);
+
+    const replaceable = [];
+    for (let i = 0; i < words.length; i++) {
+      const wordLower = words[i].toLowerCase();
+      let isFocusWord = false;
+      for (const fk of focusSet) {
+        if (wordLower.includes(fk.toLowerCase())) {
+          isFocusWord = true;
+          break;
+        }
+      }
+      if (!isFocusWord) {
+        replaceable.push(i);
+      }
+    }
+
+    shuffleArray(replaceable);
+
+    const toReplace = Math.min(needs.length, replaceable.length);
+    for (let i = 0; i < toReplace; i++) {
+      words[replaceable[i]] = createWordForKey(needs[i], trigramFallback, allChars);
     }
   }
 

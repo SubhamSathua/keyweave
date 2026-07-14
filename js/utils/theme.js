@@ -111,8 +111,8 @@ export function applyTheme(theme, appearance, animate) {
     currentResolvedAppearance = resolved;
   }
 
-  localStorage.setItem('theme', theme);
-  localStorage.setItem('appearance', appearance);
+  localStorage.setItem('typing-drill-color', theme);
+  localStorage.setItem('typing-drill-theme-mode', appearance);
   setupSystemListener();
 }
 

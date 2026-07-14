@@ -89,6 +89,24 @@
     background: var(--accent);
 }
 
+.header-reset-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 5px 12px;
+    cursor: pointer;
+    color: var(--text-muted);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.header-reset-btn:hover {
+    color: var(--text-accent);
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
 /* ── Appearance Dropdown ── */
 .appearance-dropdown {
     position: relative;
