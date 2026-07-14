@@ -755,6 +755,13 @@ html.theme-transitioning *::after {
 
 .about-privacy-btn {
   background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.about-privacy-btn:hover {
+  background: var(--accent);
+  color: var(--text-accent);
 }
 
 .about-footer {
@@ -774,7 +781,7 @@ html.theme-transitioning *::after {
 /* ── Privacy Modal ── */
 .privacy-body p {
   font-size: 13px;
-  color: var(--text-muted);
+  color: var(--text-primary);
   line-height: 1.6;
   margin-bottom: 12px;
 }
